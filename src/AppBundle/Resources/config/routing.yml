@@ -1,3 +1,7 @@
 app.index:
     path:     /
     defaults: { _controller: AppBundle:Home:index }
+
+world:
+    path:     /helloworld
+    defaults: { _controller: AppBundle:Hello:world }
