@@ -18,4 +18,27 @@ class HomeController extends Controller
         ));
     }
 
+    /**
+     * User login action.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function loginAction()
+    {
+        return $this->render('AppBundle:Home:login.html.twig', array(
+
+        ));
+    }
+
+    /**
+     * Coach info action.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function coachesAction()
+    {
+        return $this->render('AppBundle:Home:coaches.html.twig', array(
+
+        ));
+    }
 }
