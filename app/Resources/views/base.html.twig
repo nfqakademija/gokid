@@ -6,24 +6,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico')}}">
     {% block stylesheets %}
-        {#<link rel="stylesheet" href="{{ asset('css/style.css') }}"/>#}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     {% endblock %}
     {% block canonical_meta %}{% endblock %}
 </head>
 <body>
-<div class="container">
-    {% block container %}
-        {% block header %}
-            {% include "::inc/header.html.twig" %}
+<div id="content-wrap">
+    <div id="content-wrap-main">
+        {% block container %}
+            {% block header %}
+                {% include "::inc/header.html.twig" %}
+            {% endblock %}
+            {% block body %}
+            {% endblock %}
         {% endblock %}
-        {% block body %}{% endblock %}
-    {% endblock %}
+    </div>
 </div>
 {% block footer %}
 {% include "::inc/footer.html.twig" %}
 {% endblock %}
 {% block javascripts %}
-    {#<script src="{{ asset('js/script.js') }}"></script>#}
+    <script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}
 </body>
 </html>
