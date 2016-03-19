@@ -4,14 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Offer;
 
 /**
- * Trainer
+ * User
  *
- * @ORM\Table(name="trainer")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TrainerRepository")
+ * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Trainer
+class User
 {
     /**
      * @var int
@@ -53,7 +54,7 @@ class Trainer
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=15)
+     * @ORM\Column(name="phone", type="string", length=45)
      */
     private $phone;
 
@@ -64,6 +65,15 @@ class Trainer
      */
     private $rating;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Offer", mappedBy="user")
+     */
+    protected $offers;
+
+    public function __construct()
+    {
+        $this->offers = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -80,7 +90,7 @@ class Trainer
      *
      * @param string $firstName
      *
-     * @return Trainer
+     * @return User
      */
     public function setFirstName($firstName)
     {
@@ -104,7 +114,7 @@ class Trainer
      *
      * @param string $lastName
      *
-     * @return Trainer
+     * @return User
      */
     public function setLastName($lastName)
     {
@@ -128,7 +138,7 @@ class Trainer
      *
      * @param string $email
      *
-     * @return Trainer
+     * @return User
      */
     public function setEmail($email)
     {
@@ -152,7 +162,7 @@ class Trainer
      *
      * @param string $password
      *
-     * @return Trainer
+     * @return User
      */
     public function setPassword($password)
     {
@@ -176,7 +186,7 @@ class Trainer
      *
      * @param string $phone
      *
-     * @return Trainer
+     * @return User
      */
     public function setPhone($phone)
     {
@@ -200,7 +210,7 @@ class Trainer
      *
      * @param integer $rating
      *
-     * @return Trainer
+     * @return User
      */
     public function setRating($rating)
     {
@@ -220,23 +230,13 @@ class Trainer
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="Offer", mappedBy="activity")
-     */
-    protected $offers;
-
-    public function __construct()
-    {
-        $this->offers = new ArrayCollection();
-    }
-
-    /**
      * Add offer
      *
-     * @param \AppBundle\Entity\Offer $offer
+     * @param Offer $offer
      *
-     * @return Trainer
+     * @return User
      */
-    public function addOffer(\AppBundle\Entity\Offer $offer)
+    public function addOffer(Offer $offer)
     {
         $this->offers[] = $offer;
 
@@ -246,9 +246,9 @@ class Trainer
     /**
      * Remove offer
      *
-     * @param \AppBundle\Entity\Offer $offer
+     * @param Offer $offer
      */
-    public function removeOffer(\AppBundle\Entity\Offer $offer)
+    public function removeOffer(Offer $offer)
     {
         $this->offers->removeElement($offer);
     }
@@ -263,3 +263,4 @@ class Trainer
         return $this->offers;
     }
 }
+
