@@ -1,3 +1,11 @@
-app.index:
-    path:     /
-    defaults: { _controller: AppBundle:Home:index }
+index:
+  path:     /
+  defaults: { _controller: AppBundle:Home:index }
+
+login:
+  path: /login
+  defaults: { _controller: AppBundle:Home:login}
+
+coaches:
+  path: /treneriams
+  defaults: { _controller: AppBundle:Home:coaches}
