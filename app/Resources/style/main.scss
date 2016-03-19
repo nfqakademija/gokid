@@ -1,2 +1,18 @@
-//bootstrap
+// Base color variables
+@import "modules/colors";
+
+// Bootstrap variable override
+@import "modules/bootstrap";
+
+// Misc. variables
+@import "modules/variables";
+
+// Bootstrap vendor stuff
 @import "./bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Partials
+@import "partials/navbar";
+@import "partials/body";
+@import "partials/search";
+@import "partials/content";
+@import "partials/footer";
