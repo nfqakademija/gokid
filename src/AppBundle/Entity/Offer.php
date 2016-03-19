@@ -3,11 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Activity;
+use AppBundle\Entity\User;
 
 /**
  * Offer
  *
- * @ORM\Table(name="offer")
+ * @ORM\Table(name="offers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OfferRepository")
  */
 class Offer
@@ -28,10 +30,10 @@ class Offer
     protected $activity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="offers")
-     * @ORM\JoinColumn(name="trainer_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="offers")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $trainer;
+    protected $user;
 
     /**
      * @var float
@@ -174,7 +176,7 @@ class Offer
      *
      * @return Offer
      */
-    public function setActivity(\AppBundle\Entity\Activity $activity = null)
+    public function setActivity(Activity $activity = null)
     {
         $this->activity = $activity;
 
@@ -192,26 +194,26 @@ class Offer
     }
 
     /**
-     * Set trainer
+     * Set user
      *
-     * @param \AppBundle\Entity\Trainer $trainer
+     * @param User $user
      *
      * @return Offer
      */
-    public function setTrainer(\AppBundle\Entity\Trainer $trainer = null)
+    public function setUser(User $user = null)
     {
-        $this->trainer = $trainer;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get trainer
+     * Get user
      *
-     * @return \AppBundle\Entity\Trainer
+     * @return User
      */
-    public function getTrainer()
+    public function getUser()
     {
-        return $this->trainer;
+        return $this->user;
     }
 }

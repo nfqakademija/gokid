@@ -4,11 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Offer;
 
 /**
  * Activity
  *
- * @ORM\Table(name="activity")
+ * @ORM\Table(name="activities")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ActivityRepository")
  */
 class Activity
@@ -29,6 +30,15 @@ class Activity
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Offer", mappedBy="activity")
+     */
+    protected $offers;
+
+    public function __construct()
+    {
+        $this->offers = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -64,25 +74,14 @@ class Activity
         return $this->name;
     }
 
-
-    /**
-     * @ORM\OneToMany(targetEntity="Offer", mappedBy="activity")
-     */
-    protected $offers;
-
-    public function __construct()
-    {
-        $this->offers = new ArrayCollection();
-    }
-
     /**
      * Add offer
      *
-     * @param \AppBundle\Entity\Offer $offer
+     * @param Offer $offer
      *
      * @return Activity
      */
-    public function addOffer(\AppBundle\Entity\Offer $offer)
+    public function addOffer(Offer $offer)
     {
         $this->offers[] = $offer;
 
@@ -92,9 +91,9 @@ class Activity
     /**
      * Remove offer
      *
-     * @param \AppBundle\Entity\Offer $offer
+     * @param Offer $offer
      */
-    public function removeOffer(\AppBundle\Entity\Offer $offer)
+    public function removeOffer(Offer $offer)
     {
         $this->offers->removeElement($offer);
     }
