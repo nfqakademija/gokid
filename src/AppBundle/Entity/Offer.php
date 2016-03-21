@@ -3,8 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Activity;
-use AppBundle\Entity\User;
 
 /**
  * Offer
@@ -45,16 +43,16 @@ class Offer
     /**
      * @var int
      *
-     * @ORM\Column(name="childrenAgeFrom", type="integer")
+     * @ORM\Column(name="age_from", type="integer")
      */
-    private $childrenAgeFrom;
+    private $ageFrom;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="childrenAgeTo", type="integer")
+     * @ORM\Column(name="age_to", type="integer")
      */
-    private $childrenAgeTo;
+    private $ageTo;
 
     /**
      * @var string
@@ -98,51 +96,51 @@ class Offer
     }
 
     /**
-     * Set childrenAgeFrom
+     * Set ageFrom
      *
-     * @param integer $childrenAgeFrom
+     * @param integer $ageFrom
      *
      * @return Offer
      */
-    public function setChildrenAgeFrom($childrenAgeFrom)
+    public function setAgeFrom($ageFrom)
     {
-        $this->childrenAgeFrom = $childrenAgeFrom;
+        $this->ageFrom = $ageFrom;
 
         return $this;
     }
 
     /**
-     * Get childrenAgeFrom
+     * Get ageFrom
      *
      * @return int
      */
-    public function getChildrenAgeFrom()
+    public function getAgeFrom()
     {
-        return $this->childrenAgeFrom;
+        return $this->ageFrom;
     }
 
     /**
-     * Set childrenAgeTo
+     * Set ageTo
      *
-     * @param integer $childrenAgeTo
+     * @param integer $ageTo
      *
      * @return Offer
      */
-    public function setChildrenAgeTo($childrenAgeTo)
+    public function setAgeTo($ageTo)
     {
-        $this->childrenAgeTo = $childrenAgeTo;
+        $this->ageTo = $ageTo;
 
         return $this;
     }
 
     /**
-     * Get childrenAgeTo
+     * Get ageTo
      *
      * @return int
      */
-    public function getChildrenAgeTo()
+    public function getAgeTo()
     {
-        return $this->childrenAgeTo;
+        return $this->ageTo;
     }
 
     /**
@@ -172,7 +170,7 @@ class Offer
     /**
      * Set activity
      *
-     * @param \AppBundle\Entity\Activity $activity
+     * @param Activity $activity
      *
      * @return Offer
      */
@@ -186,7 +184,7 @@ class Offer
     /**
      * Get activity
      *
-     * @return \AppBundle\Entity\Activity
+     * @return Activity
      */
     public function getActivity()
     {
