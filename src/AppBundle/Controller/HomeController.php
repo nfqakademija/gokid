@@ -4,6 +4,10 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Class HomeController
+ * @package AppBundle\Controller
+ */
 class HomeController extends Controller
 {
     /**
@@ -13,9 +17,7 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:Home:index.html.twig', array(
-            // ...
-        ));
+        return $this->render('AppBundle:Home:index.html.twig', array());
     }
 
     /**
