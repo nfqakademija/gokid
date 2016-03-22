@@ -69,6 +69,9 @@ class User
      */
     protected $offers;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -262,4 +265,3 @@ class User
         return $this->offers;
     }
 }
-

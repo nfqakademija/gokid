@@ -8,16 +8,21 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Activity;
 
-
+/**
+ * Class LoadData
+ * @package AppBundle\DataFixtures\ORM
+ */
 class LoadData implements FixtureInterface
 {
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $user1 = new User();

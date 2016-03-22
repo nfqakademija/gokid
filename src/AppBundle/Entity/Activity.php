@@ -34,6 +34,9 @@ class Activity
      */
     protected $offers;
 
+    /**
+     * Activity constructor.
+     */
     public function __construct()
     {
         $this->offers = new ArrayCollection();
