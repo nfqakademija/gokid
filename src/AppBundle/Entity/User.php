@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
@@ -11,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var int
@@ -20,49 +21,35 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=45)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=45)
      */
-    private $lastName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=45)
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=100)
-     */
-    private $password;
+    protected $lastName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=45)
      */
-    private $phone;
+    protected $phone;
 
     /**
      * @var int
      *
      * @ORM\Column(name="rating", type="integer")
      */
-    private $rating;
+    protected $rating;
 
     /**
      * @ORM\OneToMany(targetEntity="Offer", mappedBy="user")
@@ -74,6 +61,7 @@ class User
      */
     public function __construct()
     {
+        parent::__construct();
         $this->offers = new ArrayCollection();
     }
 
@@ -133,54 +121,6 @@ class User
     public function getLastName()
     {
         return $this->lastName;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
