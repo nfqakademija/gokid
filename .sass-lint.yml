@@ -21,7 +21,7 @@ rules:
     - max-depth: 1
   border-zero:
     - 1
-    - convention: zero
+    - convention: 0
   brace-style:
     - 1
     - allow-single-line: false
