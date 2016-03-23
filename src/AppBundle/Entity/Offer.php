@@ -41,6 +41,20 @@ class Offer
     private $price;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="male", type="boolean")
+     */
+    protected $male;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="female", type="boolean")
+     */
+    protected $female;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="age_from", type="integer")
@@ -213,5 +227,53 @@ class Offer
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set male
+     *
+     * @param boolean $male
+     *
+     * @return Offer
+     */
+    public function setMale($male)
+    {
+        $this->male = $male;
+
+        return $this;
+    }
+
+    /**
+     * Is male
+     *
+     * @return boolean
+     */
+    public function isMale()
+    {
+        return $this->male;
+    }
+
+    /**
+     * Set female
+     *
+     * @param boolean $female
+     *
+     * @return Offer
+     */
+    public function setFemale($female)
+    {
+        $this->female = $female;
+
+        return $this;
+    }
+
+    /**
+     * Is female
+     *
+     * @return boolean
+     */
+    public function isFemale()
+    {
+        return $this->female;
     }
 }
