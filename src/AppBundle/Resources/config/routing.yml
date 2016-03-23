@@ -1,3 +1,7 @@
 app.index:
     path:     /
     defaults: { _controller: AppBundle:Home:index }
+
+app.search:
+    path:     /search
+    defaults: { _controller: AppBundle:Home:search }
