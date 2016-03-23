@@ -1,15 +1,15 @@
 // Footer
-#footer-container {
+.footer-container {
   background-color: $darkest;
-  color: white;
+  color: #fff;
   position: relative;
   margin-top: -$footer-height;
   height: $footer-height;
-  clear:both;
+  clear: both;
   padding-top: 24px;
 
   a {
-    color: white;
+    color: #fff;
   }
 
   a:hover {
@@ -20,10 +20,10 @@
 }
 
 // Fix footer to the bottom of the page
-#content-wrap {
+.content-wrap {
   min-height: 100%;
 
-  #content-wrap-main {
+  .main {
     padding-bottom: $footer-height;
     overflow: auto;
   }
