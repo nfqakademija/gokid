@@ -8,8 +8,7 @@
     background-color: #fff;
   }
 
-  .navbar-toggle,
-  .navbar-toggle:hover {
+  .navbar-toggle {
     background-color: #ddd;
   }
 }
@@ -28,11 +27,6 @@
   .navbar-toggle.collapsed {
     border-color: #fff;
     background-color: transparent;
-  }
-
-  .navbar-toggle:hover {
-    background-color: $lightest;
-    border-color: $lightest;
   }
 
   .icon-bar {
