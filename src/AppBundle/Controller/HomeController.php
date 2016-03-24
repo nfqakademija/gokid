@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:Home:index.html.twig', array());
+        return $this->render('AppBundle:Home:index.html.twig', []);
     }
 
     /**
@@ -27,9 +27,7 @@ class HomeController extends Controller
      */
     public function loginAction()
     {
-        return $this->render('AppBundle:Home:login.html.twig', array(
-
-        ));
+        return $this->render('AppBundle:Home:login.html.twig', []);
     }
 
     /**
@@ -39,8 +37,6 @@ class HomeController extends Controller
      */
     public function coachesAction()
     {
-        return $this->render('AppBundle:Home:coaches.html.twig', array(
-
-        ));
+        return $this->render('AppBundle:Home:coaches.html.twig', []);
     }
 }
