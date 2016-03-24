@@ -1,4 +1,62 @@
 // Navbar overrides
 .navbar {
-  border: 0;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+
+  .navbar-toggle.collapsed {
+    background-color: #fff;
+  }
+
+  .navbar-toggle,
+  .navbar-toggle:hover {
+    background-color: #ddd;
+  }
+}
+
+.navbar.transparent {
+  border-width: 0;
+  background: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  width: 100%;
+
+  .navbar-toggle {
+    border-color: $darkest;
+    background-color: $darkest;
+  }
+
+  .navbar-toggle.collapsed {
+    border-color: #fff;
+    background-color: transparent;
+  }
+
+  .navbar-toggle:hover {
+    background-color: $lightest;
+    border-color: $lightest;
+  }
+
+  .icon-bar {
+    background-color: #fff;
+  }
+
+  .navbar-collapse {
+    box-shadow: none;
+  }
+
+  li>a {
+    color: #fff;
+  }
+
+  li>a:hover {
+    background: transparent;
+    color: $lightest;
+  }
+
+  a {
+    color: #fff;
+  }
+
+  a:hover {
+    color: $lightest;
+  }
 }
