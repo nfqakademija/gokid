@@ -37,7 +37,8 @@ class OfferRepository extends EntityRepository
         }
 
         if ($activity) {
-            $qb->andWhere('o.activity = :activity')
+            $qb->leftJoin('o.activity', 'a');
+            $qb->andWhere('a.name = :activity')
                 ->setParameter('activity', $activity);
         }
 
