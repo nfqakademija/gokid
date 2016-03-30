@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class HomeController
@@ -13,7 +14,7 @@ class HomeController extends Controller
     /**
      * Home page index action.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction()
     {
@@ -23,7 +24,7 @@ class HomeController extends Controller
     /**
      * User login action.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function loginAction()
     {
@@ -33,7 +34,7 @@ class HomeController extends Controller
     /**
      * Coach info action.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function coachesAction()
     {
