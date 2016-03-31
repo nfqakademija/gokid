@@ -2,7 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\ActivityRepository;
+use AppBundle\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -18,26 +21,26 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:Home:index.html.twig', []);
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
+
+        return $this->render('AppBundle:Home:index.html.twig', array(
+            'activities' => $activityRepository->getActivityList(),
+        ));
     }
 
     /**
-     * User login action.
+     * @param Request $request
      *
      * @return Response
      */
-    public function loginAction()
+    public function searchAction(Request $request)
     {
-        return $this->render('AppBundle:Home:login.html.twig', []);
-    }
+        /** @var OfferRepository $offerRepository */
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
-    /**
-     * Coach info action.
-     *
-     * @return Response
-     */
-    public function coachesAction()
-    {
-        return $this->render('AppBundle:Home:coaches.html.twig', []);
+        return $this->render('AppBundle:Home:search.html.twig', [
+            'offers' => $offerRepository->search($request),
+        ]);
     }
 }
