@@ -15,6 +15,26 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
+     * Login action.
+     *
+     * @return Response
+     */
+    public function loginAction()
+    {
+        return $this->render('AppBundle:Home:login.html.twig', []);
+    }
+
+    /**
+     * Coaches action.
+     *
+     * @return Response
+     */
+    public function coachesAction()
+    {
+        return $this->render('AppBundle:Home:coaches.html.twig', []);
+    }
+
+    /**
      * Home page index action.
      *
      * @return Response
@@ -24,9 +44,9 @@ class HomeController extends Controller
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
 
-        return $this->render('AppBundle:Home:index.html.twig', array(
+        return $this->render('AppBundle:Home:index.html.twig', [
             'activities' => $activityRepository->getActivityList(),
-        ));
+        ]);
     }
 
     /**
