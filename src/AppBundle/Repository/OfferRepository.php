@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use \Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Offer;
 
 /**
  * OfferRepository
@@ -12,4 +13,42 @@ use \Doctrine\ORM\EntityRepository;
  */
 class OfferRepository extends EntityRepository
 {
+    /**
+     * @param Offer $offer
+     * @return mixed
+     */
+    public function searchSimilarOffers(Offer $offer)
+    {
+        $activity = $offer->getActivity()->getName();
+        $ageFrom = $offer->getAgeFrom();
+        $ageTo = $offer->getAgeTo();
+        $address = $offer->getAddress();
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('AppBundle:Offer', 'o');
+
+        if ($activity) {
+            $qb->leftJoin('o.activity', 'a');
+            $qb->orWhere('a.name = :activity')
+                ->setParameter('activity', $activity);
+        }
+
+        if ($address) {
+            $qb->orWhere('o.address = :address')
+                ->setParameter('address', $address);
+        }
+
+        if ($ageFrom) {
+            $qb->orWhere('o.ageFrom = :ageFrom')
+                ->setParameter('ageFrom', $ageFrom);
+        }
+
+        if ($ageTo) {
+            $qb->orWhere('o.ageTo = :ageTo')
+                ->setParameter('ageTo', $ageTo);
+        }
+
+        return $qb->getQuery()->execute();
+    }
 }
