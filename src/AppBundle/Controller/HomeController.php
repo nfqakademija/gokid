@@ -46,10 +46,12 @@ class HomeController extends Controller
      */
     public function offerDetailsAction()
     {
-        $offer = $this->getDoctrine()->getRepository('AppBundle:Offer')->find(5);
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+        $offer = $offerRepository->find(1);
 
         return $this->render('AppBundle:Home:offerDetails.html.twig', [
-            'offer' => $offer
+            'offer' => $offer,
+            'similarOffers' => $offerRepository->searchSimilarOffers($offer),
         ]);
     }
 }
