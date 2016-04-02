@@ -1,4 +1,7 @@
-﻿
+﻿h1{
+  margin-bottom: 50px;
+}
+
 .detailsContainer{
   background-color: white;
   border: thin;
@@ -8,7 +11,7 @@
     margin-left: 10px;
   }
 
-  .info{
+  div{
     border-bottom: thin;
     border-bottom-style: inset;
     margin-top: 10px;
@@ -17,5 +20,19 @@
   .userInfo{
     margin-left: 30px;
     height: 20px;
+  }
+}
+
+.similarOffers{
+  margin-top: 100px;
+  border-top: thin;
+  border-top-style: inset;
+
+  h3{
+    margin-left: 30px;
+  }
+
+  #col1{
+    margin-left: 30px;
   }
 }
