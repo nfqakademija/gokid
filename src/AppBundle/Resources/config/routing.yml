@@ -9,3 +9,7 @@ app.login:
 app.coaches:
   path: /coaches
   defaults: { _controller: AppBundle:Home:coaches}
+
+app.offerDetails:
+  path: /offer
+  defaults: { _controller: AppBundle:Home:offerDetails}
