@@ -40,4 +40,16 @@ class HomeController extends Controller
     {
         return $this->render('AppBundle:Home:coaches.html.twig', []);
     }
+
+    /**
+     * @return Response
+     */
+    public function offerDetailsAction()
+    {
+        $offer = $this->getDoctrine()->getRepository('AppBundle:Offer')->find(5);
+
+        return $this->render('AppBundle:Home:offerDetails.html.twig', [
+            'offer' => $offer
+        ]);
+    }
 }
