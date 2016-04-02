@@ -1,1 +1,21 @@
 ﻿
+.detailsContainer{
+  background-color: white;
+  border: thin;
+  border-color: black;
+
+  p{
+    margin-left: 10px;
+  }
+
+  .info{
+    border-bottom: thin;
+    border-bottom-style: inset;
+    margin-top: 10px;
+  }
+
+  .userInfo{
+    margin-left: 30px;
+    height: 20px;
+  }
+}

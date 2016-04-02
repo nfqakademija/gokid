@@ -1,27 +1,39 @@
 {% extends "::base.html.twig" %}
+
 {% block title %} Būrelio informacija - {{ parent() }}{% endblock %}
 
 {% block body %}
 
-
     <div class="container-fluid">
-        <h1> Būrelio pavadinimas</h1>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <img src="goal.jpg" class="img-rounded" alt="Goal" width="347" height="346">
-            </div>
-            <div class="col-sm-6">
-                <blockquote>
-                    <p class="description"> Būrelio aprašymas</p>
-                </blockquote>
-                <p> Sporto rūšis {{ offer.getActivity.getName }} </p>
-                <p> Treneris {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }}</p>
-                <p> Adresas {{ offer.getAddress }}</p>
-                <p> Vaikų amžius {{ offer.getAgeFrom }} - {{ offer.getAgeTo }} m. </p>
-                <p> Kaina {{ offer.getPrice }} EUR </p>
-
-            </div>
-        </div>
+         <h1> Būrelio pavadinimas</h1>
+         <div class="row">
+              <div class="col-sm-5">
+                    <img src="goal.jpg" class="img-rounded" alt="Goal" width="347" height="346">
+              </div>
+              <div class="col-sm-7">
+                    <div class="detailsContainer">
+                        <div class="info">
+                            <p> Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. </p>
+                        </div>
+                        <div class="info">
+                            <p> Sporto rūšis: {{ offer.getActivity.getName }} </p>
+                        </div>
+                        <div class="info">
+                            <p> Treneris: {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }} </p>
+                            <p class="userInfo"> Telefonas: {{ offer.getUser.getPhone }} </p>
+                            <p class="userInfo"> El. paštas: {{ offer.getUser.getEmail }} </p>
+                        </div>
+                        <div class="info">
+                            <p> Adresas: {{ offer.getAddress }}</p>
+                        </div>
+                        <div class="info">
+                            <p> Vaikų amžius: {{ offer.getAgeFrom }} - {{ offer.getAgeTo }} m. </p>
+                        </div>
+                        <div class="info">
+                            <p> Kaina: {{ offer.getPrice }} EUR </p>
+                        </div>
+                    </div>
+              </div>
+         </div>
     </div>
 {% endblock %}
