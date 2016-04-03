@@ -44,10 +44,10 @@ class HomeController extends Controller
     /**
      * @return Response
      */
-    public function offerDetailsAction()
+    public function offerDetailsAction($id)
     {
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
-        $offer = $offerRepository->find(1);
+        $offer = $offerRepository->find($id);
 
         return $this->render('AppBundle:Home:offerDetails.html.twig', [
             'offer' => $offer,

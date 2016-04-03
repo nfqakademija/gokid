@@ -11,5 +11,5 @@ app.coaches:
   defaults: { _controller: AppBundle:Home:coaches}
 
 app.offerDetails:
-  path: /offer
+  path: /offer/{id}
   defaults: { _controller: AppBundle:Home:offerDetails}

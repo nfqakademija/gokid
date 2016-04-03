@@ -35,37 +35,50 @@
                     </div>
               </div>
          </div>
-        </div>
-
+    </div>
+    <div class="similarOffers">
+        <h3> Panašūs būreliai </h3>
         <div class="row">
-            <div class="similarOffers">
-                <h3> Panašūs būreliai </h3>
-                    <div class="col-sm-4">
-                        <div id="col1">
-                            <h4> Būrelio pavadinimas</h4>
-                            <p> Sporto rūšis: {{ similarOffers[0].getActivity.getName }}</p>
-                            <p> Treneris: {{ similarOffers[0].getUser.getFirstName }} {{ similarOffers[0].getUser.getLastName }} </p>
-                            <p> Adresas: {{ similarOffers[0].getAddress }}</p>
-                            <p> Vaikų amžius: {{ similarOffers[0].getAgeFrom }} - {{ similarOffers[0].getAgeTo }} m.</p>
-                            <p> Kaina: {{ similarOffers[0].getPrice }} EUR </p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <h4> Būrelio pavadinimas</h4>
-                        <p> Sporto rūšis: {{ similarOffers[1].getActivity.getName }}</p>
-                        <p> Treneris: {{ similarOffers[1].getUser.getFirstName }} {{ similarOffers[1].getUser.getLastName }} </p>
-                        <p> Adresas: {{ similarOffers[1].getAddress }}</p>
-                        <p> Vaikų amžius: {{ similarOffers[1].getAgeFrom }} - {{ similarOffers[1].getAgeTo }} m.</p>
-                        <p> Kaina: {{ similarOffers[1].getPrice }} EUR </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <h4> Būrelio pavadinimas</h4>
-                        <p> Sporto rūšis: {{ similarOffers[2].getActivity.getName }}</p>
-                        <p> Treneris: {{ similarOffers[2].getUser.getFirstName }} {{ similarOffers[2].getUser.getLastName }} </p>
-                        <p> Adresas: {{ similarOffers[2].getAddress }}</p>
-                        <p> Vaikų amžius: {{ similarOffers[2].getAgeFrom }} - {{ similarOffers[2].getAgeTo }} m.</p>
-                        <p> Kaina: {{ similarOffers[2].getPrice }} EUR </p>
-                    </div>
+            {% if similarOffers |length >= 1 %}
+              <div class="col-sm-3">
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <p> Sporto rūšis: {{ similarOffers[0].getActivity.getName }}</p>
+                  <p> Treneris: {{ similarOffers[0].getUser.getFirstName }} {{ similarOffers[0].getUser.getLastName }} </p>
+                  <p> Adresas: {{ similarOffers[0].getAddress }}</p>
+                  <p> Vaikų amžius: {{ similarOffers[0].getAgeFrom }} - {{ similarOffers[0].getAgeTo }} m.</p>
+                  <p> Kaina: {{ similarOffers[0].getPrice }} EUR </p>
               </div>
+            {% endif %}
+            {% if similarOffers |length >= 2 %}
+              <div class="col-sm-3">
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <p> Sporto rūšis: {{ similarOffers[1].getActivity.getName }}</p>
+                  <p> Treneris: {{ similarOffers[1].getUser.getFirstName }} {{ similarOffers[1].getUser.getLastName }} </p>
+                  <p> Adresas: {{ similarOffers[1].getAddress }}</p>
+                  <p> Vaikų amžius: {{ similarOffers[1].getAgeFrom }} - {{ similarOffers[1].getAgeTo }} m.</p>
+                  <p> Kaina: {{ similarOffers[1].getPrice }} EUR </p>
+              </div>
+            {% endif %}
+            {% if similarOffers |length >= 3 %}
+              <div class="col-sm-3">
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <p> Sporto rūšis: {{ similarOffers[2].getActivity.getName }}</p>
+                  <p> Treneris: {{ similarOffers[2].getUser.getFirstName }} {{ similarOffers[2].getUser.getLastName }} </p>
+                  <p> Adresas: {{ similarOffers[2].getAddress }}</p>
+                  <p> Vaikų amžius: {{ similarOffers[2].getAgeFrom }} - {{ similarOffers[2].getAgeTo }} m.</p>
+                  <p> Kaina: {{ similarOffers[2].getPrice }} EUR </p>
+              </div>
+            {% endif %}
+            {% if similarOffers |length >= 4 %}
+              <div class="col-sm-3">
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <p> Sporto rūšis: {{ similarOffers[3].getActivity.getName }}</p>
+                  <p> Treneris: {{ similarOffers[3].getUser.getFirstName }} {{ similarOffers[3].getUser.getLastName }} </p>
+                  <p> Adresas: {{ similarOffers[3].getAddress }}</p>
+                  <p> Vaikų amžius: {{ similarOffers[3].getAgeFrom }} - {{ similarOffers[3].getAgeTo }} m.</p>
+                  <p> Kaina: {{ similarOffers[3].getPrice }} EUR </p>
+              </div>
+            {% endif %}
         </div>
+    </div>
 {% endblock %}
