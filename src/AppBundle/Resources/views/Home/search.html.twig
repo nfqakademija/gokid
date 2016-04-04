@@ -1,0 +1,20 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Homepage - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+
+    {% for offer in offers %}
+        activity: {{ offer.getActivity.getName }}<br>
+        user: {{ offer.getUser.getFirstName }}  {{ offer.getUser.getLastName }} <br>
+        price: {{ offer.getPrice }}<br>
+        male: {{ offer.isMale }}<br>
+        female: {{ offer.isFemale }}<br>
+        ageFrom: {{ offer.getAgeFrom }}<br>
+        ageTo: {{ offer.getAgeTo }}<br>
+        address: {{ offer.getAddress }}<br><br>
+
+    {% endfor %}
+
+{% endblock %}
