@@ -49,6 +49,6 @@ class OfferRepository extends EntityRepository
                 ->setParameter('ageTo', $ageTo);
         }
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->setMaxResults(4)->execute();
     }
 }
