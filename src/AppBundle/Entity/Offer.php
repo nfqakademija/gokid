@@ -104,6 +104,13 @@ class Offer
     private $longitude;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", nullable=true)
+     */
+    public $image;
+
+    /**
      * Get id
      *
      * @return int
@@ -400,4 +407,29 @@ class Offer
     {
         return $this->longitude;
     }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Offer
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 }
+
