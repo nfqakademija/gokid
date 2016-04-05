@@ -30,6 +30,7 @@ class LoadData implements FixtureInterface
         $user1->setLastName('Jasilionis');
         $user1->setPhone('865778030');
         $user1->setEmail('a.jasilionis@saboniocentras.lt');
+        $user1->setUsername('Aurimas');
         $user1->setPassword('password');
         $user1->setRating(10);
         $manager->persist($user1);
@@ -39,6 +40,7 @@ class LoadData implements FixtureInterface
         $user2->setLastName('Sirtautas');
         $user2->setPhone('868637833');
         $user2->setEmail('d.sirtautas@saboniocentras.lt');
+        $user2->setUsername('Darius');
         $user2->setPassword('password');
         $user2->setRating(10);
         $manager->persist($user2);
@@ -47,7 +49,8 @@ class LoadData implements FixtureInterface
         $user3->setFirstName('Laimis');
         $user3->setLastName('Bičkauskas');
         $user3->setPhone('865221255');
-        $user3->setEmail('email@mail.com');
+        $user3->setEmail('emailx@mail.com');
+        $user3->setUsername('Laimis');
         $user3->setPassword('password');
         $user3->setRating(10);
         $manager->persist($user3);
@@ -56,7 +59,8 @@ class LoadData implements FixtureInterface
         $user4->setFirstName('Kazimieras');
         $user4->setLastName('Bričkus');
         $user4->setPhone('861235851');
-        $user4->setEmail('email@mail.com');
+        $user4->setEmail('emailc@mail.com');
+        $user4->setUsername('Kazimieras');
         $user4->setPassword('password');
         $user4->setRating(10);
         $manager->persist($user4);
@@ -65,7 +69,8 @@ class LoadData implements FixtureInterface
         $user5->setFirstName('Donatas');
         $user5->setLastName('Januševičius');
         $user5->setPhone('860000001');
-        $user5->setEmail('email@mail.com');
+        $user5->setEmail('emaila@mail.com');
+        $user5->setUsername('Donatas');
         $user5->setPassword('password');
         $user5->setRating(10);
         $manager->persist($user5);
@@ -75,6 +80,7 @@ class LoadData implements FixtureInterface
         $user6->setLastName('Bugailiškis');
         $user6->setPhone('861376228');
         $user6->setEmail('j.bugailiskis@gmail.com');
+        $user6->setUsername('Justas');
         $user6->setPassword('password');
         $user6->setRating(10);
         $manager->persist($user6);
@@ -84,6 +90,7 @@ class LoadData implements FixtureInterface
         $user7->setLastName('Kubiliūtė');
         $user7->setPhone('860015689');
         $user7->setEmail('juste@tennisvilnius.lt');
+        $user7->setUsername('Justė');
         $user7->setPassword('password');
         $user7->setRating(10);
         $manager->persist($user7);
@@ -92,7 +99,8 @@ class LoadData implements FixtureInterface
         $user8->setFirstName('Eduardas');
         $user8->setLastName('Belevičius');
         $user8->setPhone('868711391');
-        $user8->setEmail('email@mail.com');
+        $user8->setEmail('emails@mail.com');
+        $user8->setUsername('Eduardas');
         $user8->setPassword('password');
         $user8->setRating(10);
         $manager->persist($user8);
