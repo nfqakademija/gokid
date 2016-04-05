@@ -5,7 +5,7 @@
 {% block body %}
 
     <div class="container-fluid">
-         <h1> Būrelio pavadinimas</h1>
+         <h1> {{ offer.getName }} </h1>
          <div class="row">
               <div class="col-sm-5">
                     <img src="goal.jpg" class="img-rounded" alt="Goal" width="347" height="346">
@@ -13,7 +13,7 @@
               <div class="col-sm-7">
                     <div class="detailsContainer">
                         <div>
-                            <p> Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. Būrelio aprašymas. </p>
+                            <p> {{ offer.getDescription }} </p>
                         </div>
                         <div>
                             <p> Sporto rūšis: {{ offer.getActivity.getName }} </p>
@@ -41,7 +41,7 @@
         <div class="row">
             {% if similarOffers |length >= 1 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <h4>{{ similarOffers[0].getName }}</h4> </a>
                   <p> Sporto rūšis: {{ similarOffers[0].getActivity.getName }}</p>
                   <p> Treneris: {{ similarOffers[0].getUser.getFirstName }} {{ similarOffers[0].getUser.getLastName }} </p>
                   <p> Adresas: {{ similarOffers[0].getAddress }}</p>
@@ -51,7 +51,7 @@
             {% endif %}
             {% if similarOffers |length >= 2 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <h4>{{ similarOffers[1].getName }}</h4> </a>
                   <p> Sporto rūšis: {{ similarOffers[1].getActivity.getName }}</p>
                   <p> Treneris: {{ similarOffers[1].getUser.getFirstName }} {{ similarOffers[1].getUser.getLastName }} </p>
                   <p> Adresas: {{ similarOffers[1].getAddress }}</p>
@@ -61,7 +61,7 @@
             {% endif %}
             {% if similarOffers |length >= 3 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <h4>{{ similarOffers[2].getName }}</h4> </a>
                   <p> Sporto rūšis: {{ similarOffers[2].getActivity.getName }}</p>
                   <p> Treneris: {{ similarOffers[2].getUser.getFirstName }} {{ similarOffers[2].getUser.getLastName }} </p>
                   <p> Adresas: {{ similarOffers[2].getAddress }}</p>
@@ -71,7 +71,7 @@
             {% endif %}
             {% if similarOffers |length >= 4 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"> <h4>Būrelio pavadinimas</h4> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"> <h4>{{ similarOffers[3].getName }}</h4> </a>
                   <p> Sporto rūšis: {{ similarOffers[3].getActivity.getName }}</p>
                   <p> Treneris: {{ similarOffers[3].getUser.getFirstName }} {{ similarOffers[3].getUser.getLastName }} </p>
                   <p> Adresas: {{ similarOffers[3].getAddress }}</p>
