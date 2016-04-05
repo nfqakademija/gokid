@@ -73,6 +73,10 @@ class HomeController extends Controller
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
         $offer = $offerRepository->find($id);
 
+        if (empty($offer)) {
+            return $this->redirect($this->generateUrl('app.search'));
+        }
+
         return $this->render('AppBundle:Home:offerDetails.html.twig', [
             'offer' => $offer,
             'similarOffers' => $offerRepository->searchSimilarOffers($offer),
