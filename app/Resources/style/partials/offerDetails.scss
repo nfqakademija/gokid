@@ -1,0 +1,39 @@
+﻿h1{
+  margin-bottom: 50px;
+}
+
+.detailsContainer{
+  background-color: white;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+
+  p{
+    margin-left: 10px;
+  }
+
+  div{
+    margin-top: 10px;
+  }
+
+  .userInfo{
+    margin-left: 70px;
+  }
+}
+
+.similarOffers{
+  margin-top: 100px;
+  margin-right: 50px;
+  margin-left: 50px;
+
+  h3, h4{
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
+#map{
+    height: 80vh;
+    margin-left: 50px;
+    margin-right: 50px;
+}

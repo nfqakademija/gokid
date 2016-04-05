@@ -17,26 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * Login action.
-     *
-     * @return Response
-     */
-    public function loginAction()
-    {
-        return $this->render('AppBundle:Home:login.html.twig', []);
-    }
-
-    /**
-     * Coaches action.
-     *
-     * @return Response
-     */
-    public function coachesAction()
-    {
-        return $this->render('AppBundle:Home:coaches.html.twig', []);
-    }
-
-    /**
      * Home page index action.
      *
      * @return Response
@@ -73,6 +53,45 @@ class HomeController extends Controller
 
         return $this->render('AppBundle:Home:search.html.twig', [
             'offers' => $offerRepository->search($request),
+        ]);
+    }
+
+    /**
+     * User login action.
+     *
+     * @return Response
+     */
+    public function loginAction()
+    {
+        return $this->render('AppBundle:Home:login.html.twig', []);
+    }
+
+    /**
+     * Coach info action.
+     *
+     * @return Response
+     */
+    public function coachesAction()
+    {
+        return $this->render('AppBundle:Home:coaches.html.twig', []);
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     */
+    public function offerDetailsAction($id)
+    {
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+        $offer = $offerRepository->find($id);
+
+        if (empty($offer)) {
+            return $this->redirect($this->generateUrl('app.search'));
+        }
+
+        return $this->render('AppBundle:Home:offerDetails.html.twig', [
+            'offer' => $offer,
+            'similarOffers' => $offerRepository->searchSimilarOffers($offer),
         ]);
     }
 }

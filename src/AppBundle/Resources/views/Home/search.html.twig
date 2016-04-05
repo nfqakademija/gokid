@@ -4,17 +4,85 @@
 
 {% block body %}
 
+    <div class="container offers">
+        <div class="row">
+            <div class="col-md-7 col-sm-8">
+                <div class="row">
 
-    {% for offer in offers %}
-        activity: {{ offer.getActivity.getName }}<br>
-        user: {{ offer.getUser.getFirstName }}  {{ offer.getUser.getLastName }} <br>
-        price: {{ offer.getPrice }}<br>
-        male: {{ offer.isMale }}<br>
-        female: {{ offer.isFemale }}<br>
-        ageFrom: {{ offer.getAgeFrom }}<br>
-        ageTo: {{ offer.getAgeTo }}<br>
-        address: {{ offer.getAddress }}<br><br>
+                    {% for offer in offers %}
+                        <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                            <div class="col-xs-6 col-sm-6 col-md-4 offer" data-id="{{ offer.getId }}">
+                                <img src="{{ asset('/images/'~offer.getImage) }}" class="img-responsive" alt="{{ offer.getName }}">
+                                <h2>{{ offer.getName }}</h2>
+                            </div>
+                        </a>
 
-    {% endfor %}
+                        {% if loop.index is divisibleby(3) %}
+                            <div class="clearfix hidden-sm hidden-xs"></div>
+                        {% endif %}
+
+                        {% if loop.index is divisibleby(2) %}
+                            <div class="clearfix hidden-lg hidden-md"></div>
+                        {% endif %}
+
+                    {% endfor %}
+
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-4">
+                <div id="map" class="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var markers = [];
+        var map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 11,
+                center: {lat: 54.8931048, lng: 23.8666335}
+            });
+
+            var bounds = new google.maps.LatLngBounds();
+
+            var green = 'http://maps.google.com/mapfiles/marker_green.png';
+
+            {% for offer in offers %}
+                bounds.extend( new google.maps.LatLng({{ offer.getLatitude }}, {{ offer.getLongitude }}) );
+
+                var contentString_{{ offer.getId }} = '<div id="content">'+
+                        '<div id="siteNotice">'+
+                        '</div>'+
+                        '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
+                        '<div class="bodyContent">'+
+                        '<a href=""><img width="100%" src="{{ asset('/images/'~offer.getImage) }}" /></a>'+
+                        '<p>{{ offer.getDescription }}</p>'+
+                        '</div>'+
+                        '</div>';
+
+                var infowindow_{{ offer.getId }} = new google.maps.InfoWindow({
+                    content: contentString_{{ offer.getId }}
+                });
+                markers[{{ offer.getId }}] = new google.maps.Marker({
+                    position: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
+                    map: map,
+                    title: '{{ offer.getName }}',
+                    icon: green
+                });
+                markers[{{ offer.getId }}].addListener('click', function() {
+                    infowindow_{{ offer.getId }}.open(map, markers[{{ offer.getId }}]);
+                    map.setCenter(marker.getPosition());
+                });
+            {% endfor %}
+            map.fitBounds(bounds);
+        }
+
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap" async defer></script>
 
 {% endblock %}
