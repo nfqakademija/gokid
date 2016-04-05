@@ -52,7 +52,7 @@
                                                         '</div>'+
                                                         '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
                                                         '<div id="bodyContent">'+
-                                                        '<a href=""><img width="100%" src="{{ app.request.getSchemeAndHttpHost() }}/images/{{ offer.getImage }}" /></a>'+
+                                                        '<a href=""><img width="100%" src="{{ asset('/images/'~ offer.getImage )}}" /></a>'+
                                                         '<p>{{ offer.getDescription }}</p>'+
                                                         '</div>'+
                                                         '</div>';
