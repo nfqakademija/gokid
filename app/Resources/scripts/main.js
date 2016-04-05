@@ -3,14 +3,14 @@
 $( ".offer" ).hover(
     function () {
         // first we need to know which <div class="marker"></div> we hovered
-        var index = $('.offer').index(this);
-        markers[index].setIcon(highlightedIcon());
+        var id = $(this).attr('data-id');
+        markers[id].setIcon(highlightedIcon());
     },
     // mouse out
     function () {
         // first we need to know which <div class="marker"></div> we hovered
-        var index = $('.offer').index(this);
-        markers[index].setIcon(normalIcon());
+        var id = $(this).attr('data-id');
+        markers[id].setIcon(normalIcon());
     }
 );
 
