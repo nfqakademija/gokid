@@ -13,3 +13,7 @@ app.login:
 app.coaches:
   path: /coaches
   defaults: { _controller: AppBundle:Home:coaches}
+
+app.offerDetails:
+  path: /offer/{id}
+  defaults: { _controller: AppBundle:Home:offerDetails}
