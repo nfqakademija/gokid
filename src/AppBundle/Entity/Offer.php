@@ -313,6 +313,54 @@ class Offer
     }
 
     /**
+     * Set male
+     *
+     * @param boolean $male
+     *
+     * @return Offer
+     */
+    public function setMale($male)
+    {
+        $this->male = $male;
+
+        return $this;
+    }
+
+    /**
+     * Is male
+     *
+     * @return boolean
+     */
+    public function isMale()
+    {
+        return $this->male;
+    }
+
+    /**
+     * Set female
+     *
+     * @param boolean $female
+     *
+     * @return Offer
+     */
+    public function setFemale($female)
+    {
+        $this->female = $female;
+
+        return $this;
+    }
+
+    /**
+     * Is female
+     *
+     * @return boolean
+     */
+    public function isFemale()
+    {
+        return $this->female;
+    }
+
+    /**
      * Set latitude
      *
      * @param float $latitude
@@ -384,51 +432,3 @@ class Offer
         return $this->image;
     }
 
-    /**
-     * Set male
-     *
-     * @param boolean $male
-     *
-     * @return Offer
-     */
-    public function setMale($male)
-    {
-        $this->male = $male;
-
-        return $this;
-    }
-
-    /**
-     * Is male
-     *
-     * @return boolean
-     */
-    public function isMale()
-    {
-        return $this->male;
-    }
-
-    /**
-     * Set female
-     *
-     * @param boolean $female
-     *
-     * @return Offer
-     */
-    public function setFemale($female)
-    {
-        $this->female = $female;
-
-        return $this;
-    }
-
-    /**
-     * Is female
-     *
-     * @return boolean
-     */
-    public function isFemale()
-    {
-        return $this->female;
-    }
-}

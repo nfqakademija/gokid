@@ -2,25 +2,6 @@
 
 {% block title %}Homepage - {{ parent() }}{% endblock %}
 
-{% block stylesheets %}
-
-    {{ parent() }}
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-weight: 100;
-            font-family: 'Lato';
-        }
-
-        .title {
-            margin: 20px auto;
-            text-align: center;
-            font-size: 96px;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
     <div class="container-fluid search-container">
         <div class="control">
@@ -120,15 +101,4 @@
 
         Cras feugiat ac
     </div>
-    <div class="title">NFQ Akademija</div>
-
-    <form action="{{ path('app.search') }}" method="get">
-        activity <input type="text" name="activity" title="activity"> <br>
-        age <input type="text" name="age" title="age"> <br>
-        price <input type="text" name="price" title="price"> <br>
-        male <input type="text" name="male" title="male"> <br>
-        female <input type="text" name="female" title="female"> <br>
-        address <input type="text" name="address" title="address"> <br>
-        <input type="submit">
-    </form>
 {% endblock %}
