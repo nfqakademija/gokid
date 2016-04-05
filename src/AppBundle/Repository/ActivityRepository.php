@@ -12,4 +12,19 @@ use \Doctrine\ORM\EntityRepository;
  */
 class ActivityRepository extends EntityRepository
 {
+    /**
+     * @return string[]
+     */
+    public function getActivityList()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a.name')->from('AppBundle:Activity', 'a');
+        $activities = $qb->getQuery()->execute();
+
+        foreach ($activities as $key => $activity) {
+            $activities[$key] = $activity['name'];
+        }
+
+        return $activities;
+    }
 }
