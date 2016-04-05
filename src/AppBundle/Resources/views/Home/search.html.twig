@@ -10,7 +10,7 @@
                 <div class="row">
 
                     {% for offer in offers %}
-                        <a href="">
+                        <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
                             <div class="col-xs-6 col-sm-6 col-md-4 offer" data-id="{{ offer.getId }}">
                                 <img src="{{ asset('/images/'~offer.getImage) }}" class="img-responsive" alt="{{ offer.getName }}">
                                 <h2>{{ offer.getName }}</h2>
