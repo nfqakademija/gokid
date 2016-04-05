@@ -42,5 +42,26 @@ class HomeController extends Controller
         return $this->render('AppBundle:Home:search.html.twig', [
             'offers' => $offerRepository->search($request),
         ]);
+        return $this->render('AppBundle:Home:index.html.twig', []);
+    }
+
+    /**
+     * User login action.
+     *
+     * @return Response
+     */
+    public function loginAction()
+    {
+        return $this->render('AppBundle:Home:login.html.twig', []);
+    }
+
+    /**
+     * Coach info action.
+     *
+     * @return Response
+     */
+    public function coachesAction()
+    {
+        return $this->render('AppBundle:Home:coaches.html.twig', []);
     }
 }
