@@ -35,7 +35,7 @@
                 </div>
             </div>
          </div>
-         <div id="map">
+         <div id="map" class="map">
             <script>
                 var markers = [];
                 var map;
@@ -51,7 +51,7 @@
                                                         '<div id="siteNotice">'+
                                                         '</div>'+
                                                         '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
-                                                        '<div id="bodyContent">'+
+                                                        '<div class="bodyContent">'+
                                                         '<a href=""><img width="100%" src="{{ asset('/images/'~ offer.getImage )}}" /></a>'+
                                                         '<p>{{ offer.getDescription }}</p>'+
                                                         '</div>'+
