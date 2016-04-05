@@ -12,7 +12,7 @@
                     {% for offer in offers %}
                         <a href="">
                             <div class="col-xs-6 col-sm-6 col-md-4 offer" data-id="{{ offer.getId }}">
-                                <img src="{{ app.request.getSchemeAndHttpHost() }}/images/{{ offer.getImage }}" class="img-responsive" alt="{{ offer.getName }}">
+                                <img src="{{ asset('/images/'~offer.getImage) }}" class="img-responsive" alt="{{ offer.getName }}">
                                 <h2>{{ offer.getName }}</h2>
                             </div>
                         </a>
@@ -59,7 +59,7 @@
                         '</div>'+
                         '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
                         '<div id="bodyContent">'+
-                        '<a href=""><img width="100%" src="{{ app.request.getSchemeAndHttpHost() }}/images/{{ offer.getImage }}" /></a>'+
+                        '<a href=""><img width="100%" src="{{ asset('/images/'~offer.getImage) }}" /></a>'+
                         '<p>{{ offer.getDescription }}</p>'+
                         '</div>'+
                         '</div>';
