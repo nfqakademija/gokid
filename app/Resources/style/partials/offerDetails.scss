@@ -4,16 +4,14 @@
 
 .detailsContainer{
   background-color: white;
-  border: thin;
-  border-color: black;
+  margin-left: 50px;
+  margin-right: 50px;
 
   p{
     margin-left: 10px;
   }
 
   div{
-    border-bottom: thin;
-    border-bottom-style: inset;
     margin-top: 10px;
   }
 
@@ -24,10 +22,11 @@
 
 .similarOffers{
   margin-top: 100px;
-  border-top: thin;
-  border-top-style: inset;
+  margin-right: 50px;
+  margin-left: 50px;
 
-  h3, h4, p{
-    margin-left: 10px;
+  h3, h4{
+    margin-bottom: 20px;
+    text-align: center;
   }
 }
