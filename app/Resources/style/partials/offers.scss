@@ -6,19 +6,19 @@
   a{
     color:inherit;
   }
-  .offer-wrapper{
+  .offer{
     overflow: hidden;
     margin-bottom:20px;
     display: inline-block;
     position: relative;
   }
-  .offer-wrapper img {
+  .offer img {
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
     transition: all 0.4s ease;
   }
-  .offer-wrapper:hover img {
+  .offer:hover img {
     opacity: 0.8;
     filter: alpha(opacity=80);
   }
