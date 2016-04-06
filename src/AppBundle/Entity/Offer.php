@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Offer
@@ -86,6 +87,9 @@ class Offer
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=45)
+     * @Assert\NotBlank(
+     *     message="Prašome įvesti gyvenamąją vietą."
+     * )
      */
     private $address;
 
