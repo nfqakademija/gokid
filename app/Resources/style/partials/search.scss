@@ -1,8 +1,5 @@
 // Search interface
 
-$search-container-sm-height: 480px;
-$search-container-md-height: 600px;
-
 .search-container {
   padding: 0;
   background-color: $darkest;
@@ -24,7 +21,8 @@ $search-container-md-height: 600px;
   }
 
   .header-text {
-    font-size: 48px;
+    font-size: 96px;
+    text-shadow: 0 0 20px #000;
     color: #fff;
   }
 
