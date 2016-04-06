@@ -29,7 +29,7 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->forward('AppBundle:Home:search');
+            return $this->forward('AppBundle:Home:search', ['offer' => $offer]);
         }
 
         /** @var ActivityRepository $activityRepository */
@@ -46,13 +46,13 @@ class HomeController extends Controller
      *
      * @return Response
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request, Offer $offer)
     {
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
         return $this->render('AppBundle:Home:search.html.twig', [
-            'offers' => $offerRepository->search($request),
+            'offers' => $offerRepository->search($offer),
         ]);
     }
 
