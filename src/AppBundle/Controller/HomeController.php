@@ -46,8 +46,12 @@ class HomeController extends Controller
      *
      * @return Response
      */
-    public function searchAction(Request $request, Offer $offer)
+    public function searchAction(Request $request, Offer $offer = null)
     {
+        if ($offer === null) {
+            $offer = new Offer();
+        }
+
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
