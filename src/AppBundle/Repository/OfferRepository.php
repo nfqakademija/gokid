@@ -18,54 +18,20 @@ class OfferRepository extends EntityRepository
      * @param Request $request
      * @return mixed
      */
-    public function search(Request $request)
+    public function search(Offer $offer)
     {
-        $age = $request->get('age');
-        $activity = $request->get('activity');
-        $address = $request->get('address');
-        $price = $request->get('price');
-        $male = $request->get('male');
-        $female = $request->get('female');
+        $address = $offer->getAddress();
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
             ->from('AppBundle:Offer', 'o');
-
-        if ($age) {
-            $qb->where('o.ageFrom <= :age')
-                ->andWhere('o.ageTo >= :age')
-                ->setParameter('age', $age);
-        }
-
-        if ($activity) {
-            $qb->leftJoin('o.activity', 'a');
-            $qb->andWhere('a.name = :activity')
-                ->setParameter('activity', $activity);
-        }
 
         if ($address) {
             $qb->andWhere('o.address = :address')
                 ->setParameter('address', $address);
         }
 
-        if ($price) {
-            $qb->andWhere('o.price = :price')
-                ->setParameter('price', $price);
-        }
-
-        if ($male) {
-            $qb->andWhere('o.male = :male')
-                ->setParameter('male', $male);
-        }
-
-        if ($female) {
-            $qb->andWhere('o.female = :female')
-                ->setParameter('female', $female);
-        }
-
         return $qb->getQuery()->execute();
-
-
     }
     /**
      * @param Offer $offer
