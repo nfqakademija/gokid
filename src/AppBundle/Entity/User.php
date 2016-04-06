@@ -172,6 +172,22 @@ class User extends BaseUser
     }
 
     /**
+     * Username can not be null. Set email as username if it is empty.
+     *
+     * {@inheritDoc}
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        if ($this->username === null) {
+            $this->setUsername($email);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add offer
      *
      * @param Offer $offer
