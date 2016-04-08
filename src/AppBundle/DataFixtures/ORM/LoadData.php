@@ -126,8 +126,8 @@ class LoadData implements FixtureInterface
         $manager->persist($activity5);
 
         $offer1 = new Offer();
-        $offer1->setMale('1');
-        $offer1->setFemale('1');
+        $offer1->setMale(true);
+        $offer1->setFemale(true);
         $offer1->setAgeFrom(8);
         $offer1->setAgeTo(16);
         $offer1->setAddress('Kaunas');
@@ -142,8 +142,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer1);
 
         $offer2 = new Offer();
-        $offer2->setMale('1');
-        $offer2->setFemale('1');
+        $offer2->setMale(true);
+        $offer2->setFemale(true);
         $offer2->setAgeFrom(8);
         $offer2->setAgeTo(13);
         $offer2->setAddress('Kaunas');
@@ -158,8 +158,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer2);
 
         $offer3 = new Offer();
-        $offer3->setMale('1');
-        $offer3->setFemale('0');
+        $offer3->setMale(true);
+        $offer3->setFemale(false);
         $offer3->setAgeFrom(10);
         $offer3->setAgeTo(13);
         $offer3->setAddress('Kaunas');
@@ -174,8 +174,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer3);
 
         $offer4 = new Offer();
-        $offer4->setMale('1');
-        $offer4->setFemale('0');
+        $offer4->setMale(true);
+        $offer4->setFemale(false);
         $offer4->setAgeFrom(13);
         $offer4->setAgeTo(15);
         $offer4->setAddress('Kaunas');
@@ -190,8 +190,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer4);
 
         $offer5 = new Offer();
-        $offer5->setMale('1');
-        $offer5->setFemale('1');
+        $offer5->setMale(true);
+        $offer5->setFemale(true);
         $offer5->setAgeFrom(7);
         $offer5->setAgeTo(12);
         $offer5->setAddress('Kaunas');
@@ -206,8 +206,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer5);
 
         $offer6 = new Offer();
-        $offer6->setMale('1');
-        $offer6->setFemale('1');
+        $offer6->setMale(true);
+        $offer6->setFemale(true);
         $offer6->setAgeFrom(10);
         $offer6->setAgeTo(15);
         $offer6->setAddress('Vilnius');
@@ -222,8 +222,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer6);
 
         $offer7 = new Offer();
-        $offer7->setMale('1');
-        $offer7->setFemale('1');
+        $offer7->setMale(true);
+        $offer7->setFemale(true);
         $offer7->setAgeFrom(8);
         $offer7->setAgeTo(13);
         $offer7->setAddress('Vilnius');
@@ -238,8 +238,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer7);
 
         $offer8 = new Offer();
-        $offer8->setMale('1');
-        $offer8->setFemale('1');
+        $offer8->setMale(true);
+        $offer8->setFemale(true);
         $offer8->setAgeFrom(8);
         $offer8->setAgeTo(12);
         $offer8->setAddress('Kaunas');
@@ -254,8 +254,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer8);
 
         $offer9 = new Offer();
-        $offer9->setMale('1');
-        $offer9->setFemale('1');
+        $offer9->setMale(true);
+        $offer9->setFemale(true);
         $offer9->setAgeFrom(12);
         $offer9->setAgeTo(15);
         $offer9->setAddress('Kaunas');
@@ -270,8 +270,8 @@ class LoadData implements FixtureInterface
         $manager->persist($offer9);
 
         $offer10 = new Offer();
-        $offer10->setMale('1');
-        $offer10->setFemale('1');
+        $offer10->setMale(true);
+        $offer10->setFemale(true);
         $offer10->setAgeFrom(12);
         $offer10->setAgeTo(16);
         $offer10->setAddress('Kaunas');
