@@ -24,11 +24,13 @@
                             </div>
                         </div>
                         <div class="col-sm-2">
-                            <div class="gender-input">
-                                <img width="20" src="{{ asset('images/mars-symbol.png') }}" class="gender-icon"/>
-                                {{ form_row(form.male) }}
-                                <img width="20" src="{{ asset('images/venus-symbol.png') }}" class="gender-icon"/>
-                                {{ form_row(form.female) }}
+                            <div class="gender-input text-center">
+                                <div class="icons-center">
+                                    <div class="gender-icon">&#9794;</div>
+                                    {{ form_row(form.male) }}
+                                    <div class="gender-icon">&#9792;</div>
+                                    {{ form_row(form.female) }}
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-2 submit-container">

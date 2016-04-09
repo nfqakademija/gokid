@@ -46,10 +46,19 @@
   .gender-checkbox {
     margin-top: 1px;
     background-color: #fff;
+    float: left;
   }
 
   .gender-icon {
-    margin-top: -39px;
+    margin: 2px 4px 0;
+    font-size: 24px;
+    float: left;
+  }
+
+  .icons-center {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 80px;
   }
 
   .header-text {
