@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\ActivityRepository;
-use AppBundle\Repository\OfferRepository;
 use AppBundle\Entity\Offer;
 use AppBundle\Form\IndexSearchOffer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,8 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * Home page index action.
-     *
+     * @param Request $request
      * @return Response
      */
     public function indexAction(Request $request)
@@ -43,7 +41,7 @@ class HomeController extends Controller
 
     /**
      * @param Request $request
-     *
+     * @param Offer|null $offer
      * @return Response
      */
     public function searchAction(Request $request, Offer $offer = null)
@@ -51,12 +49,10 @@ class HomeController extends Controller
         if ($offer === null) {
             $offer = new Offer();
         }
-
-        /** @var OfferRepository $offerRepository */
-        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+        $search = $this->get('app.searchService');
 
         return $this->render('AppBundle:Home:search.html.twig', [
-            'offers' => $offerRepository->search($offer),
+            'offers' => $search->findByAddress($offer),
         ]);
     }
 
@@ -86,16 +82,15 @@ class HomeController extends Controller
      */
     public function offerDetailsAction($id)
     {
-        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
-        $offer = $offerRepository->find($id);
-
+        $search = $this->get('app.searchService');
+        $offer = $search->findById($id)[0];
         if (empty($offer)) {
             return $this->redirect($this->generateUrl('app.search'));
         }
 
         return $this->render('AppBundle:Home:offerDetails.html.twig', [
             'offer' => $offer,
-            'similarOffers' => $offerRepository->searchSimilarOffers($offer),
+            'similarOffers' => $search->findSimilarOffers($offer),
         ]);
     }
 }
