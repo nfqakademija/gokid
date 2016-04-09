@@ -43,25 +43,35 @@
 
 .navbar.transparent {
   border-width: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
   position: absolute;
   width: 100%;
 
-  .navbar-toggle {
-    border-width: 0;
-    background-color: $neutral;
+  .navbar-header {
+    float: left;
   }
 
-  .navbar-toggle.collapsed {
-    background-color: transparent;
+  .navbar-collapse {
+    float: right !important;
+    width: auto;
+    border-top-width: 0 !important;
+    box-shadow: none !important;
   }
 
-  .navbar-toggle.collapsed .icon-bar {
-    background-color: #fff;
+  .nav>li {
+    position: relative;
+    display: block;
+    float: left;
+    padding-top: 15px;
+  }
+
+  .navbar-brand {
+    color: #fff;
   }
 
   li>a {
     color: #fff;
+    transition: color 0.5s ease;
   }
 
   li>a:hover,
@@ -72,7 +82,11 @@
   }
 
   a {
+    padding: 10px 20px;
     color: #fff;
+    border: 2px solid;
+    border-radius: 3px;
+    margin: 0 15px;
   }
 
   a:hover {

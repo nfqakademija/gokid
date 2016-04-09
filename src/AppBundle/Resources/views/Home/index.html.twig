@@ -2,27 +2,45 @@
 
 {% block title %}Homepage - {{ parent() }}{% endblock %}
 
-{% block body %}
-    <div class="container-fluid search-container">
-        <div class="wrapper">
-            <div class="header">
-                <div class="va-middle text-center">
-                    <h1 class="header-text">
-                        Būrelių paieška
-                    </h1>
-                </div>
-            </div>
-            <div class="control">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2">
-                        {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
-                        {{ form_start(form,  {'attr': {'novalidate': 'novalidate'}}) }}
-                            {{  form_row(form.address, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti gyvenamąją vietą')"} }) }}
+{% block container %}
+    {% include ':inc:header.html.twig' %}
+    <div class="search-image"></div>
+    <div class="container search-container">
+        <div class="va-middle text-center">
+            <h1 class="header-text">
+                Būrelių paieška
+            </h1>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
+                    {{ form_start(form,  {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+                    <div class="form-group gutter-remove bar-container">
+                        <div class="top-container">
+                            <div class="col-sm-5">
+                                {{  form_row(form.address, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti gyvenamąją vietą')"} }) }}
+                            </div>
+                            <div class="col-sm-3">
+                                {{  form_row(form.ageFrom, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti vaiko amžių')"} }) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="gender-input">
+                                <img width="20" src="{{ asset('images/mars-symbol.png') }}" class="gender-icon"/>
+                                {{ form_row(form.male) }}
+                                <img width="20" src="{{ asset('images/venus-symbol.png') }}" class="gender-icon"/>
+                                {{ form_row(form.female) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-2 submit-container">
                             <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                        {{ form_end(form) }}
+                        </div>
                     </div>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

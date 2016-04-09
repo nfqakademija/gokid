@@ -1,53 +1,92 @@
 // Search interface
 
-.search-container {
-  padding: 0;
-  background-color: $darkest;
+.search-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background-image: url('../images/search-background.jpg');
   background-size: cover;
-  background-attachment: fixed;
   background-position: center;
+}
 
-  .wrapper {
-    margin-top: $navbar-height;
-    padding-bottom: 94px;
-    position: relative;
+.top-container {
+  div {
+    padding: 0;
+  }
+}
+
+.search-container {
+  position: relative;
+  height: 100%;
+  display: table;
+  table-layout: fixed;
+
+  .form-control:focus {
+    box-shadow: none;
   }
 
-  .header {
-    height: 100%;
-    width: 100%;
-    display: table;
+  input {
+    box-shadow: none;
+    height: 44px;
+    border-width: 0;
+  }
+
+  .checkbox {
+    display: inline-block;
+  }
+
+  .gender-input {
+    background-color: #fff;
+    height: 44px;
+    margin: 0;
+  }
+
+  .gender-checkbox {
+    margin-top: 1px;
+    background-color: #fff;
+  }
+
+  .gender-icon {
+    margin-top: -39px;
   }
 
   .header-text {
-    font-size: 96px;
     text-shadow: 0 0 20px #000;
     color: #fff;
   }
 
-  .control {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 30px 15px;
-    background-color: rgba(0, 0, 0, 0.65);
+  .place-input {
+    border-radius: 2px 0 0 2px;
   }
 
-  .form-group {
-    margin: 0;
+  .age-input {
+    border-radius: 0;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+
+  .gutter-remove {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .gutter-remove>div[class*='col-'] {
+    padding: 0;
   }
 
   .searchbar-submit {
     border-width: 0;
     height: 44px;
-    float: left;
-    width: 20%;
+    width: 100%;
     background-color: $neutral;
     color: #fff;
     border-radius: 0 2px 2px 0;
+    transition: background-color 0.5s ease;
+    transition: color 0.5s ease;
   }
+
 
   .searchbar-submit:hover {
     background-color: $lightest;
@@ -63,51 +102,42 @@
     background-color: $dark;
     color: #fff;
   }
+}
 
-  .searchbar-input {
-    height: 44px;
-    box-shadow: none;
-    border-radius: 2px 0 0 2px;
-    z-index: 3;
+@media (max-width: 768px) {
+  .search-container {
+    width: 100%;
+
+    .gender-input {
+      background-color: transparent;
+    }
+
+    .age-input {
+      border-width: 0;
+      border-radius: 0 0 3px 3px;
+    }
+
+    .place-input {
+      border-radius: 3px 3px 0 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .searchbar-submit {
+      border-radius: 3px;
+    }
   }
 
-  .searchbar-input:focus {
-    border-color: #ccc;
+  .top-container {
+    @include box-shadow(0 0 30px 0 rgba(0, 0, 0, 0.5));
   }
 
-  .location-error {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: $lightest;
-    padding: 2px 5px;
-    margin-top: -1px;
-    border-radius: 0 0 2px 2px;
-  }
-
-  .searchbar-wrapper {
-    float: left;
-    width: 80%;
-    position: relative;
+  .submit-container {
+    @include box-shadow(0 0 30px 0 rgba(0, 0, 0, 0.5));
   }
 }
 
-@media screen and (max-width: 767px) {
-  .search-container {
-    height: $search-container-sm-height;
-
-    .wrapper {
-      height: $search-container-sm-height - $navbar-height;
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .search-container {
-    height: $search-container-md-height;
-
-    .wrapper {
-      height: $search-container-md-height - $navbar-height;
-    }
+@media (min-width: 769px) {
+  .bar-container {
+    @include box-shadow(0 0 30px 0 rgba(0, 0, 0, 0.5));
   }
 }
