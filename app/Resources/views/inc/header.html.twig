@@ -10,9 +10,9 @@
                 </button>
             {% endif %}
             {% if app.request.attributes.get('_route') == 'app.index' %}
-                <span class="navbar-brand">GoKid</span>
+                <span class="navbar-brand"><img src="{{ asset('images/soccerball-white.svg') }}" width="100" height="30"/></span>
             {% else %}
-                <a class="navbar-brand" href="{{ path('app.index') }}">GoKid</a>
+                <a class="navbar-brand" href="{{ path('app.index') }}"><img src="{{ asset('images/soccerball.svg') }}" width="100" height="30"/></a>
             {% endif %}
         </div>
 
