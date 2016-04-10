@@ -73,6 +73,9 @@ class Offer
      * @var int
      *
      * @ORM\Column(name="age_from", type="integer")
+     * @Assert\NotBlank(
+     *     message="Prašome įvesti vaiko amžių."
+     * )
      */
     private $ageFrom;
 
