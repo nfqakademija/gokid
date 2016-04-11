@@ -171,5 +171,4 @@ class OfferSearch
     {
         $this->female = $female;
     }
-
 }

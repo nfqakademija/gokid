@@ -82,7 +82,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return Response
      */
     public function offerDetailsAction($id)
