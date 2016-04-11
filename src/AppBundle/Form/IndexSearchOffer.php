@@ -9,7 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-
 class IndexSearchOffer extends AbstractType
 {
     /**
@@ -23,8 +22,9 @@ class IndexSearchOffer extends AbstractType
             'attr' => [
                 'placeholder' => 'Gyvenamoji vieta',
                 'class' => 'place-input',
+                'id' => 'autocomplete',
             ],
-        ])->add('ageFrom', IntegerType::class, [
+        ])->add('age', IntegerType::class, [
             'label' => false,
             'attr' => [
                 'placeholder' => 'Vaiko amžius',
@@ -40,6 +40,21 @@ class IndexSearchOffer extends AbstractType
             'attr' => [
                 'class' => 'gender-checkbox',
             ]
+        ])->add('latitude', TextType::class, [
+            'label' => false,
+            'attr' => [
+                'class' => 'hidden',
+            ]
+        ])->add('longitude', TextType::class, [
+            'label' => false,
+            'attr' => [
+                'class' => 'hidden',
+            ]
+        ])->add('distance', TextType::class, [
+            'data' => '10',
+            'attr' => [
+                'class' => 'hidden distance-field',
+            ]
         ]);
     }
     
@@ -49,7 +64,7 @@ class IndexSearchOffer extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Offer'
+            'data_class' => 'AppBundle\Entity\OfferSearch'
         ]);
     }
 }
