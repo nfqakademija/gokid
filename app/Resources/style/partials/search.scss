@@ -1,5 +1,22 @@
 // Search interface
 
+.locate-me {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 44px;
+  padding-top: 13px !important;
+  color: $neutral;
+  transition: color 0.5s ease;
+  text-align: center;
+}
+
+.locate-me:hover {
+  cursor: pointer;
+  color: $darkest;
+}
+
 .search-image {
   position: absolute;
   left: 0;
@@ -68,6 +85,7 @@
 
   .place-input {
     border-radius: 2px 0 0 2px;
+    padding-right: 29px;
   }
 
   .age-input {
