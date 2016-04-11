@@ -4,7 +4,6 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\OfferSearch;
 use \Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Offer;
 
 /**
@@ -16,7 +15,7 @@ use AppBundle\Entity\Offer;
 class OfferRepository extends EntityRepository
 {
     /**
-     * @param Request $request
+     * @param OfferSearch $offer
      * @return mixed
      */
     public function search(OfferSearch $offer)
