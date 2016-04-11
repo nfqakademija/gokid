@@ -436,4 +436,3 @@ class Offer
         return $this->image;
     }
 }
-

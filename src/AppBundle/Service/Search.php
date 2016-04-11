@@ -47,7 +47,7 @@ class Search
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return mixed
      */
     public function findById($id)
@@ -60,7 +60,7 @@ class Search
                 ->setParameter('id', $id);
         }
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->execute()[0];
     }
 
     /**

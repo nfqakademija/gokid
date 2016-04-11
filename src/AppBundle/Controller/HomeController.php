@@ -40,11 +40,10 @@ class HomeController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param Offer|null $offer
      * @return Response
      */
-    public function searchAction(Request $request, Offer $offer = null)
+    public function searchAction(Offer $offer = null)
     {
         if ($offer === null) {
             $offer = new Offer();
@@ -77,13 +76,13 @@ class HomeController extends Controller
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return Response
      */
     public function offerDetailsAction($id)
     {
         $search = $this->get('app.searchService');
-        $offer = $search->findById($id)[0];
+        $offer = $search->findById($id);
         if (empty($offer)) {
             return $this->redirect($this->generateUrl('app.search'));
         }

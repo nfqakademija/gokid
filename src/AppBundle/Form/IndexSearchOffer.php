@@ -7,11 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+/**
+ * Class IndexSearchOffer
+ * @package AppBundle\Form
+ */
 class IndexSearchOffer extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,14 +26,14 @@ class IndexSearchOffer extends AbstractType
             ],
         ]);
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Offer'
+            'data_class' => 'AppBundle\Entity\Offer',
         ]);
     }
 }
