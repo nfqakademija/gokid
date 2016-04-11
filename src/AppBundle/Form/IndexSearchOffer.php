@@ -34,27 +34,28 @@ class IndexSearchOffer extends AbstractType
             'label' => false,
             'attr' => [
                 'class' => 'gender-checkbox',
-            ]
+            ],
         ])->add('female', CheckboxType::class, [
             'label' => false,
             'attr' => [
                 'class' => 'gender-checkbox',
-            ]
+            ],
         ])->add('latitude', TextType::class, [
             'label' => false,
             'attr' => [
                 'class' => 'hidden',
-            ]
+            ],
         ])->add('longitude', TextType::class, [
             'label' => false,
             'attr' => [
                 'class' => 'hidden',
-            ]
+            ],
         ])->add('distance', TextType::class, [
+            'label' => false,
             'data' => '10',
             'attr' => [
                 'class' => 'hidden distance-field',
-            ]
+            ],
         ]);
     }
     
