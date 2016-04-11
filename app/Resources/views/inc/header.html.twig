@@ -1,22 +1,20 @@
 <nav class="navbar navbar-default {% if app.request.attributes.get('_route') == 'app.index' %}transparent{% endif %}">
     <div class="container">
         <div class="navbar-header">
-            {% if app.request.attributes.get('_route') != 'app.index' %}
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
-                    <span class="sr-only">Atverti navigaciją</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            {% endif %}
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                <span class="sr-only">Atverti navigaciją</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             {% if app.request.attributes.get('_route') == 'app.index' %}
-                <span class="navbar-brand"><img src="{{ asset('images/soccerball-white.svg') }}" width="100" height="30"/></span>
+                <span class="navbar-brand"><img src="{{ asset('images/soccerball-white.png') }}" width="100" height="30"/></span>
             {% else %}
                 <a class="navbar-brand" href="{{ path('app.index') }}"><img src="{{ asset('images/soccerball.svg') }}" width="100" height="30"/></a>
             {% endif %}
         </div>
 
-        <div class="{% if app.request.attributes.get('_route') != 'app.index' %}collapse{% endif %} navbar-collapse" id="navbar-collapse">
+        <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="{% if app.request.attributes.get('_route') == 'app.coaches' %}active{% endif %}"><a href="{{ path('app.coaches') }}">Treneriams</a></li>
                 <li class="{% if app.request.attributes.get('_route') == 'app.login' %}active{% endif %}"><a href="{{ path('app.login') }}">Prisijungti</a></li>
