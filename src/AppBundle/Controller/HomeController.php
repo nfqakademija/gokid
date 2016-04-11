@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\OfferSearch;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Entity\Offer;
@@ -23,7 +24,7 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $offer = new Offer();
+        $offer = new OfferSearch();
         $form = $this->createForm(IndexSearchOffer::class, $offer);
 
         $form->handleRequest($request);
@@ -42,11 +43,11 @@ class HomeController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param OfferSearch $offer
      *
      * @return Response
      */
-    public function searchAction(Request $request, Offer $offer = null)
+    public function searchAction(OfferSearch $offer = null)
     {
         if ($offer === null) {
             $offer = new Offer();
