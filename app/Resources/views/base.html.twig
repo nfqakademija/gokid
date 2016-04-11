@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}{{ "My project" }}{% endblock %}</title>
+    <title>{% block title %}{{ "GoKid" }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     {% block stylesheets %}
@@ -15,13 +15,11 @@
 {% block container %}
 <div class="content-wrap">
     <div class="main">
-
-            {% block header %}
-                {% include "::inc/header.html.twig" %}
-            {% endblock %}
-            {% block body %}
-            {% endblock %}
-
+        {% block header %}
+            {% include "::inc/header.html.twig" %}
+        {% endblock %}
+        {% block body %}
+        {% endblock %}
     </div>
 </div>
 {% endblock %}
