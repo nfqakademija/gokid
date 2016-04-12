@@ -2,8 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\OfferSearch;
 use \Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Offer;
 
 /**
@@ -15,24 +15,59 @@ use AppBundle\Entity\Offer;
 class OfferRepository extends EntityRepository
 {
     /**
-     * @param Request $request
+     * @param OfferSearch $offer
      * @return mixed
      */
-    public function search(Offer $offer)
+    public function search(OfferSearch $offer)
     {
-        $address = $offer->getAddress();
-
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('o')
-            ->from('AppBundle:Offer', 'o');
 
-        if ($address) {
-            $qb->andWhere('o.address = :address')
-                ->setParameter('address', $address);
+        if ($offer->getLatitude() && $offer->getLongitude()) {
+            $qb->select("o," .
+                "(6371 * ACOS(" .
+                "COS(RADIANS({$offer->getLatitude()})) * " .
+                "COS(RADIANS(o.latitude)) * " .
+                "COS(RADIANS(o.longitude) - RADIANS({$offer->getLongitude()})) + " .
+                "SIN(RADIANS({$offer->getLatitude()})) * SIN(RADIANS(o.latitude)))" .
+                ") as distance")
+                ->from('AppBundle:Offer', 'o')
+                ->orderBy('distance');
+            if ($offer->getDistance()) {
+                $qb->having('distance <= :radius')
+                    ->setParameter('radius', $offer->getDistance());
+            }
+        } else {
+            $qb->select("o")
+                ->from('AppBundle:Offer', 'o');
         }
 
-        return $qb->getQuery()->execute();
+        if ($offer->getAge()) {
+            $qb->where("o.ageFrom <= {$offer->getAge()}")
+                ->andWhere("o.ageTo >= {$offer->getAge()}");
+        }
+
+        if ($offer->isFemale()) {
+            $qb->where("o.female = true");
+        }
+
+        if ($offer->isMale()) {
+            $qb->where("o.male = true");
+        }
+
+        $results = $qb->getQuery()->execute();
+
+        if ($offer->getLatitude() && $offer->getLongitude()) {
+            $returnArray = [];
+            foreach ($results as $result) {
+                $result[0]->setDistance($result['distance']);
+                $returnArray[] = $result[0];
+            }
+            return $returnArray;
+        }
+
+        return $results;
     }
+
     /**
      * @param Offer $offer
      * @return mixed
