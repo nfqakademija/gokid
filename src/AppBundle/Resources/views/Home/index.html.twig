@@ -1,104 +1,196 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Homepage - {{ parent() }}{% endblock %}
-
-{% block body %}
-    <div class="container-fluid search-container">
-        <div class="control">
+{% block container %}
+    {% include ':inc:header.html.twig' %}
+    <div class="search-image"></div>
+    <div class="container search-container">
+        <div class="va-middle text-center">
+            <h1 class="header-text">
+                Būrelių paieška
+            </h1>
             <div class="row">
-                <div class="col-xs-8 col-xs-offset-2 text-center title">
-                    <h1>
-                        Būrelių paieška
-                    </h1>
-                    <hr/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8 col-xs-offset-2">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                <div class="col-sm-10 col-sm-offset-1">
+                    {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
+                    {{ form_start(form,  {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal index-form'}}) }}
+                    <div class="form-group gutter-remove bar-container">
+                        <div class="top-container">
+                            <div class="col-sm-5">
+                                <div class="locate-me">
+                                    <span class="glyphicon glyphicon-globe" id="locate-me"></span>
+                                </div>
+                                {{  form_row(form.address, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti gyvenamąją vietą')"} }) }}
+                            </div>
+                            <div class="col-sm-3">
+                                {{  form_row(form.age, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti vaiko amžių')"} }) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="gender-input text-center">
+                                <div class="icons-center">
+                                    <div class="gender-icon"><b>&#9794;</b></div>
+                                    {{ form_row(form.male) }}
+                                    <div class="gender-icon"><b>&#9792;</b></div>
+                                    {{ form_row(form.female) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 submit-container">
+                            <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </div>
                     </div>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid content-container">
-        <h1>Pagrindinis puslapis</h1>
-        <hr/>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
+{% endblock %}
 
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
 
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
 
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var autocomplete, geocoder, coordinates = null;
 
-        Cras feugiat ac augue ut mollis. Duis nunc purus, ultrices sit amet vehicula molestie, placerat nec lacus. Duis elit enim, cursus at vulputate et, ornare eleifend urna. Proin sed justo arcu. Nulla tristique sapien quis mauris finibus, sit amet maximus justo tempus. Quisque vulputate auctor pretium. Vivamus eu risus semper, gravida mauris sit amet, aliquam ex. Proin congue dapibus nunc vitae mattis. Fusce vehicula libero id mollis viverra.
+        // Address input element
+        var input = (document.getElementById('index_search_offer_address'));
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
+        // Locate the users address when globe button is clicked
+        $('.locate-me').click(locateUserAddress);
 
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
+        // Signals whether form is being submitted
+        var formSubmiting = false;
 
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
+        // Initialize address autocomplete plugin
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                    input,
+                    {
+                        types: ['(cities)'],
+                        componentRestrictions: {country: 'ltu'}
+                    }
+            );
+            geocoder = new google.maps.Geocoder();
 
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
+            // Change the coordinates variable, when user autocompletes address
+            autocomplete.addListener('place_changed', function() {
+                var location = autocomplete.getPlace();
+                if (location) {
+                    changeCoordinates(
+                            location.geometry.location.lat(),
+                            location.geometry.location.lng()
+                    );
+                }
+            });
+        }
 
-        Cras feugiat ac Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
+        // Confirm that user coordinates are set when form is submitted
+        $('.index-form').submit(function(event) {
+            // If user has not selected their address from autocomplete list or
+            // used geolocating, perform location aproximation
+            if (!formSubmiting) {
+                if (coordinates == null) {
+                    event.preventDefault();
+                    var userInput = $('.place-input').val();
+                    // User typed nothing, proceed with form submission
+                    if (userInput === "") {
+                        formSubmiting = true;
+                        $('.index-form').submit();
+                    } else {
+                        var service = new google.maps.places.AutocompleteService();
+                        service.getPlacePredictions(
+                                {
+                                    input: userInput,
+                                    types: ['geocode'],
+                                    componentRestrictions: {country: 'ltu'}
+                                },
+                                function (predictions, status) {
+                                    // User typed something legible, predict the location
+                                    // and set coordinates
+                                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                        if (predictions && predictions[0]) {
+                                            var predictedLocation = predictions[0];
+                                            geocode({'address': predictedLocation.description},
+                                                function(results) {
+                                                    changeCoordinates(
+                                                            results[0].geometry.location.lat(),
+                                                            results[0].geometry.location.lng()
+                                                    );
+                                                    formSubmiting = true;
+                                                    $('.index-form').submit();
+                                                }
+                                            );
+                                        } else {
+                                            // User input illegible, set coordinates to null
+                                            changeCoordinates(null, null);
+                                            formSubmiting = true;
+                                            $('.index-form').submit();
+                                        }
+                                    }
+                                }
+                        );
+                    }
+                }
+            }
+        });
 
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
+        // Geocoding function to reduce code duplication
+        function geocode(params, callback) {
+            geocoder.geocode(params,
+                function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            callback(results);
+                        } else {
+                            console.log('Rasti adreso nepavyko');
+                        }
+                    } else {
+                        console.log('Geocoderio fail del:' + status);
+                    }
+                }
+            );
+        }
 
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
+        // Set coordinates variable
+        function changeCoordinates(lat, lng) {
+            coordinates = {
+                lat: lat,
+                lng: lng
+            };
+            setCoordinatesInputs();
+        }
 
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
+        // Set values of hidden coordinate fields
+        function setCoordinatesInputs() {
+            $('#index_search_offer_latitude').val(coordinates.lat);
+            $('#index_search_offer_longitude').val(coordinates.lng);
+        }
 
-        Cras feugiat ac Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
+        function locateUserAddress() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latlng = new google.maps.LatLng(
+                            position.coords.latitude,
+                            position.coords.longitude
+                    );
+                    geocode({'latLng': latlng}, function(results) {
+                        var addressComponents = results[0].address_components;
+                        var address = addressComponents[1].short_name + ' ' +
+                                addressComponents[0].long_name + ', ' +
+                                addressComponents[2].long_name;
+                        $(input).val(address);
+                        // Change the coordinates variable, when user uses geolocation
+                        changeCoordinates(
+                                results[0].geometry.location.lat(),
+                                results[0].geometry.location.lng()
+                        )
+                    })
+                });
+            }
+        }
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
+{% endblock %}
 
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
-
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
-
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
-
-        Cras feugiat ac Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
-
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
-
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
-
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
-
-        Cras feugiat ac Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
-
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
-
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
-
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
-
-        Cras feugiat ac Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
-
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
-
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
-
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
-
-        Cras feugiat ac Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
-
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
-
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
-
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
-
-        Cras feugiat ac Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
-
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
-
-        Vivamus id arcu auctor, placerat enim scelerisque, vestibulum enim. Donec non nisl finibus, scelerisque mi in, aliquet nisl. Sed eleifend non turpis quis bibendum. Praesent semper consequat diam non tincidunt. Cras justo purus, sagittis vitae est id, viverra consectetur ipsum. Nullam sagittis velit leo, vitae faucibus orci sollicitudin id. Phasellus vehicula placerat vulputate. Fusce in neque semper, imperdiet nulla sed, dignissim orci. Aenean nec rhoncus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet, enim vitae elementum efficitur, felis nisl dictum leo, auctor dapibus sapien ante sodales nibh.
-
-        Suspendisse eu neque sem. Aliquam porttitor malesuada diam, quis vulputate justo blandit eget. Ut enim ex, rutrum et tristique ut, tempor vel magna. Aliquam sed sapien vehicula lacus suscipit consectetur. Mauris ligula ex, bibendum sed semper at, interdum eget diam. Suspendisse tincidunt metus vitae suscipit sollicitudin. Quisque faucibus est elit, ac molestie massa pretium eu. Cras malesuada quam felis, sed euismod est porttitor sed. Curabitur quis nisi tortor. Duis nisi ante, ultricies at fringilla in, rutrum et est. In non diam facilisis, iaculis quam sed, elementum tellus. Fusce accumsan, odio id finibus molestie, massa odio rutrum libero, sed rhoncus dui odio ut nunc.
-
-        Cras feugiat ac
-    </div>
+{% block footer %}
 {% endblock %}

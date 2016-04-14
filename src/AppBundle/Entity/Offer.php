@@ -25,13 +25,13 @@ class Offer
      * @ORM\ManyToOne(targetEntity="Activity", inversedBy="offers")
      * @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
      */
-    protected $activity;
+    private $activity;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="offers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    private $user;
 
     /**
      * @var string
@@ -59,14 +59,14 @@ class Offer
      *
      * @ORM\Column(name="male", type="boolean")
      */
-    protected $male;
+    private $male;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="female", type="boolean")
      */
-    protected $female;
+    private $female;
 
     /**
      * @var int
@@ -108,7 +108,28 @@ class Offer
      *
      * @ORM\Column(name="image", type="string", nullable=true)
      */
-    public $image;
+    private $image;
+
+    /**
+     * @var float
+     */
+    private $distance;
+
+    /**
+     * @return mixed
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param mixed $distance
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+    }
 
     /**
      * Get id
@@ -432,4 +453,3 @@ class Offer
         return $this->image;
     }
 }
-

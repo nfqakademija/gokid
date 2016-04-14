@@ -1,0 +1,7 @@
+// Parent must be table, or have display: table; for this to work.
+.va-middle {
+  vertical-align: middle;
+  display: table-cell;
+  float: none;
+  width: 100%;
+}

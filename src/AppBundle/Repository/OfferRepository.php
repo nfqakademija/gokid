@@ -2,8 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\OfferSearch;
 use \Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Offer;
 
 /**
@@ -15,58 +15,59 @@ use AppBundle\Entity\Offer;
 class OfferRepository extends EntityRepository
 {
     /**
-     * @param Request $request
+     * @param OfferSearch $offer
      * @return mixed
      */
-    public function search(Request $request)
+    public function search(OfferSearch $offer)
     {
-        $age = $request->get('age');
-        $activity = $request->get('activity');
-        $address = $request->get('address');
-        $price = $request->get('price');
-        $male = $request->get('male');
-        $female = $request->get('female');
-
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('o')
-            ->from('AppBundle:Offer', 'o');
 
-        if ($age) {
-            $qb->where('o.ageFrom <= :age')
-                ->andWhere('o.ageTo >= :age')
-                ->setParameter('age', $age);
+        if ($offer->getLatitude() && $offer->getLongitude()) {
+            $qb->select("o," .
+                "(6371 * ACOS(" .
+                "COS(RADIANS({$offer->getLatitude()})) * " .
+                "COS(RADIANS(o.latitude)) * " .
+                "COS(RADIANS(o.longitude) - RADIANS({$offer->getLongitude()})) + " .
+                "SIN(RADIANS({$offer->getLatitude()})) * SIN(RADIANS(o.latitude)))" .
+                ") as distance")
+                ->from('AppBundle:Offer', 'o')
+                ->orderBy('distance');
+            if ($offer->getDistance()) {
+                $qb->having('distance <= :radius')
+                    ->setParameter('radius', $offer->getDistance());
+            }
+        } else {
+            $qb->select("o")
+                ->from('AppBundle:Offer', 'o');
         }
 
-        if ($activity) {
-            $qb->leftJoin('o.activity', 'a');
-            $qb->andWhere('a.name = :activity')
-                ->setParameter('activity', $activity);
+        if ($offer->getAge()) {
+            $qb->where("o.ageFrom <= {$offer->getAge()}")
+                ->andWhere("o.ageTo >= {$offer->getAge()}");
         }
 
-        if ($address) {
-            $qb->andWhere('o.address = :address')
-                ->setParameter('address', $address);
+        if ($offer->isFemale()) {
+            $qb->where("o.female = true");
         }
 
-        if ($price) {
-            $qb->andWhere('o.price = :price')
-                ->setParameter('price', $price);
+        if ($offer->isMale()) {
+            $qb->where("o.male = true");
         }
 
-        if ($male) {
-            $qb->andWhere('o.male = :male')
-                ->setParameter('male', $male);
+        $results = $qb->getQuery()->execute();
+
+        if ($offer->getLatitude() && $offer->getLongitude()) {
+            $returnArray = [];
+            foreach ($results as $result) {
+                $result[0]->setDistance($result['distance']);
+                $returnArray[] = $result[0];
+            }
+            return $returnArray;
         }
 
-        if ($female) {
-            $qb->andWhere('o.female = :female')
-                ->setParameter('female', $female);
-        }
-
-        return $qb->getQuery()->execute();
-
-
+        return $results;
     }
+
     /**
      * @param Offer $offer
      * @return mixed
