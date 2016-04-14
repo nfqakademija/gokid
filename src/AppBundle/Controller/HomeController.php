@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
-use AppBundle\Entity\Offer;
 use AppBundle\Form\IndexSearchOffer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +49,7 @@ class HomeController extends Controller
     public function searchAction(OfferSearch $offer = null)
     {
         if ($offer === null) {
-            $offer = new Offer();
+            $offer = new OfferSearch();
         }
 
         /** @var OfferRepository $offerRepository */
