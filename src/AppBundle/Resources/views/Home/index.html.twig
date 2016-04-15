@@ -21,7 +21,7 @@
                                 {{  form_row(form.address, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti gyvenamąją vietą')"} }) }}
                             </div>
                             <div class="col-sm-3">
-                                {{  form_row(form.age, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti vaiko amžių')"} }) }}
+                                {{  form_row(form.age, { 'attr': {'min': 0, 'oninvalid': "setCustomValidity('Prašome įvesti vaiko amžių')"} }) }}
                             </div>
                         </div>
                         <div class="col-sm-2">
