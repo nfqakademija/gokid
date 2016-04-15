@@ -26,11 +26,18 @@ gulp.task('scripts', function() {
             dir.bootstrapJS + 'transition.js',
             dir.bootstrapJS + 'collapse.js',
             dir.bootstrapJS + 'dropdown.js',
+            dir.bootstrapJS + 'tooltip.js',
+            dir.bootstrapJS + 'popover.js',
             //...
             // Main JS file
             dir.assets + 'scripts/main.js'
         ])
         .pipe(concat('script.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+    gulp.src([
+        dir.assets + 'scripts/index-search.js'
+        ])
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
 });
