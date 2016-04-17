@@ -1,13 +1,87 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    <div class="container content-container">
-        <h1>Puslapis treneriams</h1>
-        <hr/>
+    <div class="background-image"></div>
+    <div class="container content-container registration-content">
+        {% form_theme form 'AppBundle:form:OfferRegistrationFields.html.twig' %}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'registration-form'}}) }}
+        <fieldset class="registration-pull-up">
+            <label>Have an account?</label>
+            <div class="field account-sign-in lwa">
+                <a class="button lwa-links-modal lwa-login-link" href="https://pixelgrade.com/demos/listable/wp-login.php?redirect_to=https%3A%2F%2Fpixelgrade.com%2Fdemos%2Flistable%2Fadd-listing%2F&amp;modal_login=true#login">Sign in</a>
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
 
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
+                If you don’t have an account you can create one below by entering your email address/username. Your account details will be confirmed via email.
 
+            </div><input type="email" class="input-text" name="create_account_email" id="account_email" placeholder="you@yourdomain.com" value="">
+        </fieldset>
+        {{ form_errors(form) }}
+        <div class="form-group">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.description, {'attr': {'class': 'desciption'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.price, {'attr': {'min': '0'}}) }}
+        </div>
+        <div class="form-group">
+            <label>
+                Lytis
+            </label>
+            {{ form_row(form.male, {'attr': {'class': 'checkbox'}}) }}
+            {{ form_row(form.female, {'attr': {'class': 'checkbox'}}) }}
+        </div>
+        <div class="form-group">
+            <label>
+                Amžius: nuo - iki
+            </label>
+            <br/>
+            {{ form_widget(form.ageFrom, {'attr': {'min': '0', 'class': 'age-input'}}) }}
+            {{ form_widget(form.ageTo, {'attr': {'min': '0', 'class': 'age-input'}}) }}
+            {{ form_errors(form.ageFrom) }}
+            {{ form_errors(form.ageTo) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.address, {'attr': {'placeholder': ''}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.images, {'attr': {'class': 'file-loading'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.activity) }}
+        </div>
+        {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
+        {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
+        <button type="submit" class="btn btn-default offer-submit">Įkelti</button>
+        {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Address input element
+        var input = (document.getElementById('offer_address'));
+        var latitude = $('#offer_latitude');
+        var longitude = $('#offer_longitude');
+        var form = $('.registration-form');
+    </script>
+    <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fileinput.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/file-upload-plugin-translation.js') }}"></script>
+    <script type="text/javascript">
+        $('#offer_images').fileinput({
+            language: 'lt',
+            showUpload: false,
+            previewSettings: {
+                image: {
+                    width: 'auto',
+                    height: '100px'
+                }
+            },
+            allowedFileTypes: ['image']
+        });
+    </script>
+    <script defer="defer" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
 {% endblock %}
