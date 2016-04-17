@@ -35,8 +35,14 @@ class ImageTransformer implements DataTransformerInterface
      */
     public function reverseTransform($offer)
     {
-        $images = [];
+        if ($offer->getMainImage()) {
+            $image = new OfferImage();
+            $image->setImageFile($offer->getMainImage());
+            $image->setOffer($offer);
+            $offer->setMainImage($image);
+        }
         if ($offer->getImages() && $offer->getImages()[0]) {
+            $images = [];
             foreach ($offer->getImages() as $file) {
                 $image = new OfferImage();
                 $image->setImageFile($file);

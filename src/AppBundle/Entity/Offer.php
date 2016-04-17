@@ -120,6 +120,12 @@ class Offer
     private $images;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage", mappedBy="offer", cascade={"persist"})
+     * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id")
+     */
+    private $mainImage;
+
+    /**
      * @var float
      */
     private $distance;
@@ -460,5 +466,22 @@ class Offer
     public function getImages()
     {
         return $this->images;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getMainImage()
+    {
+        return $this->mainImage;
+    }
+
+    /**
+     * @param mixed $mainImage
+     */
+    public function setMainImage($mainImage)
+    {
+        $this->mainImage = $mainImage;
     }
 }

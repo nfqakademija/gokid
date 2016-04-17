@@ -41,8 +41,11 @@ class OfferType extends AbstractType
             ->add('address', null, [
                 'label' => 'Adresas',
             ])
+            ->add('mainImage', FileType::class, [
+                'label' => 'Pagrindinė nuotrauka',
+            ])
             ->add('images', FileType::class, [
-                'label' => 'Nuotraukos',
+                'label' => 'Papildomos nuotraukos',
                 'multiple' => true,
             ])
             ->addModelTransformer(new ImageTransformer())
