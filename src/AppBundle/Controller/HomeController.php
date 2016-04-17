@@ -6,6 +6,8 @@ use AppBundle\Entity\OfferSearch;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Form\IndexSearchOffer;
+use AppBundle\Form\OfferType;
+use AppBundle\Entity\Offer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,11 +75,26 @@ class HomeController extends Controller
     /**
      * Coach info action.
      *
+     * @param Request $request
+     *
      * @return Response
      */
-    public function coachesAction()
+    public function coachesAction(Request $request)
     {
-        return $this->render('AppBundle:Home:coaches.html.twig', []);
+        $offer = new Offer();
+        $form = $this->createForm(OfferType::class, $offer);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($offer);
+            $em->flush();
+        }
+
+        return $this->render('AppBundle:Home:coaches.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
