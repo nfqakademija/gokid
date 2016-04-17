@@ -1,8 +1,5 @@
 var autocomplete, geocoder, coordinates = null;
 
-// Address input element
-var input = (document.getElementById('index_search_offer_address'));
-
 // Locate the users address when globe button is clicked
 $('.locate-me').click(locateUserAddress);
 
@@ -33,17 +30,17 @@ function initAutocomplete() {
 }
 
 // Confirm that user coordinates are set when form is submitted
-$('.index-form').submit(function(event) {
+$(form).submit(function(event) {
     // If user has not selected their address from autocomplete list or
     // used geolocating, perform location aproximation
     if (!formSubmiting) {
         if (coordinates == null) {
             event.preventDefault();
-            var userInput = $('.place-input').val();
+            var userInput = $(input).val();
             // User typed nothing, proceed with form submission
             if (userInput === "") {
                 formSubmiting = true;
-                $('.index-form').submit();
+                $(form).submit();
             } else {
                 var service = new google.maps.places.AutocompleteService();
                 service.getPlacePredictions(
@@ -65,14 +62,14 @@ $('.index-form').submit(function(event) {
                                             results[0].geometry.location.lng()
                                         );
                                         formSubmiting = true;
-                                        $('.index-form').submit();
+                                        $(form).submit();
                                     }
                                 );
                             } else {
                                 // User input illegible, set coordinates to null
                                 changeCoordinates(null, null);
                                 formSubmiting = true;
-                                $('.index-form').submit();
+                                $(form).submit();
                             }
                         }
                     }
@@ -110,8 +107,8 @@ function changeCoordinates(lat, lng) {
 
 // Set values of hidden coordinate fields
 function setCoordinatesInputs() {
-    $('#index_search_offer_latitude').val(coordinates.lat);
-    $('#index_search_offer_longitude').val(coordinates.lng);
+    $(latitude).val(coordinates.lat);
+    $(longitude).val(coordinates.lng);
 }
 
 function locateUserAddress() {
@@ -144,7 +141,7 @@ $('#index_search_offer_age').popover({
     html: true
 }).click(function() {
     $('.button-container').click(function () {
-        $('#index_search_offer_age').val($(this).text());
+        $('#index_search_offer_age').val($(this).text()).popover('hide');
     });
 });
 
