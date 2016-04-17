@@ -18,16 +18,17 @@
                                 <div class="locate-me">
                                     <span class="glyphicon glyphicon-globe" id="locate-me"></span>
                                 </div>
-                                {{  form_row(form.address, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti gyvenamąją vietą')"} }) }}
+                                {{  form_row(form.address, {'attr': {'class': 'place-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                             </div>
                             <div class="col-sm-3">
                                 {{
                                     form_row(form.age, {
                                             'attr': {
                                                 'min': 0,
-                                                'oninvalid': "setCustomValidity('Prašome įvesti vaiko amžių')",
                                                 'data-toggle': "popover",
-                                                'data-placement': "bottom"
+                                                'data-placement': "bottom",
+                                                'placeholder': 'Vaiko amžius',
+                                                'class': 'age-input'
                                             }
                                         }
                                     )
@@ -38,15 +39,18 @@
                             <div class="gender-input text-center">
                                 <div class="icons-center">
                                     <div class="gender-icon"><b>&#9794;</b></div>
-                                    {{ form_row(form.male) }}
+                                    {{ form_row(form.male, {'attr': {'class': 'gender-checkbox'}}) }}
                                     <div class="gender-icon"><b>&#9792;</b></div>
-                                    {{ form_row(form.female) }}
+                                    {{ form_row(form.female, {'attr': {'class': 'gender-checkbox'}}) }}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2 submit-container">
                             <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </div>
+                        {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
+                        {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
+                        {{ form_row(form.distance, {'attr': {'class': 'hidden distance-field'}}) }}
                     </div>
                     {{ form_end(form) }}
                 </div>
@@ -74,6 +78,13 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript">
+        // Address input element
+        var input = (document.getElementById('index_search_offer_address'));
+        var latitude = $('#index_search_offer_latitude');
+        var longitude = $('#index_search_offer_longitude');
+        var form = $('.index-form');
+    </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
     <script defer="defer" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
 {% endblock %}
