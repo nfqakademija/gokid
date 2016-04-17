@@ -35,11 +35,27 @@ gulp.task('scripts', function() {
         .pipe(concat('script.js'))
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
+
+    // Index search form script
     gulp.src([
         dir.assets + 'scripts/index-search.js'
         ])
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
+
+    // Bootstrap file input plugin script
+    gulp.src([
+        dir.assets + 'scripts/file-upload-plugin-translation.js'
+    ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+
+    // Bootstrap file input plugin translation
+    gulp.src([
+        './vendor/kartik-v/bootstrap-fileinput/js/fileinput.js'
+    ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'))
 });
 
 gulp.task('images', function() {
