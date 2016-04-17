@@ -5,6 +5,10 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\OfferSearch;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * OfferRepository
@@ -105,5 +109,32 @@ class OfferRepository extends EntityRepository
         }
 
         return $qb->getQuery()->setMaxResults(4)->execute();
+    }
+
+    /**
+     * @param $offers
+     * @return JSON
+     */
+    public function prepareJSON($offers)
+    {
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $data = [];
+        foreach($offers as $offer)
+        {
+            $data[$offer->getId()]['id'] = $offer->getId();
+            $data[$offer->getId()]['activity'] = $offer->getActivity()->getName();
+            $data[$offer->getId()]['name'] = $offer->getName();
+            $data[$offer->getId()]['description'] = $offer->getDescription();
+            $data[$offer->getId()]['price'] = $offer->getPrice();
+            $data[$offer->getId()]['address'] = $offer->getAddress();
+            $data[$offer->getId()]['latitude'] = $offer->getLatitude();
+            $data[$offer->getId()]['longitude'] = $offer->getLongitude();
+            $data[$offer->getId()]['image'] = $offer->getImage();
+        }
+
+        return $serializer->serialize($data, 'json');
     }
 }

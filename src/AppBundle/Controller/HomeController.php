@@ -55,8 +55,11 @@ class HomeController extends Controller
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
+        $offers = $offerRepository->search($offer);
+
         return $this->render('AppBundle:Home:search.html.twig', [
-            'offers' => $offerRepository->search($offer),
+            'offers' => $offers,
+            'offers_json' => $offerRepository->prepareJSON($offers),
         ]);
     }
 

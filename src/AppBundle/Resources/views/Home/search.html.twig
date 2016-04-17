@@ -40,6 +40,7 @@
     <script>
         var markers = [];
         var map;
+        var offers = {{ offers_json|raw }};
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -47,38 +48,23 @@
                 center: {lat: 54.8931048, lng: 23.8666335}
             });
 
-            var bounds = new google.maps.LatLngBounds();
+            var green           = 'http://maps.google.com/mapfiles/marker_green.png';
+            var infowindow      = getInfowindows(offers);
 
-            var green = 'http://maps.google.com/mapfiles/marker_green.png';
-
-            {% for offer in offers %}
-                bounds.extend( new google.maps.LatLng({{ offer.getLatitude }}, {{ offer.getLongitude }}) );
-
-                var contentString_{{ offer.getId }} = '<div id="content">'+
-                        '<div id="siteNotice">'+
-                        '</div>'+
-                        '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
-                        '<div class="bodyContent">'+
-                        '<a href=""><img width="100%" src="{{ asset('/images/'~offer.getImage) }}" /></a>'+
-                        '<p>{{ offer.getDescription }}</p>'+
-                        '</div>'+
-                        '</div>';
-
-                var infowindow_{{ offer.getId }} = new google.maps.InfoWindow({
-                    content: contentString_{{ offer.getId }}
-                });
-                markers[{{ offer.getId }}] = new google.maps.Marker({
-                    position: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
+            for (var offer in offers) {
+                markers[offer] = new google.maps.Marker({
+                    position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
                     map: map,
-                    title: '{{ offer.getName }}',
+                    title: offers[offer].name,
                     icon: green
                 });
-                markers[{{ offer.getId }}].addListener('click', function() {
-                    infowindow_{{ offer.getId }}.open(map, markers[{{ offer.getId }}]);
-                    map.setCenter(marker.getPosition());
+                markers[offer].addListener('click', function() {
+                    infowindow[offer].open(map, markers[offer]);
+                    map.setCenter(markers[offer].getPosition());
                 });
-            {% endfor %}
-            map.fitBounds(bounds);
+            }
+
+            map.fitBounds(getBounds(offers));
         }
 
     </script>
