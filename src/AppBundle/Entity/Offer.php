@@ -3,12 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as CustomAssert;
 
 /**
  * Offer
  *
  * @ORM\Table(name="offers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OfferRepository")
+ * @CustomAssert\GenderSelected
+ * @CustomAssert\AgesAscending
  */
 class Offer
 {
@@ -24,6 +28,7 @@ class Offer
     /**
      * @ORM\ManyToOne(targetEntity="Activity", inversedBy="offers")
      * @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
+     * @Assert\NotNull(message="Prašome pasirinkti būrelio sporto šaką")
      */
     private $activity;
 
@@ -37,6 +42,7 @@ class Offer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=120)
+     * @Assert\NotBlank(message="Prašome įvesti būrelio pavadinimą")
      */
     private $name;
 
@@ -44,13 +50,15 @@ class Offer
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank(message="Prašome įvesti būrelio aprašymą")
      */
     private $description;
 
     /**
-     * @var float
+     * @var integer
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="integer")
+     * @Assert\NotBlank(message="Prašome įvesti būrelio kainą")
      */
     private $price;
 
@@ -72,6 +80,7 @@ class Offer
      * @var int
      *
      * @ORM\Column(name="age_from", type="integer")
+     * @Assert\NotBlank(message="Prašome įvesti mažiausią galimą vaiko amžių")
      */
     private $ageFrom;
 
@@ -79,6 +88,7 @@ class Offer
      * @var int
      *
      * @ORM\Column(name="age_to", type="integer")
+     * @Assert\NotBlank(message="Prašome įvesti didžiausią galimą vaiko amžių")
      */
     private $ageTo;
 
@@ -86,6 +96,7 @@ class Offer
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=45)
+     * @Assert\NotBlank(message="Prašome įvesti būrelio vykimo vietą")
      */
     private $address;
 
@@ -104,11 +115,9 @@ class Offer
     private $longitude;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="image", type="string", nullable=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OfferImage", mappedBy="offer", cascade={"persist"})
      */
-    private $image;
+    private $images;
 
     /**
      * @var float
@@ -432,24 +441,24 @@ class Offer
     /**
      * Set image
      *
-     * @param string $image
+     * @param OfferImage[] $images
      *
      * @return Offer
      */
-    public function setImage($image)
+    public function setImages($images)
     {
-        $this->image = $image;
+        $this->images = $images;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get images
      *
-     * @return string
+     * @return OfferImage[]
      */
-    public function getImage()
+    public function getImages()
     {
-        return $this->image;
+        return $this->images;
     }
 }
