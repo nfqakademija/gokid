@@ -8,6 +8,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\OfferImage;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Offer;
@@ -106,23 +107,23 @@ class LoadData implements FixtureInterface
         $manager->persist($user8);
 
         $activity1 = new Activity();
-        $activity1->setName('Basketball');
+        $activity1->setName('Krepšinis');
         $manager->persist($activity1);
 
         $activity2 = new Activity();
-        $activity2->setName('Football');
+        $activity2->setName('Futbolas');
         $manager->persist($activity2);
 
         $activity3 = new Activity();
-        $activity3->setName('Athletics');
+        $activity3->setName('Lengvoji atletika');
         $manager->persist($activity3);
 
         $activity4 = new Activity();
-        $activity4->setName('Tennis');
+        $activity4->setName('Tenisas');
         $manager->persist($activity4);
 
         $activity5 = new Activity();
-        $activity5->setName('Swimming');
+        $activity5->setName('Plaukimas');
         $manager->persist($activity5);
 
         $offer1 = new Offer();
@@ -135,7 +136,6 @@ class LoadData implements FixtureInterface
         $offer1->setDescription('Strateginis krepšinio rinkos partneris, ugdantis aktyvius ir sveikus visuomenės narius, lyderiaujantis rengiant profesionalaus krepšinio pamainą.');
         $offer1->setLatitude('54.907187');
         $offer1->setLongitude('23.965188');
-        $offer1->setImage('sabonio.png');
         $offer1->setActivity($activity1);
         $offer1->setUser($user1);
         $offer1->setPrice(10.0);
@@ -151,7 +151,6 @@ class LoadData implements FixtureInterface
         $offer2->setDescription('"Tornado" krepšinio mokykla kasmet sulaukia vis didesnio būrio berniukų ir vaikinų, norinčių žaisti krepšinį. Šiuo metu mokykloje sportuoja daugiau nei 550 vaikų.  "Tornado" KM dirba patyrę treneriai, ne vienerius metus ugdantys krepšininkus nuo pirmųjų žingsnių krepšinio aikštelėje.');
         $offer2->setLatitude('54.8963829');
         $offer2->setLongitude('23.8306256');
-        $offer2->setImage('tornadas.jpg');
         $offer2->setActivity($activity1);
         $offer2->setUser($user2);
         $offer2->setPrice(10.0);
@@ -167,7 +166,6 @@ class LoadData implements FixtureInterface
         $offer3->setDescription('Kauno futbolo mokykla „Tauras“ yra vaikų, jaunimo ir suaugusiųjų papildomo ugdymo Kauno miesto savivaldybės biudžetinė įstaiga.');
         $offer3->setLatitude('54.911455');
         $offer3->setLongitude('23.900993');
-        $offer3->setImage('tauras.jpg');
         $offer3->setActivity($activity2);
         $offer3->setUser($user3);
         $offer3->setPrice(10.0);
@@ -183,7 +181,6 @@ class LoadData implements FixtureInterface
         $offer4->setDescription('Siekiame būti geriausiais, stengiamės, jog treniruotės būtų kuo įdomesnės ir įvairesnės, o sąlygos būtų vienos iš geriausių. Mokykloje dirba kvalifikuoti treneriai. Dirbame daug ir atsakingai, nuolat tobuliname savo žinias.');
         $offer4->setLatitude('54.9240091');
         $offer4->setLongitude('23.86884');
-        $offer4->setImage('futbolas.jpg');
         $offer4->setActivity($activity2);
         $offer4->setUser($user4);
         $offer4->setPrice(10.0);
@@ -199,7 +196,6 @@ class LoadData implements FixtureInterface
         $offer5->setDescription('Kauno sporto mokykla „Viltis" – neformaliojo vaikų švietimo mokykla, veikianti pagal Kauno sporto mokyklos nuostatus.');
         $offer5->setLatitude('54.897066');
         $offer5->setLongitude('23.936196');
-        $offer5->setImage('viltis.jpg');
         $offer5->setActivity($activity3);
         $offer5->setUser($user5);
         $offer5->setPrice(10.0);
@@ -215,7 +211,6 @@ class LoadData implements FixtureInterface
         $offer6->setDescription('Vilniaus lengvosios atletikos mokykla kviečia vaikus ir paauglius išbandyti įvairias lengvosios atletikos rungtis (įvairių distancijų bėgimai, šuoliai į tolį, į aukštį, su kartimi, rutulio stūmimas, disko metimas).');
         $offer6->setLatitude('54.674208');
         $offer6->setLongitude('25.253787');
-        $offer6->setImage('vilnius.jpg');
         $offer6->setActivity($activity3);
         $offer6->setUser($user6);
         $offer6->setPrice(10.0);
@@ -231,7 +226,6 @@ class LoadData implements FixtureInterface
         $offer7->setDescription('Teniso klubą ,,Tennis & More” įkūrėme 2010 m. Klube veikia teniso mokykla vaikams, T&M akademija suaugusiems. Organizuojame tarpmiestinį komandinį turnyrą ,,T&M Taurė“ ir kitus teniso renginius.');
         $offer7->setLatitude('54.6785579');
         $offer7->setLongitude('25.2830118');
-        $offer7->setImage('tennis.png');
         $offer7->setActivity($activity4);
         $offer7->setUser($user7);
         $offer7->setPrice(10.0);
@@ -247,7 +241,6 @@ class LoadData implements FixtureInterface
         $offer8->setDescription('Mokyklos tikslai išugdyti aukšto lygio žaidėjus ne tik Lietuvos, bet ir tarptautinio lygio mąstu, išmokyti teniso paslapčių visus norinčius taisyklingai, techniškai ir gerai žaisti tenisą, pradedant nuo naujokų iki profesionalių žaidėjų.');
         $offer8->setLatitude('54.8986934');
         $offer8->setLongitude('23.9324214');
-        $offer8->setImage('sabeckas.jpg');
         $offer8->setActivity($activity4);
         $offer8->setUser($user8);
         $offer8->setPrice(10.0);
@@ -263,7 +256,6 @@ class LoadData implements FixtureInterface
         $offer9->setDescription('Neformaliojo vaikų švietimo ir formalųjį švietimą papildančio ugdymo mokykla, veikianti pagal Kauno plaukimo mokyklos  nuostatus.');
         $offer9->setLatitude('54.917862');
         $offer9->setLongitude('23.8994529');
-        $offer9->setImage('swim.jpg');
         $offer9->setActivity($activity5);
         $offer9->setUser($user8);
         $offer9->setPrice(10.0);
@@ -279,11 +271,60 @@ class LoadData implements FixtureInterface
         $offer10->setDescription('Šiandien "Girstučio" baseinas gali didžiuotis būdamas vienas iš didžiausių ir moderniausių sporto kompleksų Lietuvoje.');
         $offer10->setLatitude('54.907028');
         $offer10->setLongitude('23.972795');
-        $offer10->setImage('girstutis.jpg');
         $offer10->setActivity($activity5);
         $offer10->setUser($user8);
         $offer10->setPrice(10.0);
         $manager->persist($offer10);
+
+        $image1 = new OfferImage();
+        $image1->setImageName('sabonio.png');
+        $image1->setOffer($offer1);
+        $manager->persist($image1);
+
+        $image2 = new OfferImage();
+        $image2->setImageName('tornadas.jpg');
+        $image2->setOffer($offer2);
+        $manager->persist($image2);
+
+        $image3 = new OfferImage();
+        $image3->setImageName('tauras.jpg');
+        $image3->setOffer($offer3);
+        $manager->persist($image3);
+
+        $image4 = new OfferImage();
+        $image4->setImageName('futbolas.jpg');
+        $image4->setOffer($offer4);
+        $manager->persist($image4);
+
+        $image5 = new OfferImage();
+        $image5->setImageName('viltis.jpg');
+        $image5->setOffer($offer5);
+        $manager->persist($image5);
+
+        $image6 = new OfferImage();
+        $image6->setImageName('vilnius.jpg');
+        $image6->setOffer($offer6);
+        $manager->persist($image6);
+
+        $image7 = new OfferImage();
+        $image7->setImageName('tennis.png');
+        $image7->setOffer($offer7);
+        $manager->persist($image7);
+
+        $image8 = new OfferImage();
+        $image8->setImageName('sabeckas.jpg');
+        $image8->setOffer($offer8);
+        $manager->persist($image8);
+
+        $image9 = new OfferImage();
+        $image9->setImageName('swim.jpg');
+        $image9->setOffer($offer9);
+        $manager->persist($image9);
+
+        $image10 = new OfferImage();
+        $image10->setImageName('girstutis.jpg');
+        $image10->setOffer($offer10);
+        $manager->persist($image10);
 
         $manager->flush();
     }
