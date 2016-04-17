@@ -84,3 +84,4 @@ vich_uploader:
             uri_prefix:         /images/offerImages
             upload_destination: %kernel.root_dir%/../web/images/offerImages
             delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
