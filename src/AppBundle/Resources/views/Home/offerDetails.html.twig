@@ -10,7 +10,7 @@
             <h1> {{ offer.getName }} </h1>
             <div class="row">
                 <div class="col-sm-5">
-                    <img src= "{{ asset ('/images/'~ offer.getImage)}}" class="img-responsive" alt="{{ offer.getName }}">
+                    <img src= "{{ asset ('/images/offerImages' ~ offer.getImages[0])}}" class="img-responsive" alt="{{ offer.getName }}">
                 </div>
                 <div class="col-sm-7">
                     <div>
@@ -53,7 +53,7 @@
                                                         '</div>'+
                                                         '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
                                                         '<div class="bodyContent">'+
-                                                        '<a href=""><img width="100%" src="{{ asset('/images/'~ offer.getImage )}}" /></a>'+
+                                                        '<a href=""><img width="100%" src="{{ asset('/images/offerImages/'~ offer.getImages[0] )}}" /></a>'+
                                                         '<p>{{ offer.getDescription }}</p>'+
                                                         '</div>'+
                                                         '</div>';
@@ -80,25 +80,25 @@
         <div class="row">
             {% if similarOffers |length >= 1 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[0].getImage)}}" class="img-responsive" alt="{{ similarOffers[0].getName }}"> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <img src="{{ asset('/images/offerImages/' ~ similarOffers[0].getImages[0])}}" class="img-responsive" alt="{{ similarOffers[0].getName }}"> </a>
                   <h4>{{ similarOffers[0].getName }}</h4>
               </div>
             {% endif %}
             {% if similarOffers |length >= 2 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[1].getImage)}}" class="img-responsive" alt="{{ similarOffers[1].getName }}"> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <img src="{{ asset('/images/offerImages/' ~ similarOffers[1].getImages[0])}}" class="img-responsive" alt="{{ similarOffers[1].getName }}"> </a>
                   <h4>{{ similarOffers[1].getName }}</h4>
               </div>
             {% endif %}
             {% if similarOffers |length >= 3 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[2].getImage)}}" class="img-responsive" alt="{{ similarOffers[2].getName }}"> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <img src="{{ asset('/images/offerImages/' ~ similarOffers[2].getImages[0])}}" class="img-responsive" alt="{{ similarOffers[2].getName }}"> </a>
                   <h4>{{ similarOffers[2].getName }}</h4>
               </div>
             {% endif %}
             {% if similarOffers |length >= 4 %}
               <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"><img src="{{ asset('/images/'~similarOffers[3].getImage)}}" class="img-responsive" alt="{{ similarOffers[3].getName }}"> </a>
+                  <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"><img src="{{ asset('/images/offerImages/' ~ similarOffers[3].getImages[0])}}" class="img-responsive" alt="{{ similarOffers[3].getName }}"> </a>
                   <h4>{{ similarOffers[3].getName }}</h4>
               </div>
             {% endif %}
