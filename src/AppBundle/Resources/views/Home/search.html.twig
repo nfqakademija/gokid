@@ -4,14 +4,43 @@
 
 {% block body %}
 
+    <div class="offers-filter">
+        <div class="container row">
+
+            <div class="locate-select col-md-3 col-sm-3 col-xs-12">
+                <div class="locate-me">
+                    <span class="glyphicon glyphicon-globe" id="locate-me"></span>
+                </div>
+                <input id="index_search_offer_address" name="index_search_offer[address]" required="required" placeholder="Gyvenamoji vieta" class="location-select" oninvalid="setCustomValidity('Prašome įvesti gyvenamąją vietą')" type="text">
+            </div>
+
+            <select class="activities-select col-md-2 col-sm-2 col-xs-6">
+                {% for activity in activities %}
+                    <option value="{{ activity }}">{{ activity }}</option>
+                {% endfor %}
+            </select>
+
+            <span class="age col-xs-2 col-md-1 col-sm-1">
+                Amžius:
+            </span>
+            <select class="age-select col-md-1 col-sm-1 col-xs-4">
+                {% for item in age_list %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
+            </select>
+
+        </div>
+    </div>
+
     <div class="container offers">
         <div class="row">
-            <div class="col-md-7 col-sm-8">
+
+            <div class="col-md-7 col-sm-12">
                 <div class="row">
 
                     {% for offer in offers %}
                         <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
-                            <div class="col-xs-6 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
+                            <div class="col-xs-12 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
                                 <div class="offer-inner">
                                     <img src="{{ asset('/images/'~offer.getImage) }}" class="img-responsive" alt="{{ offer.getName }}" />
                                     <div class="offer-content">
@@ -48,16 +77,114 @@
 
                 </div>
             </div>
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 hidden-sm">
                 <div id="map" class="map"></div>
             </div>
         </div>
     </div>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            var autocomplete, geocoder, coordinates = null;
+
+            // Address input element
+            var input = (document.getElementById('index_search_offer_address'));
+
+            // Locate the users address when globe button is clicked
+            $('.locate-me').click(locateUserAddress);
+
+            // Signals whether form is being submitted
+            var formSubmiting = false;
+
+            // Initialize address autocomplete plugin
+            function initAutocomplete() {
+                autocomplete = new google.maps.places.Autocomplete(
+                        input,
+                        {
+                            types: ['(cities)'],
+                            componentRestrictions: {country: 'ltu'}
+                        }
+                );
+                geocoder = new google.maps.Geocoder();
+
+                // Change the coordinates variable, when user autocompletes address
+                autocomplete.addListener('place_changed', function() {
+                    var location = autocomplete.getPlace();
+                    if (location) {
+                        changeCoordinates(
+                                location.geometry.location.lat(),
+                                location.geometry.location.lng()
+                        );
+                    }
+                });
+            }
+
+            // Geocoding function to reduce code duplication
+            function geocode(params, callback) {
+                geocoder.geocode(params,
+                        function (results, status) {
+                            if (status === google.maps.GeocoderStatus.OK) {
+                                if (results[0]) {
+                                    callback(results);
+                                } else {
+                                    console.log('Rasti adreso nepavyko');
+                                }
+                            } else {
+                                console.log('Geocoderio fail del:' + status);
+                            }
+                        }
+                );
+            }
+
+            // Set coordinates variable
+            function changeCoordinates(lat, lng) {
+                coordinates = {
+                    lat: lat,
+                    lng: lng
+                };
+                setCoordinatesInputs();
+            }
+
+            // Set values of hidden coordinate fields
+            function setCoordinatesInputs() {
+                $('#index_search_offer_latitude').val(coordinates.lat);
+                $('#index_search_offer_longitude').val(coordinates.lng);
+            }
+
+            function locateUserAddress() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var latlng = new google.maps.LatLng(
+                                position.coords.latitude,
+                                position.coords.longitude
+                        );
+                        geocode({'latLng': latlng}, function(results) {
+                            var addressComponents = results[0].address_components;
+                            var address = addressComponents[1].short_name + ' ' +
+                                    addressComponents[0].long_name + ', ' +
+                                    addressComponents[2].long_name;
+                            $(input).val(address);
+                            // Change the coordinates variable, when user uses geolocation
+                            changeCoordinates(
+                                    results[0].geometry.location.lat(),
+                                    results[0].geometry.location.lng()
+                            )
+                        })
+                    });
+                }
+            }
+        </script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
+    {% endblock %}
+
     <script>
         var offers = {{ offers_json|raw }};
         var markers = [];
+        var clusters = [];
         var infowindow = [];
         var map;
+        var markerClusterer = null;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -74,13 +201,14 @@
                     icon: green,
                     id: offer
                 });
+                clusters.push(markers[offer]);
             }
-
             setMapParameters(offers);
+
+            markerClusterer = new MarkerClusterer(map, clusters);
         }
-
     </script>
-
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/1.0/src/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap" async defer></script>
 
 {% endblock %}

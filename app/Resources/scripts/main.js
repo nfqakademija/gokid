@@ -1,19 +1,22 @@
 /* Offers */
 
+/**
+ * Hightligths marker when offer hovered
+ */
 $( ".offer" ).hover(
     function () {
-        // first we need to know which <div class="marker"></div> we hovered
         var id = $(this).attr('data-id');
         markers[id].setIcon(highlightedIcon());
     },
-    // mouse out
     function () {
-        // first we need to know which <div class="marker"></div> we hovered
         var id = $(this).attr('data-id');
         markers[id].setIcon(normalIcon());
     }
 );
 
+/**
+ * Focuses to location on map
+ */
 $( ".offer-location" ).click(
     function(){
         closeWindows(markers);
@@ -37,6 +40,11 @@ function highlightedIcon() {
     };
 }
 
+/**
+ * Generates bounds, listeners, popup windows by given offers
+ * @param offers
+ * @returns {boolean}
+ */
 function setMapParameters(offers){
     bounds = new google.maps.LatLngBounds();
     var contentString = [];
@@ -47,8 +55,8 @@ function setMapParameters(offers){
         contentString[offer] = '<div class="marker-infowindow">' +
             '<div>' +
             '</div>' +
-            '<div class="image"><a href=""><img width="100%" src="images/' + offers[offer].image + '" /><div class="price">' + offers[offer].price + ' € / Mėn</div></a></div>' +
-            '<a href=""><h4 class="name">' + offers[offer].name + '</h4></a>' +
+            '<div class="image"><a href="offer/'+offer+'"><img width="100%" src="images/' + offers[offer].image + '" /><div class="price">' + offers[offer].price + ' € / Mėn</div></a></div>' +
+            '<a href="offer/'+offer+'"><h4 class="name">' + offers[offer].name + '</h4></a>' +
             '<div class="marker-content">' +
             '<span class="offer-activity">'+offers[offer].activity + '</span>' +
             '<span class="offer-rating">5.0</span></div>' +
@@ -60,19 +68,30 @@ function setMapParameters(offers){
         markers[offer].addListener('click', function() {
             closeWindows(offers);
             infowindow[this.id].open(map, markers[this.id]);
-            map.setCenter(markers[this.id].getPosition());
+            return false;
         });
     }
-
     map.fitBounds(bounds);
 
     return true;
 }
 
+/**
+ * Closes all given windows
+ * @param windows
+ */
 function closeWindows(windows){
     for (var window in windows) {
         infowindow[window].close();
     }
 }
+
+/**
+ * Prepare nice select
+ */
+$(document).ready(function() {
+    $('select.activities-select').niceSelect();
+    $('select.age-select').niceSelect();
+});
 
 /* End of Offers */

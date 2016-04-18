@@ -112,6 +112,34 @@ class OfferRepository extends EntityRepository
     }
 
     /**
+     * Generates possible age list
+     * @return array
+     */
+    public function getAgeList()
+    {
+        $list = [];
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o.ageFrom')
+            ->from('AppBundle:Offer', 'o')
+            ->orderBy('o.ageFrom', 'ASC');
+        $first = $qb->getQuery()->setMaxResults(1)->execute();
+
+        $qb2 = $this->getEntityManager()->createQueryBuilder();
+        $qb2->select('u.ageTo')
+            ->from('AppBundle:Offer', 'u')
+            ->orderBy('u.ageTo', 'DESC');
+        $last = $qb2->getQuery()->setMaxResults(1)->execute();
+
+        for($i=$first[0]['ageFrom']; $i<=$last[0]['ageTo'];$i++)
+        {
+            array_push($list, $i);
+        }
+
+        return $list;
+    }
+
+    /**
      * @param $offers
      * @return JSON
      */

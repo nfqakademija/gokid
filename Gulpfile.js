@@ -27,6 +27,8 @@ gulp.task('scripts', function() {
             dir.bootstrapJS + 'collapse.js',
             dir.bootstrapJS + 'dropdown.js',
             //...
+            // Nice select
+            dir.assets + 'scripts/jquery.nice-select.min.js',
             // Main JS file
             dir.assets + 'scripts/main.js'
         ])
