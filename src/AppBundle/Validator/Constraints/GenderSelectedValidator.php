@@ -2,6 +2,7 @@
 
 namespace AppBundle\Validator\Constraints;
 
+use AppBundle\Entity\Offer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -17,7 +18,10 @@ class GenderSelectedValidator extends ConstraintValidator
     public function validate($offer, Constraint $constraint)
     {
         if (!$offer->isMale() && !$offer->isFemale()) {
-            $this->context->buildViolation($constraint->message)
+            $this->context->buildViolation(
+                $constraint->message,
+                ['id' => 'gender']
+            )
                 ->addViolation();
         }
     }
