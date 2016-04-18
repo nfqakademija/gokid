@@ -28,14 +28,14 @@ class User extends BaseUser
      *
      * @ORM\Column(name="firstName", type="string", length=45)
      */
-    protected $firstName;
+    private $firstName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=45)
      */
-    protected $lastName;
+    private $lastName;
 
     /**
      * @var string
