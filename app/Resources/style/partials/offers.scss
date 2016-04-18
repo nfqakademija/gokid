@@ -1,7 +1,16 @@
 .offers {
+  background-color: #F9F9F9;
+
   h2 {
-    font-size: 20px;
+    font-size: 24px;
     margin-top: 5px;
+    font-weight: 700;
+    font-family: Arial;
+    color:#65C04C;
+  }
+
+  h5{
+    margin-bottom:20px;
   }
 
   a {
@@ -15,11 +24,53 @@
     position: relative;
   }
 
+  .offer-inner{
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.075);
+  }
+
+  .offer-content{
+    padding-top: 32px;
+    color: #ababab;
+    font-size: 14.95px;
+    padding: 16px;
+    font-weight: 400;
+  }
+
+  .offer-rating{
+    border: 2px solid #65C04C;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    width: 30px;
+  }
+
+  .offer-activity{
+    padding-left:5px;
+  }
+
+  .offer-price{
+    font-weight: 700;
+    float:right;
+    padding-right:15px;
+  }
+
+  .offer-location{
+    float:right;
+    color:#65C04C;
+  }
+
   .offer img {
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
     transition: all 0.4s ease;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   .offer:hover img {
@@ -32,8 +83,47 @@
     height: 80vh;
   }
 
-  .bodyContent img {
-    padding-bottom: 10px;
+  .marker-content{
+    color: #ababab;
+    font-size: 14.95px;
+    font-weight: 400;
+    overflow: hidden;
+  }
+
+  .marker-infowindow{
+    margin: 0;
+    width: 260px;
+    height: auto;
+  }
+
+  .marker-infowindow .name{
+    font-size: 18px;
+    color:#565a5c;
+    padding-top:10px;
+  }
+
+  .marker-infowindow .image{
+    position:relative;
+  }
+
+  .marker-infowindow .image .price{
+    background-color: rgba(60,63,64,0.9);
+    color:#fff;
+    left: 0;
+    bottom:0;
+    padding: 7px 10px;
+    position: absolute;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .marker-infowindow .offer-rating{
+    padding:3px 0 0 0 !important;
+    float:right;
+  }
+  .marker-infowindow .offer-activity{
+    padding-top: 4px;
+    display: inline-block;
   }
 
   .marker {
