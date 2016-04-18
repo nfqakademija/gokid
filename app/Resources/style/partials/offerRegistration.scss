@@ -1,27 +1,24 @@
 // Offer registration page
 .background-image {
+  height: 345px;
   width: 100%;
   margin-top: -20px;
   background-image: url('../images/offer-register-background.jpg');
   background-position: center;
   background-size: cover;
   display: table;
+
+  .header-text {
+    text-align: center;
+    width: 100%;
+    height: 345px;
+  }
 }
 
 .title {
   color: #fff;
   margin: 0;
   text-shadow: 0 0 20px #000;
-}
-
-.header-text {
-  text-align: center;
-  width: 100%;
-}
-
-.header-text,
-.background-image {
-  height: 345px;
 }
 
 .registration-pull-up {
@@ -128,9 +125,12 @@
 }
 
 @media (max-width: 768px) {
-  .background-image,
-  .header-text {
+  .background-image {
     height: 100px;
+
+    .header-text {
+      height: 100px;
+    }
   }
 
   .registration-pull-up {
