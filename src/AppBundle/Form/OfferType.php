@@ -51,13 +51,16 @@ class OfferType extends AbstractType
             ->addModelTransformer(new ImageTransformer())
             ->add('activity', null, [
                 'label' => 'Sporto šaka',
+                'placeholder' => 'Pasirinkite',
             ])
             ->add('latitude', null, [
                 'label' => false,
             ])
             ->add('longitude', null, [
                 'label' => false,
-            ]);
+            ])
+            ->add('user', new RegistrationType())
+        ;
     }
     
     /**
@@ -66,7 +69,8 @@ class OfferType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Offer'
+            'data_class' => 'AppBundle\Entity\Offer',
+            'validation_groups' => ['CustomRegistration', 'Default'],
         ));
     }
 }

@@ -35,6 +35,7 @@ class Offer
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="offers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @Assert\Valid
      */
     private $user;
 
@@ -120,7 +121,7 @@ class Offer
     private $images;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage", mappedBy="offer", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage")
      * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id")
      */
     private $mainImage;

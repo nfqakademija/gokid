@@ -1,39 +1,48 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    <div class="background-image"></div>
-    <div class="container content-container registration-content">
+    <div class="background-image">
+        <div class="va-middle header-text">
+            <h1 class="title">
+                Įkelkite savo būrelį
+            </h1>
+        </div>
+    </div>
+    <div class="container content-container content-form">
         {% form_theme form 'AppBundle:form:OfferRegistrationFields.html.twig' %}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'registration-form'}}) }}
-        <fieldset class="registration-pull-up">
-            <label>Have an account?</label>
-            <div class="field account-sign-in lwa">
-                <a class="button lwa-links-modal lwa-login-link" href="https://pixelgrade.com/demos/listable/wp-login.php?redirect_to=https%3A%2F%2Fpixelgrade.com%2Fdemos%2Flistable%2Fadd-listing%2F&amp;modal_login=true#login">Sign in</a>
-
-
-                If you don’t have an account you can create one below by entering your email address/username. Your account details will be confirmed via email.
-
-            </div><input type="email" class="input-text" name="create_account_email" id="account_email" placeholder="you@yourdomain.com" value="">
-        </fieldset>
-        {{ form_errors(form) }}
-        <div class="form-group">
-            {{ form_row(form.name) }}
+        <div class="registration-pull-up">
+                <legend>
+                    Paskyros duomenys
+                </legend>
+                {% for key, row in form.user %}
+                    <div class="form-group">
+                        {{ form_row(row) }}
+                    </div>
+                {% endfor %}
+            <input type="hidden" name="_registration_token" value="{{ csrf_token('fos_user_registration_form') }}"/>
         </div>
-        <div class="form-group">
-            {{ form_row(form.description, {'attr': {'class': 'desciption'}}) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(form.price, {'attr': {'min': '0'}}) }}
-        </div>
-        <div class="form-group">
-            <label>
+        {{ form_row(form.name) }}
+        {{ form_row(form.description, {'attr': {'class': 'desciption'}}) }}
+        {{ form_row(form.price, {'attr': {'min': '0'}}) }}
+        <div class="form-group {% if errors.gender %}has-error{% endif %}">
+            <label class="control-label required">
                 Lytis
             </label>
             {{ form_row(form.male, {'attr': {'class': 'checkbox'}}) }}
             {{ form_row(form.female, {'attr': {'class': 'checkbox'}}) }}
+            {% if errors.gender %}
+                <span class="help-block">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-exclamation-sign"></span> {{ errors.gender }}
+                        </li>
+                    </ul>
+                </span>
+            {% endif %}
         </div>
-        <div class="form-group">
-            <label>
+        <div class="form-group {% if errors.ages or not form.ageFrom.vars.valid or not form.ageTo.vars.valid %}has-error{% endif %}">
+            <label class="control-label required">
                 Amžius: nuo - iki
             </label>
             <br/>
@@ -41,6 +50,15 @@
             {{ form_widget(form.ageTo, {'attr': {'min': '0', 'class': 'age-input'}}) }}
             {{ form_errors(form.ageFrom) }}
             {{ form_errors(form.ageTo) }}
+            {% if errors.ages %}
+                <span class="help-block">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-exclamation-sign"></span> {{ errors.ages }}
+                        </li>
+                    </ul>
+                </span>
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form_row(form.address, {'attr': {'placeholder': ''}}) }}
@@ -56,9 +74,10 @@
         </div>
         {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
         {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
-        <button type="submit" class="btn btn-default offer-submit">Įkelti</button>
+        <button type="submit" class="btn btn-default submit">Įkelti</button>
         {{ form_end(form) }}
     </div>
+    {{ dump(form) }}
 {% endblock %}
 
 {% block javascripts %}
