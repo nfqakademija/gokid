@@ -73,6 +73,10 @@ function setMapParameters(offers){
     }
     map.fitBounds(bounds);
 
+    map.addListener('click', function() {
+        closeWindows(offers);
+    });
+
     return true;
 }
 
