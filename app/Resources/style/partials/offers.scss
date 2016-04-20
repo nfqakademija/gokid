@@ -5,12 +5,11 @@
     font-size: 24px;
     margin-top: 5px;
     font-weight: 700;
-    font-family: Arial;
-    color:#65C04C;
+    color: #65c04c;
   }
 
   h5 {
-    margin-bottom:20px;
+    margin-bottom: 20px;
   }
 
   a {
@@ -25,13 +24,12 @@
   }
 
   .offer-inner {
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.075);
   }
 
   .offer-content {
-    padding-top: 32px;
     color: #ababab;
     font-size: 14.95px;
     padding: 16px;
@@ -39,7 +37,7 @@
   }
 
   .offer-rating {
-    border: 2px solid #65C04C;
+    border: 2px solid #65c04c;
     border-radius: 50%;
     font-size: 13px;
     font-weight: 600;
@@ -50,18 +48,18 @@
   }
 
   .offer-activity {
-    padding-left:5px;
+    padding-left: 5px;
   }
 
   .offer-price {
     font-weight: 700;
-    float:right;
-    padding-right:15px;
+    float: right;
+    padding-right: 15px;
   }
 
   .offer-location {
-    float:right;
-    color:#65C04C;
+    float: right;
+    color: #65c04c;
   }
 
   .offer img {
@@ -74,7 +72,6 @@
   }
 
   .offer:hover img {
-    -webkit-filter: saturate(150%);
     filter: saturate(150%);
   }
 
@@ -90,7 +87,7 @@
     overflow: hidden;
   }
 
-  .marker-infowindow{
+  .marker-infowindow {
     margin: 0;
     width: 260px;
     height: auto;
@@ -98,19 +95,19 @@
 
   .marker-infowindow .name {
     font-size: 18px;
-    color:#565a5c;
-    padding-top:10px;
+    color: #565a5c;
+    padding-top: 10px;
   }
 
   .marker-infowindow .image {
-    position:relative;
+    position: relative;
   }
 
   .marker-infowindow .image .price {
-    background-color: rgba(60,63,64,0.9);
-    color:#fff;
+    background-color: rgba(60, 63, 64, 0.9);
+    color: #fff;
     left: 0;
-    bottom:0;
+    bottom: 0;
     padding: 7px 10px;
     position: absolute;
     font-size: 18px;
@@ -118,9 +115,10 @@
   }
 
   .marker-infowindow .offer-rating {
-    padding:3px 0 0 0 !important;
-    float:right;
+    padding: 3px 0 0 0 !important;
+    float: right;
   }
+
   .marker-infowindow .offer-activity {
     padding-top: 4px;
     display: inline-block;
@@ -134,29 +132,30 @@
 .offers-filter {
   position: relative;
   background-color: #fff;
-  padding: 20px 30px 20px;
+  padding: 20px 30px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.075);
 
-  .locate-select{
-    padding-left:0;
+  .locate-select {
+    padding-left: 0;
     position: relative;
     @media screen and (max-width: $media-query-md) {
-      padding-right:0;
+      padding-right: 0;
     }
   }
 
-  .locate-me{
-    z-index:1;
+  .locate-me {
+    z-index: 1;
     right: 17px;
   }
 
-  .age{
-    float:left;
-    font-weight:bold;
+  .age {
+    float: left;
+    font-weight: bold;
     height: 42px;
     padding: 10px 15px 10px 30px;
   }
-  .location-select{
+
+  .location-select {
     -webkit-tap-highlight-color: transparent;
     background-color: #fff;
     border-radius: 4px;
@@ -164,7 +163,7 @@
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    width:100%;
+    width: 100%;
     float: left;
     font-family: inherit;
     font-size: 14px;

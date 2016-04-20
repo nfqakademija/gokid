@@ -24,7 +24,7 @@ $( ".offer-location" ).click(
         infowindow[id].open(map, markers[id]);
         map.setCenter(markers[id].getPosition());
         map.setZoom(14);
-        $(window).scrollTop($('#map').offset().top-20)
+        $(window).scrollTop($('#map').offset().top-20);
         return false;
     }
 );

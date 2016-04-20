@@ -5,10 +5,6 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\OfferSearch;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * OfferRepository
@@ -131,8 +127,7 @@ class OfferRepository extends EntityRepository
             ->orderBy('u.ageTo', 'DESC');
         $last = $qb2->getQuery()->setMaxResults(1)->execute();
 
-        for($i=$first[0]['ageFrom']; $i<=$last[0]['ageTo'];$i++)
-        {
+        for ($i=$first[0]['ageFrom']; $i<=$last[0]['ageTo']; $i++) {
             array_push($list, $i);
         }
 
@@ -145,13 +140,8 @@ class OfferRepository extends EntityRepository
      */
     public function prepareJSON($offers)
     {
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
         $data = [];
-        foreach($offers as $offer)
-        {
+        foreach ($offers as $offer) {
             $data[$offer->getId()]['id'] = $offer->getId();
             $data[$offer->getId()]['activity'] = $offer->getActivity()->getName();
             $data[$offer->getId()]['name'] = $offer->getName();
@@ -163,6 +153,6 @@ class OfferRepository extends EntityRepository
             $data[$offer->getId()]['image'] = $offer->getImage();
         }
 
-        return $serializer->serialize($data, 'json');
+        return json_encode($data);
     }
 }
