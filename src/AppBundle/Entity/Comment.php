@@ -6,12 +6,13 @@
  * Time: 12:35 AM
  */
 
-namespace MyProject\MyBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
 
 /**
+ * @ORM\Table(name="comments")
  * @ORM\Entity
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
@@ -28,7 +29,7 @@ class Comment extends BaseComment
      * Thread of this comment
      *
      * @var Thread
-     * @ORM\ManyToOne(targetEntity="gokid\AppBundle\Entity\Thread")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
      */
     protected $thread;
 }
