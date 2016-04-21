@@ -96,6 +96,7 @@ function closeWindows(windows){
 $(document).ready(function() {
     $('select.activities-select').niceSelect();
     $('select.age-select').niceSelect();
+    $("#map").sticky({topSpacing:0});
 });
 
 /* End of Offers */
