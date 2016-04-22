@@ -21,7 +21,7 @@
   text-shadow: 0 0 20px #000;
 }
 
-.registration-pull-up {
+.registration-up {
   margin-top: -160px;
   padding: 30px;
   padding-bottom: 40px;
@@ -29,12 +29,24 @@
   border: 1px solid #ccc;
   margin-bottom: 25px;
   border-radius: 10px;
+
+  .registration-paragraph {
+    margin-bottom: 25px;
+  }
+}
+
+.content-form.logged-in {
+  padding-top: 30px;
 }
 
 .content-form {
   border-radius: 3px;
   background-color: #fff;
   padding: 60px 30px 0;
+
+  .euro-sign {
+    border-left-width: 0;
+  }
 
   input,
   select,
@@ -50,6 +62,15 @@
 
   .btn {
     border: 1px solid #ccc;
+  }
+
+  .has-error .payment-type {
+    border-color: $brand-danger;
+    background-color: $alert-danger-bg;
+  }
+
+  .payment-type {
+    background-color: $gray-lighter;
   }
 
   .btn:focus,
@@ -113,12 +134,21 @@
     height: 44px;
   }
 
-  .offer-submit:hover {
+  .submit.login {
+    margin-bottom: 0;
+  }
+
+  .login-paragraph {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .submit:hover {
     background-color: $lightest;
     color: $darkest;
   }
 
-  .offer-submit:active {
+  .submit:active {
     background-color: $dark;
     color: #fff;
   }
@@ -133,7 +163,7 @@
     }
   }
 
-  .registration-pull-up {
+  .registration-up {
     margin-top: 0;
   }
 }
@@ -145,5 +175,22 @@
 
   .content-form.narrow {
     max-width: 480px;
+    border-radius: 10px;
   }
+
+  .content-form.logged-in {
+    border-radius: 10px;
+  }
+
+  .content-form.logged-in.offer-registration {
+    margin-top: -100px;
+  }
+}
+
+.content-form {
+  @include box-shadow(0 0 25px -10px rgba(0, 0, 0, 0.5));
+}
+
+.no-shadow {
+  box-shadow: none;
 }
