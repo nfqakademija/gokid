@@ -63,6 +63,7 @@ class HomeController extends Controller
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
             'offers_json' => $offerRepository->prepareJSON($offers),
+            'form' => $form->createView(),
         ]);
     }
 

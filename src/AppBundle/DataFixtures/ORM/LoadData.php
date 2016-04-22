@@ -139,6 +139,7 @@ class LoadData implements FixtureInterface
         $offer1->setActivity($activity1);
         $offer1->setUser($user1);
         $offer1->setPrice(10.0);
+        $offer1->setPaymentType(0);
         $manager->persist($offer1);
 
         $offer2 = new Offer();
@@ -154,6 +155,7 @@ class LoadData implements FixtureInterface
         $offer2->setActivity($activity1);
         $offer2->setUser($user2);
         $offer2->setPrice(10.0);
+        $offer2->setPaymentType(0);
         $manager->persist($offer2);
 
         $offer3 = new Offer();
@@ -169,6 +171,7 @@ class LoadData implements FixtureInterface
         $offer3->setActivity($activity2);
         $offer3->setUser($user3);
         $offer3->setPrice(10.0);
+        $offer3->setPaymentType(0);
         $manager->persist($offer3);
 
         $offer4 = new Offer();
@@ -184,6 +187,7 @@ class LoadData implements FixtureInterface
         $offer4->setActivity($activity2);
         $offer4->setUser($user4);
         $offer4->setPrice(10.0);
+        $offer4->setPaymentType(0);
         $manager->persist($offer4);
 
         $offer5 = new Offer();
@@ -199,6 +203,7 @@ class LoadData implements FixtureInterface
         $offer5->setActivity($activity3);
         $offer5->setUser($user5);
         $offer5->setPrice(10.0);
+        $offer5->setPaymentType(0);
         $manager->persist($offer5);
 
         $offer6 = new Offer();
@@ -214,6 +219,7 @@ class LoadData implements FixtureInterface
         $offer6->setActivity($activity3);
         $offer6->setUser($user6);
         $offer6->setPrice(10.0);
+        $offer6->setPaymentType(0);
         $manager->persist($offer6);
 
         $offer7 = new Offer();
@@ -229,6 +235,7 @@ class LoadData implements FixtureInterface
         $offer7->setActivity($activity4);
         $offer7->setUser($user7);
         $offer7->setPrice(10.0);
+        $offer7->setPaymentType(0);
         $manager->persist($offer7);
 
         $offer8 = new Offer();
@@ -244,6 +251,7 @@ class LoadData implements FixtureInterface
         $offer8->setActivity($activity4);
         $offer8->setUser($user8);
         $offer8->setPrice(10.0);
+        $offer8->setPaymentType(0);
         $manager->persist($offer8);
 
         $offer9 = new Offer();
@@ -259,6 +267,7 @@ class LoadData implements FixtureInterface
         $offer9->setActivity($activity5);
         $offer9->setUser($user8);
         $offer9->setPrice(10.0);
+        $offer9->setPaymentType(0);
         $manager->persist($offer9);
 
         $offer10 = new Offer();
@@ -274,6 +283,7 @@ class LoadData implements FixtureInterface
         $offer10->setActivity($activity5);
         $offer10->setUser($user8);
         $offer10->setPrice(10.0);
+        $offer10->setPaymentType(0);
         $manager->persist($offer10);
 
         $image1 = new OfferImage();
@@ -325,6 +335,17 @@ class LoadData implements FixtureInterface
         $image10->setImageName('girstutis.jpg');
         $image10->setOffer($offer10);
         $manager->persist($image10);
+
+        $offer1->setMainImage($image1);
+        $offer2->setMainImage($image2);
+        $offer3->setMainImage($image3);
+        $offer4->setMainImage($image4);
+        $offer5->setMainImage($image5);
+        $offer6->setMainImage($image6);
+        $offer7->setMainImage($image7);
+        $offer8->setMainImage($image8);
+        $offer9->setMainImage($image9);
+        $offer10->setMainImage($image10);
 
         $manager->flush();
     }

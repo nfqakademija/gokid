@@ -136,13 +136,14 @@ class OfferRepository extends EntityRepository
     }
 
     /**
-     * @param $offers
-     * @return JSON
+     * @param Offer[]
+     * @return string
      */
     public function prepareJSON($offers)
     {
         $data = [];
         foreach ($offers as $offer) {
+            /* @var $offer Offer */
             $data[$offer->getId()]['id'] = $offer->getId();
             $data[$offer->getId()]['activity'] = $offer->getActivity()->getName();
             $data[$offer->getId()]['name'] = $offer->getName();
@@ -151,7 +152,7 @@ class OfferRepository extends EntityRepository
             $data[$offer->getId()]['address'] = $offer->getAddress();
             $data[$offer->getId()]['latitude'] = $offer->getLatitude();
             $data[$offer->getId()]['longitude'] = $offer->getLongitude();
-            $data[$offer->getId()]['image'] = $offer->getImage();
+            $data[$offer->getId()]['image'] = $offer->getMainImage();
         }
 
         return json_encode($data);
