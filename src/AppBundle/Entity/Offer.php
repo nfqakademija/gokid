@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Offer
@@ -114,6 +115,53 @@ class Offer
      * @var float
      */
     private $distance;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="offer")
+     */
+    protected $comments;
+
+    /**
+     * Activity constructor.
+     */
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    /**
+     * Add comment
+     *
+     * @param Comment $comment
+     *
+     * @return Offer
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 
     /**
      * @return mixed

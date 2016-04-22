@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OfferSearch;
+use AppBundle\Form\OfferDetails;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Entity\Offer;
+use AppBundle\Entity\Comment;
 use AppBundle\Form\IndexSearchOffer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,16 +87,37 @@ class HomeController extends Controller
      * @param int $id
      * @return Response
      */
-    public function offerDetailsAction($id)
+    public function offerDetailsAction(Request $request, $id)
     {
+
+
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
         $offer = $offerRepository->find($id);
-
         if (empty($offer)) {
             return $this->redirect($this->generateUrl('app.search'));
         }
+        $comment = new Comment();
+        $form = $this->createForm(OfferDetails::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $comment->setOffer($offer);
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->render('AppBundle:Home:offerDetails.html.twig', [
+                'form' => $form->createView(),
+                'comments' => $offer->getComments(),
+                'offer' => $offer,
+                'similarOffers' => $offerRepository->searchSimilarOffers($offer),
+            ]);
+        }
 
         return $this->render('AppBundle:Home:offerDetails.html.twig', [
+            'form' => $form->createView(),
+            'comments' => $offer->getComments(),
             'offer' => $offer,
             'similarOffers' => $offerRepository->searchSimilarOffers($offer),
         ]);

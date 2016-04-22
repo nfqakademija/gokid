@@ -1,39 +1,152 @@
-﻿h1{
-  margin-bottom: 50px;
-}
-
-.detailsContainer{
-  background-color: white;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 50px;
-
-  p{
-    margin-left: 10px;
+﻿.offerDetails {
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+    //width: 100%;
+    height: 400px;
+    margin: auto;
   }
 
-  div{
-    margin-top: 10px;
-  }
-
-  .userInfo{
-    margin-left: 70px;
-  }
-}
-
-.similarOffers{
-  margin-top: 100px;
-  margin-right: 50px;
-  margin-left: 50px;
-
-  h3, h4{
+  .name {
     margin-bottom: 20px;
-    text-align: center;
+    color: darkgreen;
   }
-}
 
-#map{
-    height: 80vh;
+  img {
+    margin-bottom: 50px;
+  }
+
+  #goToSearchContainer {
+    margin-top: 100px;
+    margin-left: 150px;
+
+  }
+
+  #goToSearch {
+    text-decoration: none;
+    color: grey;
+
+    a:hover {
+      color: darkgreen;
+      text-decoration: none;
+    }
+  }
+
+  .detailsContainer {
+    background-color: white;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-bottom: 150px;
+
+    p {
+      margin-left: 10px;
+    }
+
+    div {
+      margin-top: 10px;
+    }
+
+    #description {
+      margin-top: 50px;
+      margin-left: 50px;
+      margin-right: 50px;
+      margin-bottom: 50px;
+      border-color: darkgrey;
+      font-size: medium;
+
+    }
+  }
+
+  .similarOffers {
+    margin-top: 100px;
+    margin-right: 50px;
+    margin-left: 50px;
+
+    h4, h5 {
+      //margin-bottom: 20px;
+      text-align: center;
+    }
+  }
+
+  #map {
+    height: 50vh;
     margin-left: 50px;
     margin-right: 50px;
+    margin-bottom: 50px;
+  }
+
+  /*.mapOffer{
+    height: 50vh;
+    margin-left: 50px;
+    margin-right: 50px;
+  }*/
+
+  #ratingContainer {
+    //margin-left: 150px;
+
+  }
+
+  .green {
+    color: green;
+  }
+
+  .contactsContainer {
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: darkgrey;
+  }
+
+  .interactionContainer {
+    /*border-top: solid;
+    border-top-color: grey;
+    border-bottom: solid;
+    border-bottom-color: grey;*/
+    //background-color: lightgray;
+    color: darkgreen;
+
+    h4 {
+      text-align: left;
+    }
+  }
+
+  .infoContainer {
+    margin-bottom: 50px;
+  }
+
+  .reviewList{
+    .review{
+      border-bottom: solid;
+      border-width: 1px;
+      border-color: darkgrey;
+    }
+    h4{
+      border-bottom: solid;
+      border-width: 1px;
+      border-color: darkgrey;
+
+    }
+    margin-bottom: 50px;
+  }
+
+  .reviewForm {
+    background-color: #e3ffdf;
+
+    .body {
+      width: 100%;
+      height: 200px;
+
+    }
+    .title {
+      width: 100%;
+    }
+
+    .email {
+      width: 100%;
+    }
+
+    .rate {
+
+    }
+  }
 }
+
+

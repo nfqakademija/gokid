@@ -13,6 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Activity;
+use AppBundle\Entity\Comment;
 
 /**
  * Class LoadData
@@ -284,6 +285,25 @@ class LoadData implements FixtureInterface
         $offer10->setUser($user8);
         $offer10->setPrice(10.0);
         $manager->persist($offer10);
+
+
+        $comment1 = new Comment();
+        $comment1->setBody("comment1");
+        $comment1->setTitle("title1");
+        $comment1->setName('Vardas1');
+        $comment1->setEmail('Example1@email.com');
+        $comment1->setRate(5);
+        $comment1->setOffer($offer1);
+        $manager->persist($comment1);
+
+        $comment2 = new Comment();
+        $comment2->setBody("comment2");
+        $comment2->setTitle("title2");
+        $comment2->setName('Vardas2');
+        $comment2->setEmail('Example2@email.com');
+        $comment2->setRate(4);
+        $comment2->setOffer($offer1);
+        $manager->persist($comment2);
 
         $manager->flush();
     }
