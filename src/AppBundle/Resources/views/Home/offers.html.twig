@@ -1,0 +1,31 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        {% for flash_message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-sm-4">
+                {% include '@App/Home/includes/accountLeftMenu.html.twig' %}
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Jūsų įkelti būreliai
+                    </div>
+                    <ul class="list-group">
+                            {% for offer in offers  %}
+                                <li class="list-group-item">
+                                    {{ offer.name }}
+                                    <a class="badge warning">Ištrinti</a>
+                                </li>
+                            {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

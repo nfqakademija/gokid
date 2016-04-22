@@ -6,14 +6,14 @@ app.search:
   path:     /search
   defaults: { _controller: AppBundle:Home:search }
 
-app.login:
-  path: /login
-  defaults: { _controller: AppBundle:Home:login}
-
 app.coaches:
   path: /coaches
-  defaults: { _controller: AppBundle:Home:coaches}
+  defaults: { _controller: AppBundle:Home:coaches }
 
 app.offerDetails:
   path: /offer/{id}
-  defaults: { _controller: AppBundle:Home:offerDetails}
+  defaults: { _controller: AppBundle:Home:offerDetails }
+
+app.registeredOffers:
+  path: /offers
+  defaults: { _controller: AppBundle:Home:offers }

@@ -26,6 +26,8 @@ gulp.task('scripts', function() {
             dir.bootstrapJS + 'transition.js',
             dir.bootstrapJS + 'collapse.js',
             dir.bootstrapJS + 'dropdown.js',
+            dir.bootstrapJS + 'tooltip.js',
+            dir.bootstrapJS + 'popover.js',
             //...
             // Nice select
             dir.assets + 'scripts/jquery.sticky.js',
@@ -36,6 +38,27 @@ gulp.task('scripts', function() {
         .pipe(concat('script.js'))
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
+
+    // Index search form script
+    gulp.src([
+        dir.assets + 'scripts/index-search.js'
+        ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+
+    // Bootstrap file input plugin script
+    gulp.src([
+        dir.assets + 'scripts/file-upload-plugin-translation.js'
+    ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+
+    // Bootstrap file input plugin translation
+    gulp.src([
+        './vendor/kartik-v/bootstrap-fileinput/js/fileinput.js'
+    ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'))
 });
 
 gulp.task('images', function() {

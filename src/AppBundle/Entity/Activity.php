@@ -109,4 +109,14 @@ class Activity
     {
         return $this->offers;
     }
+
+    /**
+     * Converts activity to string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

@@ -11,35 +11,64 @@
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
                     {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
-                    {{ form_start(form,  {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal index-form'}}) }}
+                    {{ form_start(form,  {'attr': {'action': path('app.search'),'novalidate': 'novalidate', 'class': 'form-horizontal index-form'}}) }}
                     <div class="form-group gutter-remove bar-container">
                         <div class="top-container">
                             <div class="col-sm-5">
                                 <div class="locate-me">
                                     <span class="glyphicon glyphicon-globe" id="locate-me"></span>
                                 </div>
-                                {{  form_row(form.address, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti gyvenamąją vietą')"} }) }}
+                                {{  form_row(form.address, {'attr': {'class': 'place-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                             </div>
                             <div class="col-sm-3">
-                                {{  form_row(form.age, { 'attr': {'oninvalid': "setCustomValidity('Prašome įvesti vaiko amžių')"} }) }}
+                                {{
+                                    form_row(form.age, {
+                                            'attr': {
+                                                'min': 0,
+                                                'data-toggle': "popover",
+                                                'data-placement': "bottom",
+                                                'placeholder': 'Vaiko amžius',
+                                                'class': 'age-input'
+                                            }
+                                        }
+                                    )
+                                }}
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="gender-input text-center">
                                 <div class="icons-center">
                                     <div class="gender-icon"><b>&#9794;</b></div>
-                                    {{ form_row(form.male) }}
+                                    {{ form_row(form.male, {'attr': {'class': 'gender-checkbox'}}) }}
                                     <div class="gender-icon"><b>&#9792;</b></div>
-                                    {{ form_row(form.female) }}
+                                    {{ form_row(form.female, {'attr': {'class': 'gender-checkbox'}}) }}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2 submit-container">
                             <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </div>
+                        {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
+                        {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
+                        {{ form_row(form.distance, {'attr': {'class': 'hidden distance-field'}}) }}
                     </div>
                     {{ form_end(form) }}
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden" id="popover-content">
+        <div class="button-table">
+            <div class="button-row">
+                {% for i in 3..10 %}
+                    <div class="button-container">{{ i }}</div>
+                {% endfor %}
+            </div>
+            <div class="button-row">
+                {% for i in 11..18 %}
+                    <div class="button-container">{{ i }}</div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -49,147 +78,15 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        var autocomplete, geocoder, coordinates = null;
-
+    <script type="text/javascript">
         // Address input element
-        var input = (document.getElementById('index_search_offer_address'));
-
-        // Locate the users address when globe button is clicked
-        $('.locate-me').click(locateUserAddress);
-
-        // Signals whether form is being submitted
-        var formSubmiting = false;
-
-        // Initialize address autocomplete plugin
-        function initAutocomplete() {
-            autocomplete = new google.maps.places.Autocomplete(
-                    input,
-                    {
-                        types: ['(cities)'],
-                        componentRestrictions: {country: 'ltu'}
-                    }
-            );
-            geocoder = new google.maps.Geocoder();
-
-            // Change the coordinates variable, when user autocompletes address
-            autocomplete.addListener('place_changed', function() {
-                var location = autocomplete.getPlace();
-                if (location) {
-                    changeCoordinates(
-                            location.geometry.location.lat(),
-                            location.geometry.location.lng()
-                    );
-                }
-            });
-        }
-
-        // Confirm that user coordinates are set when form is submitted
-        $('.index-form').submit(function(event) {
-            // If user has not selected their address from autocomplete list or
-            // used geolocating, perform location aproximation
-            if (!formSubmiting) {
-                if (coordinates == null) {
-                    event.preventDefault();
-                    var userInput = $('.place-input').val();
-                    // User typed nothing, proceed with form submission
-                    if (userInput === "") {
-                        formSubmiting = true;
-                        $('.index-form').submit();
-                    } else {
-                        var service = new google.maps.places.AutocompleteService();
-                        service.getPlacePredictions(
-                                {
-                                    input: userInput,
-                                    types: ['geocode'],
-                                    componentRestrictions: {country: 'ltu'}
-                                },
-                                function (predictions, status) {
-                                    // User typed something legible, predict the location
-                                    // and set coordinates
-                                    if (status === google.maps.places.PlacesServiceStatus.OK) {
-                                        if (predictions && predictions[0]) {
-                                            var predictedLocation = predictions[0];
-                                            geocode({'address': predictedLocation.description},
-                                                function(results) {
-                                                    changeCoordinates(
-                                                            results[0].geometry.location.lat(),
-                                                            results[0].geometry.location.lng()
-                                                    );
-                                                    formSubmiting = true;
-                                                    $('.index-form').submit();
-                                                }
-                                            );
-                                        } else {
-                                            // User input illegible, set coordinates to null
-                                            changeCoordinates(null, null);
-                                            formSubmiting = true;
-                                            $('.index-form').submit();
-                                        }
-                                    }
-                                }
-                        );
-                    }
-                }
-            }
-        });
-
-        // Geocoding function to reduce code duplication
-        function geocode(params, callback) {
-            geocoder.geocode(params,
-                function (results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        if (results[0]) {
-                            callback(results);
-                        } else {
-                            console.log('Rasti adreso nepavyko');
-                        }
-                    } else {
-                        console.log('Geocoderio fail del:' + status);
-                    }
-                }
-            );
-        }
-
-        // Set coordinates variable
-        function changeCoordinates(lat, lng) {
-            coordinates = {
-                lat: lat,
-                lng: lng
-            };
-            setCoordinatesInputs();
-        }
-
-        // Set values of hidden coordinate fields
-        function setCoordinatesInputs() {
-            $('#index_search_offer_latitude').val(coordinates.lat);
-            $('#index_search_offer_longitude').val(coordinates.lng);
-        }
-
-        function locateUserAddress() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var latlng = new google.maps.LatLng(
-                            position.coords.latitude,
-                            position.coords.longitude
-                    );
-                    geocode({'latLng': latlng}, function(results) {
-                        var addressComponents = results[0].address_components;
-                        var address = addressComponents[1].short_name + ' ' +
-                                addressComponents[0].long_name + ', ' +
-                                addressComponents[2].long_name;
-                        $(input).val(address);
-                        // Change the coordinates variable, when user uses geolocation
-                        changeCoordinates(
-                                results[0].geometry.location.lat(),
-                                results[0].geometry.location.lng()
-                        )
-                    })
-                });
-            }
-        }
+        var input = (document.getElementById('address'));
+        var latitude = $('#latitude');
+        var longitude = $('#longitude');
+        var form = $('.index-form');
     </script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
+    <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
+    <script defer="defer" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
 {% endblock %}
 
 {% block footer %}

@@ -1,0 +1,16 @@
+<div class="container content-container content-form narrow">
+    {% form_theme form '@App/form/OfferRegistrationFields.html.twig' %}
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'novalidate': 'novalidate', 'class': 'fos_user_registration_register'}}) }}
+        <legend>
+            Registracija
+        </legend>
+        {{ form_row(form.email) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.phone) }}
+        {{ form_row(form.plainPassword) }}
+    <div>
+        <input type="submit" value="Registruotis" class="submit"/>
+    </div>
+    {{ form_end(form) }}
+</div>

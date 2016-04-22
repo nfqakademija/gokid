@@ -19,43 +19,19 @@ class IndexSearchOffer extends AbstractType
     {
         $builder->add('address', TextType::class, [
             'label' => false,
-            'attr' => [
-                'placeholder' => 'Gyvenamoji vieta',
-                'class' => 'place-input',
-                'id' => 'autocomplete',
-            ],
         ])->add('age', IntegerType::class, [
             'label' => false,
-            'attr' => [
-                'placeholder' => 'Vaiko amžius',
-                'class' => 'age-input'
-            ],
         ])->add('male', CheckboxType::class, [
             'label' => false,
-            'attr' => [
-                'class' => 'gender-checkbox',
-            ],
         ])->add('female', CheckboxType::class, [
             'label' => false,
-            'attr' => [
-                'class' => 'gender-checkbox',
-            ],
         ])->add('latitude', TextType::class, [
             'label' => false,
-            'attr' => [
-                'class' => 'hidden',
-            ],
         ])->add('longitude', TextType::class, [
             'label' => false,
-            'attr' => [
-                'class' => 'hidden',
-            ],
         ])->add('distance', TextType::class, [
             'label' => false,
             'data' => '10',
-            'attr' => [
-                'class' => 'hidden distance-field',
-            ],
         ]);
     }
     
@@ -65,7 +41,17 @@ class IndexSearchOffer extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\OfferSearch'
+            'method' => 'GET',
+            'data_class' => 'AppBundle\Entity\OfferSearch',
+            'csrf_protection' => false,
         ]);
+    }
+
+    /**
+     * @return null
+     */
+    public function getName()
+    {
+        return null;
     }
 }

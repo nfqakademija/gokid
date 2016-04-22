@@ -10,6 +10,9 @@
 // Bootstrap vendor stuff
 @import '../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
 
+// File upload plugin styles
+@import '../../../vendor/kartik-v/bootstrap-fileinput/css/fileinput';
+
 // Partials
 @import 'partials/navbar';
 @import 'partials/body';
@@ -20,3 +23,5 @@
 @import 'partials/offerDetails';
 @import 'partials/common';
 @import 'partials/nice-select';
+@import 'partials/forms';
+@import 'partials/accountPage';
