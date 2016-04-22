@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class OfferType extends AbstractType
 {
@@ -50,7 +51,7 @@ class OfferType extends AbstractType
             ])
             ->addModelTransformer(new ImageTransformer())
             ->add('activity', null, [
-                'label' => 'Sporto šaka',
+                'label' => null,
                 'placeholder' => 'Pasirinkite',
             ])
             ->add('latitude', null, [
@@ -60,6 +61,14 @@ class OfferType extends AbstractType
                 'label' => false,
             ])
             ->add('user', new RegistrationType())
+            ->add('paymentType', ChoiceType::class, [
+                'label' => false,
+                'choices' => [
+                    'Vieną kartą',
+                    'Kas savaitę',
+                    'Kas mėnesį',
+                ],
+            ])
         ;
     }
     

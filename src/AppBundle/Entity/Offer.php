@@ -16,6 +16,11 @@ use AppBundle\Validator\Constraints as CustomAssert;
  */
 class Offer
 {
+    // Payment type constants
+    const SINGLE_TIME = 0;
+    const WEEKLY = 1;
+    const MONTHLY = 2;
+
     /**
      * @var int
      *
@@ -54,6 +59,11 @@ class Offer
      * @Assert\NotBlank(message="Prašome įvesti būrelio aprašymą")
      */
     private $description;
+
+    /**
+     * @ORM\Column(columnDefinition="TINYINT DEFAULT 1 NOT NULL")
+     */
+    private $paymentType;
 
     /**
      * @var integer
@@ -484,5 +494,21 @@ class Offer
     public function setMainImage($mainImage)
     {
         $this->mainImage = $mainImage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentType()
+    {
+        return $this->paymentType;
+    }
+
+    /**
+     * @param mixed $paymentType
+     */
+    public function setPaymentType($paymentType)
+    {
+        $this->paymentType = $paymentType;
     }
 }
