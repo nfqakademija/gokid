@@ -1,7 +1,15 @@
 .offers {
+  padding-top: 20px;
+
   h2 {
-    font-size: 20px;
+    font-size: 24px;
     margin-top: 5px;
+    font-weight: 700;
+    color: #65c04c;
+  }
+
+  h5 {
+    margin-bottom: 20px;
   }
 
   a {
@@ -15,28 +23,243 @@
     position: relative;
   }
 
+  .offer-inner {
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.075);
+  }
+
+  .offer-content {
+    color: #ababab;
+    font-size: 14.95px;
+    padding: 16px;
+    font-weight: 400;
+  }
+
+  .offer-rating {
+    border: 2px solid #65c04c;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    width: 30px;
+  }
+
+  .offer-activity {
+    padding-left: 5px;
+  }
+
+  .offer-price {
+    font-weight: 700;
+    float: right;
+    padding-right: 15px;
+  }
+
+  .offer-location {
+    float: right;
+    color: #65c04c;
+  }
+
   .offer img {
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
     transition: all 0.4s ease;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   .offer:hover img {
-    opacity: 0.8;
-    filter: alpha(opacity=80);
+    filter: saturate(150%);
   }
 
   .map {
     width: 100%;
-    height: 80vh;
+    height: 100vh;
   }
 
-  .bodyContent img {
-    padding-bottom: 10px;
+  .marker-content {
+    color: #ababab;
+    font-size: 14.95px;
+    font-weight: 400;
+    overflow: hidden;
+  }
+
+  .marker-infowindow {
+    margin: 0;
+    width: 260px;
+    height: auto;
+  }
+
+  .marker-infowindow .name {
+    font-size: 18px;
+    color: #565a5c;
+    padding-top: 10px;
+  }
+
+  .marker-infowindow .image {
+    position: relative;
+  }
+
+  .marker-infowindow .image .price {
+    background-color: rgba(60, 63, 64, 0.9);
+    color: #fff;
+    left: 0;
+    bottom: 0;
+    padding: 7px 10px;
+    position: absolute;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .marker-infowindow .offer-rating {
+    padding: 3px 0 0 0 !important;
+    float: right;
+  }
+
+  .marker-infowindow .offer-activity {
+    padding-top: 4px;
+    display: inline-block;
   }
 
   .marker {
     display: none !important;
+  }
+}
+
+.offers-filter {
+  position: relative;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  height: 100%;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+  padding-top: 15px;
+
+  .form-control:focus {
+    box-shadow: none;
+  }
+
+  input {
+    box-shadow: none;
+    height: 44px;
+  }
+
+  .checkbox {
+    display: inline-block;
+  }
+
+  .gender-input {
+    background-color: #fff;
+    height: 44px;
+    margin: 0;
+  }
+
+  .gender-checkbox {
+    margin-top: 1px;
+    background-color: #fff;
+    float: left;
+  }
+
+  .gender-icon {
+    margin: 3px 4px 0;
+    font-size: 24px;
+    float: left;
+  }
+
+  .icons-center {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 85px;
+  }
+
+  .place-input {
+    border-radius: 2px 0 0 2px;
+    padding-right: 29px;
+  }
+
+  .age-input {
+    border-radius: 0;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+
+  .gutter-remove>div[class*='col-'] {
+    padding: 0;
+  }
+
+  .searchbar-submit {
+    border-width: 0;
+    height: 44px;
+    width: 100%;
+    background-color: $neutral;
+    color: #fff;
+    border-radius: 0 2px 2px 0;
+    transition: background-color 0.5s ease;
+    transition: color 0.5s ease;
+  }
+
+  .searchbar-submit:hover {
+    background-color: $lightest;
+    color: $darkest;
+  }
+
+  .searchbar-submit:focus {
+    outline: none;
+  }
+
+  .searchbar-submit:active {
+    box-shadow: none;
+    background-color: $dark;
+    color: #fff;
+  }
+
+  .error-container {
+    color: $darkest;
+  }
+
+  @media (max-width: 768px) {
+    .search-container {
+      width: 100%;
+
+      .gender-icon {
+        color: #fff;
+      }
+
+      .gender-input {
+        background-color: transparent;
+      }
+
+      .age-input {
+        border-width: 0;
+        border-radius: 0 0 3px 3px;
+      }
+
+      .place-input {
+        border-radius: 3px 3px 0 0;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .searchbar-submit {
+        border-radius: 3px;
+      }
+    }
+
+    .top-container {
+      @include box-shadow(none);
+      background-color: #ccc;
+      border-radius: 3px;
+    }
+
+    .top-container div {
+      height: 44px;
+    }
+
+    .submit-container {
+      @include box-shadow(none);
+    }
   }
 }

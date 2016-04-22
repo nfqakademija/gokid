@@ -50,11 +50,19 @@ class HomeController extends Controller
 
         $form->handleRequest($request);
 
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
+
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
+        $offers = $offerRepository->search($offer);
+
         return $this->render('AppBundle:Home:search.html.twig', [
-            'offers' => $offerRepository->search($offer),
+            'activities' => $activityRepository->getActivityList(),
+            'age_list' => $offerRepository->getAgeList(),
+            'offers' => $offers,
+            'offers_json' => $offerRepository->prepareJSON($offers),
         ]);
     }
 
