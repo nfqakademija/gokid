@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\OfferSearch;
+use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
 
@@ -105,5 +106,20 @@ class OfferRepository extends EntityRepository
         }
 
         return $qb->getQuery()->setMaxResults(4)->execute();
+    }
+
+    /**
+     * @param User $user
+     * @return Offer[]
+     */
+    public function getUsersOffers(User $user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('AppBundle:Offer', 'o');
+
+        $qb->where('o.user = :user')->setParameter('user', $user);
+
+        return $qb->getQuery()->execute();
     }
 }

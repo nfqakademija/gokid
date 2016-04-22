@@ -26,6 +26,11 @@ class RegistrationController extends BaseController
      */
     public function registerAction(Request $request, Offer $offer = null)
     {
+        // Redirect authenticated users to homepage
+        if ($this->container->get('security.authorization_checker')
+            ->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirect($this->generateUrl('app.index'));
+        }
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
@@ -58,15 +63,12 @@ class RegistrationController extends BaseController
 
             $userManager->updateUser($user);
 
-            // Set the user of the offer to be registered to the just created
-            // user.
-            if ($internal) {
-                $offer->setUser($user);
-                return new Response('Ok');
-            }
-
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
+                // Remove the default FOSUserBundle account registration success
+                // flash message.
+                $this->get('session')->getFlashBag()->clear();
+                $this->addFlash('success', 'Jūsų paskyra sukurta');
+                $url = $this->generateUrl('fos_user_profile_edit');
                 $response = new RedirectResponse($url);
             }
 
@@ -74,6 +76,13 @@ class RegistrationController extends BaseController
                 FOSUserEvents::REGISTRATION_COMPLETED,
                 new FilterUserResponseEvent($user, $request, $response)
             );
+
+            // Set the user of the offer to be registered to the just created
+            // user.
+            if ($internal) {
+                $offer->setUser($user);
+                return new Response('Ok');
+            }
 
             return $response;
         }

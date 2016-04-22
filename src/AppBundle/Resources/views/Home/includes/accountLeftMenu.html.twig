@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Jūsų paskyra
+    </div>
+    <div class="panel-body left-menu">
+        <ul class="nav">
+            <li class="{% if app.request.attributes.get('_route') == 'app.account' %}active{% endif %}">
+                <a href="{{ path('fos_user_profile_edit') }}">Paskyros duomenys</a>
+            </li>
+            <li class="{% if app.request.attributes.get('_route') == 'app.registeredOffers' %}active{% endif %}">
+                <a href="{{ path('app.registeredOffers') }}">Jūsų būreliai</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -26,12 +26,12 @@ class RegistrationType extends AbstractType
             ->add('phone', null, [
                 'label' => 'Telefono numeris',
             ])
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => array('label' => 'Slaptažodis'),
                 'second_options' => array('label' => 'Pakartokite slaptažodį'),
                 'invalid_message' => 'Slaptažodžiai nesutampa',
-            ))  
+            ])
         ;
     }
 

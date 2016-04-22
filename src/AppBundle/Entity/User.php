@@ -47,7 +47,7 @@ class User extends BaseUser
     /**
      * @var int
      *
-     * @ORM\Column(name="rating", type="integer")
+     * @ORM\Column(name="rating", type="integer", nullable=true)
      */
     protected $rating;
 
@@ -55,6 +55,27 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Offer", mappedBy="user")
      */
     protected $offers;
+
+    /**
+     * @var string
+     */
+    protected $currentPassword;
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentPassword()
+    {
+        return $this->currentPassword;
+    }
+
+    /**
+     * @param mixed $currentPassword
+     */
+    public function setCurrentPassword($currentPassword)
+    {
+        $this->currentPassword = $currentPassword;
+    }
 
     /**
      * User constructor.

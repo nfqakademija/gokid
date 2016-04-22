@@ -1,22 +1,38 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% block fos_user_content %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <div class="container content-container content-form narrow">
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-    <form action="{{ path("fos_user_security_check") }}" method="post">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <legend>
+                Prisijungimas
+            </legend>
 
-        <label for="username">{{ 'El. paštas' }}</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            <div class="form-group">
+                <label for="username" class="control-label required">{{ 'El. paštas' }}</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control"/>
+            </div>
 
-        <label for="password">{{ 'Slaptažodis' }}</label>
-        <input type="password" id="password" name="_password" required="required" />
+            <div class="form-group">
+                <label for="password" class="control-lable required">{{ 'Slaptažodis' }}</label>
+                <input type="password" id="password" name="_password" required="required" class="form-control"/>
+            </div>
 
-        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-        <label for="remember_me">{{ 'Prisiminti mane' }}</label>
+            <div class="checkbox">
+                <label for="remember_me">
+                    <input class="checkbox" type="checkbox" id="remember_me" name="_remember_me" value="on"/>{{ 'Prisiminti mane' }}
+                </label>
+            </div>
 
-        <input type="submit" id="_submit" name="_submit" value="{{ 'Prisijungti' }}" />
-    </form>
+            <input type="submit" class="submit login" id="_submit" name="_submit" value="{{ 'Prisijungti' }}" />
+            <hr/>
+            <p class="login-paragraph">
+                Neturite paskyros? <a href="{{ path('fos_user_registration_register') }}">Registracija</a>
+            </p>
+        </form>
+    </div>
 {% endblock fos_user_content %}
