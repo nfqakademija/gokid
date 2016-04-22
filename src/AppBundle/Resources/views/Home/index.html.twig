@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
                     {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
-                    {{ form_start(form,  {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal index-form'}}) }}
+                    {{ form_start(form,  {'attr': {'action': path('app.search'),'novalidate': 'novalidate', 'class': 'form-horizontal index-form'}}) }}
                     <div class="form-group gutter-remove bar-container">
                         <div class="top-container">
                             <div class="col-sm-5">
@@ -80,9 +80,9 @@
     {{ parent() }}
     <script type="text/javascript">
         // Address input element
-        var input = (document.getElementById('index_search_offer_address'));
-        var latitude = $('#index_search_offer_latitude');
-        var longitude = $('#index_search_offer_longitude');
+        var input = (document.getElementById('address'));
+        var latitude = $('#latitude');
+        var longitude = $('#longitude');
         var form = $('.index-form');
     </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>

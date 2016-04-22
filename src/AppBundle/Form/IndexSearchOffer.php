@@ -41,7 +41,17 @@ class IndexSearchOffer extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\OfferSearch'
+            'method' => 'GET',
+            'data_class' => 'AppBundle\Entity\OfferSearch',
+            'csrf_protection' => false,
         ]);
+    }
+
+    /**
+     * @return null
+     */
+    public function getName()
+    {
+        return null;
     }
 }
