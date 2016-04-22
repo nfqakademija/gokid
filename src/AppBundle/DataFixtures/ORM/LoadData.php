@@ -133,7 +133,11 @@ class LoadData implements FixtureInterface
         $offer1->setAgeTo(16);
         $offer1->setAddress('Kaunas');
         $offer1->setName('Sabonio krepšinio centras');
-        $offer1->setDescription('Strateginis krepšinio rinkos partneris, ugdantis aktyvius ir sveikus visuomenės narius, lyderiaujantis rengiant profesionalaus krepšinio pamainą.');
+        $description = <<<DESCRIPTION
+Strateginis krepšinio rinkos partneris, ugdantis aktyvius ir sveikus visuomenės narius,
+ lyderiaujantis rengiant profesionalaus krepšinio pamainą.
+DESCRIPTION;
+        $offer1->setDescription($description);
         $offer1->setLatitude('54.907187');
         $offer1->setLongitude('23.965188');
         $offer1->setActivity($activity1);
@@ -149,7 +153,12 @@ class LoadData implements FixtureInterface
         $offer2->setAgeTo(13);
         $offer2->setAddress('Kaunas');
         $offer2->setName('„TORNADO“ Krepšinio mokykla');
-        $offer2->setDescription('"Tornado" krepšinio mokykla kasmet sulaukia vis didesnio būrio berniukų ir vaikinų, norinčių žaisti krepšinį. Šiuo metu mokykloje sportuoja daugiau nei 550 vaikų.  "Tornado" KM dirba patyrę treneriai, ne vienerius metus ugdantys krepšininkus nuo pirmųjų žingsnių krepšinio aikštelėje.');
+        $description = <<<DESCRIPTION
+"Tornado" krepšinio mokykla kasmet sulaukia vis didesnio būrio berniukų ir vaikinų,
+norinčių žaisti krepšinį. Šiuo metu mokykloje sportuoja daugiau nei 550 vaikų.
+"Tornado" KM dirba patyrę treneriai, ne vienerius metus ugdantys krepšininkus nuo pirmųjų žingsnių krepšinio aikštelėje.
+DESCRIPTION;
+        $offer2->setDescription($description);
         $offer2->setLatitude('54.8963829');
         $offer2->setLongitude('23.8306256');
         $offer2->setActivity($activity1);
@@ -165,7 +174,11 @@ class LoadData implements FixtureInterface
         $offer3->setAgeTo(13);
         $offer3->setAddress('Kaunas');
         $offer3->setName('Kauno futbolo mokykla „Tauras“');
-        $offer3->setDescription('Kauno futbolo mokykla „Tauras“ yra vaikų, jaunimo ir suaugusiųjų papildomo ugdymo Kauno miesto savivaldybės biudžetinė įstaiga.');
+        $description = <<<DESCRIPTION
+Kauno futbolo mokykla „Tauras“ yra vaikų, 
+jaunimo ir suaugusiųjų papildomo ugdymo Kauno miesto savivaldybės biudžetinė įstaiga.
+DESCRIPTION;
+        $offer3->setDescription($description);
         $offer3->setLatitude('54.911455');
         $offer3->setLongitude('23.900993');
         $offer3->setActivity($activity2);
@@ -181,7 +194,12 @@ class LoadData implements FixtureInterface
         $offer4->setAgeTo(15);
         $offer4->setAddress('Kaunas');
         $offer4->setName('Kauno vaikų ir jaunimo futbolo mokykla „Ąžuolas“');
-        $offer4->setDescription('Siekiame būti geriausiais, stengiamės, jog treniruotės būtų kuo įdomesnės ir įvairesnės, o sąlygos būtų vienos iš geriausių. Mokykloje dirba kvalifikuoti treneriai. Dirbame daug ir atsakingai, nuolat tobuliname savo žinias.');
+        $description = <<<DESCRIPTION
+Siekiame būti geriausiais, stengiamės, jog treniruotės būtų kuo įdomesnės ir įvairesnės, 
+o sąlygos būtų vienos iš geriausių. Mokykloje dirba kvalifikuoti treneriai. 
+Dirbame daug ir atsakingai, nuolat tobuliname savo žinias.
+DESCRIPTION;
+        $offer4->setDescription($description);
         $offer4->setLatitude('54.9240091');
         $offer4->setLongitude('23.86884');
         $offer4->setActivity($activity2);
@@ -197,7 +215,10 @@ class LoadData implements FixtureInterface
         $offer5->setAgeTo(12);
         $offer5->setAddress('Kaunas');
         $offer5->setName('Kauno sporto mokykla „Viltis"');
-        $offer5->setDescription('Kauno sporto mokykla „Viltis" – neformaliojo vaikų švietimo mokykla, veikianti pagal Kauno sporto mokyklos nuostatus.');
+        $description = <<<DESCRIPTION
+Kauno sporto mokykla „Viltis" – neformaliojo vaikų švietimo mokykla, veikianti pagal Kauno sporto mokyklos nuostatus.
+DESCRIPTION;
+        $offer5->setDescription($description);
         $offer5->setLatitude('54.897066');
         $offer5->setLongitude('23.936196');
         $offer5->setActivity($activity3);
@@ -213,7 +234,11 @@ class LoadData implements FixtureInterface
         $offer6->setAgeTo(15);
         $offer6->setAddress('Vilnius');
         $offer6->setName('Vilniaus lengvosios atletikos mokykla');
-        $offer6->setDescription('Vilniaus lengvosios atletikos mokykla kviečia vaikus ir paauglius išbandyti įvairias lengvosios atletikos rungtis (įvairių distancijų bėgimai, šuoliai į tolį, į aukštį, su kartimi, rutulio stūmimas, disko metimas).');
+        $description = <<<DESCRIPTION
+Vilniaus lengvosios atletikos mokykla kviečia vaikus ir paauglius išbandyti įvairias lengvosios atletikos rungtis 
+(įvairių distancijų bėgimai, šuoliai į tolį, į aukštį, su kartimi, rutulio stūmimas, disko metimas).
+DESCRIPTION;
+        $offer6->setDescription($description);
         $offer6->setLatitude('54.674208');
         $offer6->setLongitude('25.253787');
         $offer6->setActivity($activity3);
@@ -229,7 +254,12 @@ class LoadData implements FixtureInterface
         $offer7->setAgeTo(13);
         $offer7->setAddress('Vilnius');
         $offer7->setName('Lauko teniso klubas - Tennis & More');
-        $offer7->setDescription('Teniso klubą ,,Tennis & More” įkūrėme 2010 m. Klube veikia teniso mokykla vaikams, T&M akademija suaugusiems. Organizuojame tarpmiestinį komandinį turnyrą ,,T&M Taurė“ ir kitus teniso renginius.');
+        $description = <<<DESCRIPTION
+Teniso klubą ,,Tennis & More” įkūrėme 2010 m. 
+Klube veikia teniso mokykla vaikams, T&M akademija suaugusiems. 
+Organizuojame tarpmiestinį komandinį turnyrą ,,T&M Taurė“ ir kitus teniso renginius.
+DESCRIPTION;
+        $offer7->setDescription($description);
         $offer7->setLatitude('54.6785579');
         $offer7->setLongitude('25.2830118');
         $offer7->setActivity($activity4);
@@ -245,7 +275,12 @@ class LoadData implements FixtureInterface
         $offer8->setAgeTo(12);
         $offer8->setAddress('Kaunas');
         $offer8->setName('G.Sabeckio teniso mokykla');
-        $offer8->setDescription('Mokyklos tikslai išugdyti aukšto lygio žaidėjus ne tik Lietuvos, bet ir tarptautinio lygio mąstu, išmokyti teniso paslapčių visus norinčius taisyklingai, techniškai ir gerai žaisti tenisą, pradedant nuo naujokų iki profesionalių žaidėjų.');
+        $description = <<<DESCRIPTION
+Mokyklos tikslai išugdyti aukšto lygio žaidėjus ne tik Lietuvos, 
+bet ir tarptautinio lygio mąstu, išmokyti teniso paslapčių visus norinčius taisyklingai, 
+techniškai ir gerai žaisti tenisą, pradedant nuo naujokų iki profesionalių žaidėjų.
+DESCRIPTION;
+        $offer8->setDescription($description);
         $offer8->setLatitude('54.8986934');
         $offer8->setLongitude('23.9324214');
         $offer8->setActivity($activity4);
@@ -261,7 +296,11 @@ class LoadData implements FixtureInterface
         $offer9->setAgeTo(15);
         $offer9->setAddress('Kaunas');
         $offer9->setName('Kauno plaukimo mokykla');
-        $offer9->setDescription('Neformaliojo vaikų švietimo ir formalųjį švietimą papildančio ugdymo mokykla, veikianti pagal Kauno plaukimo mokyklos  nuostatus.');
+        $description = <<<DESCRIPTION
+Neformaliojo vaikų švietimo ir formalųjį švietimą papildančio ugdymo mokykla, 
+veikianti pagal Kauno plaukimo mokyklos  nuostatus.
+DESCRIPTION;
+        $offer9->setDescription($description);
         $offer9->setLatitude('54.917862');
         $offer9->setLongitude('23.8994529');
         $offer9->setActivity($activity5);
@@ -277,7 +316,10 @@ class LoadData implements FixtureInterface
         $offer10->setAgeTo(16);
         $offer10->setAddress('Kaunas');
         $offer10->setName('"Girstučio" baseinas');
-        $offer10->setDescription('Šiandien "Girstučio" baseinas gali didžiuotis būdamas vienas iš didžiausių ir moderniausių sporto kompleksų Lietuvoje.');
+        $description = <<<DESCRIPTION
+Šiandien "Girstučio" baseinas gali didžiuotis būdamas vienas iš didžiausių ir moderniausių sporto kompleksų Lietuvoje.
+DESCRIPTION;
+        $offer10->setDescription($description);
         $offer10->setLatitude('54.907028');
         $offer10->setLongitude('23.972795');
         $offer10->setActivity($activity5);
