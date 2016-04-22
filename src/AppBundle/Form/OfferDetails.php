@@ -22,11 +22,11 @@ class OfferDetails extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('body', TextType::class, [
-            'label' => 'Jūsų atsiliepimas',
+            'label' => false,
         ])->add('name', TextType::class, [
-                'label' => 'Jūsų vardas',
+                'label' => false,
             ])->add('rate', IntegerType::class,[
-                'label' => 'Įvertinimas',
+                'label' => false,
             ])/*->add('rate1', CheckboxType::class, [
             'label' => false,
             'required'  => false,
@@ -43,9 +43,9 @@ class OfferDetails extends AbstractType
                 'label' => false,
                 'required'  => false,
             ])*/->add('title', TextType::class, [
-            'label' => 'Atsiliepimo pavadinimas',
+            'label' => false,
         ])->add('email', EmailType::class, [
-            'label' => 'El. pašto adresas',
+            'label' => false,
             ])->add('submit', 'submit', array('label'=>'Įvertinti'));
     }
 

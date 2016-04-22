@@ -148,23 +148,30 @@
                     <div class="reviewForm">
 
                         <h4> Įvertinkite ir parašykite atsiliepimą </h4>
-
-
-
-
                         {{ form_start(form) }}
+                        <h5> Jūsų atsiliepimas </h5>
                         {{ form_row(form.body, { 'attr': {'class': 'body'} }) }}
+                        <h5> Įvertinimas </h5>
                         {{ form_row(form.rate, { 'attr': {'class': 'rate'} }) }}
+                        <h5> Atsiliepimo pavadinimas </h5>
                         {{ form_row(form.title, { 'attr': {'class': 'title'} }) }}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6> Jūsų vardas </h6>
                         {{ form_row(form.name, { 'attr': {'class': 'name'} }) }}
+                            </div>
+                            <div class="col-sm-6">
+                                <h6> El. pašto adresas </h6>
                         {{ form_row(form.email, { 'attr': {'class': 'email'} }) }}
-                        {{ form_row(form.submit, { 'attr': {'class': ''} }) }}
+                            </div>
+                        </div>
+                        {{ form_row(form.submit, { 'attr': {'class': 'button'} }) }}
                         {{ form_end(form) }}
-
 </div>
 
 </div>
 <div class="col-sm-5">
+    <div class="mapContainer">
 <div id="map" class="map">
 <script>
     var markers = [];
@@ -202,6 +209,7 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap" async defer></script>
 
+</div>
 </div>
 
 

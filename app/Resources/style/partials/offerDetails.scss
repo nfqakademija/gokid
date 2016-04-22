@@ -46,10 +46,7 @@
     }
 
     #description {
-      margin-top: 50px;
-      margin-left: 50px;
-      margin-right: 50px;
-      margin-bottom: 50px;
+      margin: 50px;
       border-color: darkgrey;
       font-size: medium;
 
@@ -66,13 +63,14 @@
       text-align: center;
     }
   }
-
+.mapContainer {
   #map {
     height: 50vh;
     margin-left: 50px;
     margin-right: 50px;
     margin-bottom: 50px;
   }
+}
 
   /*.mapOffer{
     height: 50vh;
@@ -130,21 +128,59 @@
   .reviewForm {
     background-color: #e3ffdf;
 
+    h4{
+      margin-left: 5%;
+    }
+
+    h5{
+      font-size: small;
+      margin-left: 5%;
+    }
+
+    h6{
+      font-size: small;
+      margin-left: 10%;
+    }
+
     .body {
-      width: 100%;
-      height: 200px;
+      margin-right: 5%;
+      margin-left: 5%;
+      width: 90%;
+      height: 150px;
 
-    }
-    .title {
-      width: 100%;
-    }
 
-    .email {
-      width: 100%;
     }
 
     .rate {
+      margin-left: 5%;
+    }
 
+    .title {
+      margin-right: 5%;
+      margin-left: 5%;
+      width: 90%;
+    }
+
+    .email {
+      margin-right: 10%;
+      margin-left: 10%;
+      width: 80%;
+      float: right;
+      label: inline;
+    }
+
+    .name{
+      margin-right: 10%;
+      margin-left: 10%;
+      width: 80%;
+      float: left;
+      label: inline;
+    }
+
+    .button{
+      background-color: darkgreen;
+      color: white;
+      margin-left: 5%;
     }
   }
 }
