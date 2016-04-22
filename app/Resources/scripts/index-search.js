@@ -71,6 +71,9 @@ $(form).submit(function(event) {
                                 formSubmiting = true;
                                 $(form).submit();
                             }
+                        } else {
+                            $(input).val('');
+                            $(form).submit();
                         }
                     }
                 );
@@ -136,12 +139,12 @@ function locateUserAddress() {
 
 // Age input popover
 
-$('#index_search_offer_age').popover({
+$('#age').popover({
     content: $('#popover-content').html(),
     html: true
 }).click(function() {
     $('.button-container').click(function () {
-        $('#index_search_offer_age').val($(this).text()).popover('hide');
+        $('#age').val($(this).text()).popover('hide');
     });
 });
 

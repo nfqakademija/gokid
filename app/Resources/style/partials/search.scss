@@ -148,8 +148,7 @@
     background-color: $neutral;
     color: #fff;
     border-radius: 0 2px 2px 0;
-    transition: background-color 0.5s ease;
-    transition: color 0.5s ease;
+    transition: background-color 0.5s, color 0.5s;
   }
 
 
