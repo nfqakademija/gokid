@@ -156,7 +156,8 @@ DESCRIPTION;
         $description = <<<DESCRIPTION
 "Tornado" krepšinio mokykla kasmet sulaukia vis didesnio būrio berniukų ir vaikinų,
 norinčių žaisti krepšinį. Šiuo metu mokykloje sportuoja daugiau nei 550 vaikų.
-"Tornado" KM dirba patyrę treneriai, ne vienerius metus ugdantys krepšininkus nuo pirmųjų žingsnių krepšinio aikštelėje.
+"Tornado" KM dirba patyrę treneriai, 
+ne vienerius metus ugdantys krepšininkus nuo pirmųjų žingsnių krepšinio aikštelėje.
 DESCRIPTION;
         $offer2->setDescription($description);
         $offer2->setLatitude('54.8963829');
@@ -216,7 +217,8 @@ DESCRIPTION;
         $offer5->setAddress('Kaunas');
         $offer5->setName('Kauno sporto mokykla „Viltis"');
         $description = <<<DESCRIPTION
-Kauno sporto mokykla „Viltis" – neformaliojo vaikų švietimo mokykla, veikianti pagal Kauno sporto mokyklos nuostatus.
+Kauno sporto mokykla „Viltis" – neformaliojo vaikų švietimo mokykla, 
+veikianti pagal Kauno sporto mokyklos nuostatus.
 DESCRIPTION;
         $offer5->setDescription($description);
         $offer5->setLatitude('54.897066');
@@ -317,7 +319,8 @@ DESCRIPTION;
         $offer10->setAddress('Kaunas');
         $offer10->setName('"Girstučio" baseinas');
         $description = <<<DESCRIPTION
-Šiandien "Girstučio" baseinas gali didžiuotis būdamas vienas iš didžiausių ir moderniausių sporto kompleksų Lietuvoje.
+Šiandien "Girstučio" baseinas gali didžiuotis būdamas vienas 
+iš didžiausių ir moderniausių sporto kompleksų Lietuvoje.
 DESCRIPTION;
         $offer10->setDescription($description);
         $offer10->setLatitude('54.907028');
