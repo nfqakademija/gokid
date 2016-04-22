@@ -131,7 +131,7 @@ class Offer
     private $images;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage", cascade={"persist"})
      * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id")
      */
     private $mainImage;
@@ -489,7 +489,7 @@ class Offer
     }
 
     /**
-     * @param mixed $mainImage
+     * @param OfferImage $mainImage
      */
     public function setMainImage($mainImage)
     {

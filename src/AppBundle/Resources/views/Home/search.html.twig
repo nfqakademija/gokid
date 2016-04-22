@@ -121,6 +121,7 @@
     </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
     <script>
+        var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};
         var markers = [];
         var clusters = [];

@@ -120,6 +120,7 @@ class HomeController extends Controller
                 $this->addFlash('success', 'Jūsų paskyra sukurta, o būrelis patalpintas į sistemą');
                 return $this->redirect($this->generateUrl('fos_user_profile_edit'));
             } else {
+                $form->remove('user');
                 $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
             }
         }
