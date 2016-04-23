@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OfferSearch;
-use AppBundle\Form\OfferDetails;
+use AppBundle\Form\CommentType;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Entity\Offer;
@@ -97,7 +97,7 @@ class HomeController extends Controller
             return $this->redirect($this->generateUrl('app.search'));
         }
         $comment = new Comment();
-        $form = $this->createForm(OfferDetails::class, $comment);
+        $form = $this->createForm(CommentType::class, $comment);
 
         $form->handleRequest($request);
 
