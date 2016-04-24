@@ -5,37 +5,38 @@
     margin: auto;
 }
 
-#goToSearchContainer {
-    margin-top: 100px;
-    margin-left: 150px;
+.goToSearchContainer {
+    margin-top: 50px;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: darkgrey;
 
-  }
+    .goToSearch {
+        margin-left: 150px;
+        text-decoration: none;
+        color: grey;
+        font-size: small;
 
-#goToSearch {
-    text-decoration: none;
-    color: grey;
-
-    a:hover {
-      color: darkgreen;
-      text-decoration: none;
+        a:hover {
+            color: darkgreen;
+            text-decoration: none;
+        }
     }
 }
 
 .detailsContainer {
     background-color: white;
-    margin-left: 150px;
-    margin-right: 150px;
-    margin-bottom: 150px;
+    margin: 150px;
+    margin-top: 0px;
 
     .name {
       margin-bottom: 20px;
       color: darkgreen;
     }
-  }
+}
 
 .similarOffers {
     margin-top: 50px;
-    margin-right: 50px;
     margin-left: 50px;
 
     h4, h5 {
@@ -47,7 +48,6 @@
   #map {
     height: 50vh;
     margin-left: 50px;
-    margin-right: 50px;
     margin-bottom: 50px;
   }
 }
@@ -71,11 +71,16 @@
   }
 
 .interactionContainer {
-    color: darkgreen;
-    h4 {
+    margin-bottom: 30px;
+    h4{
       text-align: left;
       font-size: medium;
     }
+    a{
+      color: darkgreen;
+      text-decoration: none;
+    }
+
   }
 
 .infoContainer {
@@ -85,11 +90,14 @@
       margin-left: 5%;
     }
     p{
-      margin: 50px;
+      margin: 30px;
       margin-top: 0px;
       font-size: small;
     }
     background-color: #d9ffbe;
+    border: solid;
+    border-width: 1px;
+    border-color: darkgrey;
 }
 
 .reviewList{
@@ -120,6 +128,9 @@
 
   .reviewForm {
     background-color: #d9ffbe;
+    border: solid;
+    border-width: 1px;
+    border-color: darkgrey;
 
     h4{
       margin-left: 5%;
@@ -145,6 +156,7 @@
 
     .rate {
       margin-left: 5%;
+
     }
 
     .title {
@@ -171,6 +183,32 @@
       background-color: darkgreen;
       color: white;
       margin-left: 5%;
+    }
+
+    .rating {
+      font-size: 0;
+      margin-left: 5%;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      font-size: 15px;
+      color: darkgreen;
+    }
+
+    .rating input:checked ~ label {
+      color: darkgreen;
+    }
+
+    .rating:hover label{
+      color: darkgreen !important;
+    }
+
+    .rating label:hover ~ label{
+      color: #E8E6E5 !important;
     }
   }
 }
