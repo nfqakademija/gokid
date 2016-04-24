@@ -132,7 +132,8 @@ class Offer
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage", cascade={"persist"})
-     * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @Assert\NotBlank(message="Prašome įkelti pagrindinę būrelio nuotrauką")
      */
     private $mainImage;
 

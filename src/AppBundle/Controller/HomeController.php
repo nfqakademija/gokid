@@ -112,6 +112,7 @@ class HomeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($offer);
             $em->flush();
+            // Unset the form so that the fields do not get repopulated
             unset($offer);
             unset($form);
             $offer = new Offer();

@@ -194,3 +194,9 @@
 .no-shadow {
   box-shadow: none;
 }
+
+.has-error {
+  .kv-fileinput-caption {
+    border: 1px solid $state-danger-text;
+  }
+}
