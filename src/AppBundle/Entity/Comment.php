@@ -38,22 +38,6 @@ class Comment
     protected $body;
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=45)
@@ -136,6 +120,21 @@ class Comment
         $this->body = $body;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
     /**
      * @return mixed
      */
