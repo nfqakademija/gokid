@@ -14,5 +14,5 @@
 /web/images/
 /web/fonts/
 Gulpfile.min.js
-app/Resources/scripts/main.min.js
+app/Resources/scripts/*.min.js
 sass-lint.yml

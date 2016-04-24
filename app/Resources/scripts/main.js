@@ -91,15 +91,6 @@ function closeWindows(windows){
     }
 }
 
-/**
- * Prepare nice select
- */
-$(document).ready(function() {
-    $('select.activities-select').niceSelect();
-    $('select.age-select').niceSelect();
-    $("#map").sticky({topSpacing:0, bottomSpacing: 65});
-});
-
 /* End of Offers */
 
 /* Index search */

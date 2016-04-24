@@ -120,6 +120,16 @@
         var latitude = $('#latitude');
         var longitude = $('#longitude');
         var form = $('.index-form');
+
+
+        /**
+         * Prepare nice select and sticky map
+         */
+        $(document).ready(function() {
+            $('select.activities-select').niceSelect();
+            $('select.age-select').niceSelect();
+            $("#map").sticky({topSpacing:0, bottomSpacing: 85});
+        });
     </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
     <script>
