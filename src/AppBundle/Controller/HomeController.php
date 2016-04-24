@@ -20,8 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * Home page index action.
-     *
+     * @param Request $request
      * @return Response
      */
     public function indexAction(Request $request)
@@ -84,12 +83,12 @@ class HomeController extends Controller
     }
 
     /**
-     * @param int $id
-     * @return Response
+     * @param Request $request
+     * @param int     $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function offerDetailsAction(Request $request, $id)
     {
-
 
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
         $offer = $offerRepository->find($id);
