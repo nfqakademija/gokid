@@ -3,7 +3,7 @@
 {% block title %} Būrelio informacija - {{ parent() }}{% endblock %}
 
 {% block body %}
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -49,46 +49,38 @@
             </a>
         </div>
     </div>
-    <div id="goToSearchContainer">
-        <a id="goToSearch" href="{{ path('app.search') }}"> Grįžti į paiešką </a>
+    <div class="goToSearchContainer">
+        <a class="goToSearch" href="{{ path('app.search') }}"> Grįžti į paiešką </a>
     </div>
     <div class="container-fluid">
         <div class="detailsContainer">
             <h1 class="name"> {{ offer.getName }} </h1>
             <div class="row">
                 <div class="col-sm-7">
-                    <div id="ratingContainer">
-                        <fieldset class="rating">
-                            <input type="radio" id="star5" name="rating" value="5" />
-                            <input type="radio" id="star4" name="rating" value="4" />
-                            <input type="radio" id="star3" name="rating" value="3" />
-                            <input type="radio" id="star2" name="rating" value="2" />
-                            <input type="radio" id="star1" name="rating" value="1" />
-                        </fieldset>
-                    </div>
+                    <span class="offer-rating"> {{ offer.getUser.getRating }}</span>
                     <div class="contactsContainer">
                         <div class="row">
                             <div class="col-sm-3">
                                 <h4> {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }} </h4>
                             </div>
                             <div class="col-sm-3">
-                                <h4> {{ offer.getUser.getPhone }} </h4>
+                                <h4> <i class="fa fa-phone" aria-hidden="true"></i> {{ offer.getUser.getPhone }} </h4>
                             </div>
                             <div class="col-sm-6">
-                                <h4> {{ offer.getUser.getEmail }} </h4>
+                                <h4> <i class="fa fa-paper-plane-o" aria-hidden="true"></i> {{ offer.getUser.getEmail }} </h4>
                             </div>
                          </div>
                     </div>
                     <div class="interactionContainer">
                         <div class="row">
                             <div class="col-sm-4">
-                                <h4> Rašyti atsiliepimą  </h4>
+                                <h4> <a href="#reviewForm"> <i class="fa fa-commenting-o" aria-hidden="true"></i> Rašyti atsiliepimą </a> </h4>
                             </div>
                             <div class="col-sm-4">
-                                <h4> Mėgstamiausias </h4>
+                                <h4> <a href=""> <i class="fa fa-bookmark-o" aria-hidden="true"></i> Mėgstamiausias </a> </h4>
                             </div>
                             <div class="col-sm-4">
-                                <h4> Dalintis </h4>
+                                <h4> <a href=""> <i class="fa fa-share" aria-hidden="true"></i> Dalintis </a> </h4>
                             </div>
                         </div>
                     </div>
@@ -123,22 +115,29 @@
                                         <h5 class="center">{{ comment.getName }} </h5>
                                     </div>
                                     <div class="col-sm-9">
-                                        <h5>{{ comment.getTitle }} </h5>
-                                        <h5>{{ comment.getRate }} </h5>
+                                        <h5> "{{ comment.getTitle }}" </h5>
+                                        <span class="offer-rating"> {{ comment.getRate }} </span>
                                         <h5>{{ comment.getBody }} </h5>
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="reviewForm">
+                    <div id='reviewForm' class="reviewForm">
                         <br>
                         <h4> Įvertinkite ir parašykite atsiliepimą </h4>
                         {{ form_start(form) }}
-                        <h5> Jūsų atsiliepimas </h5>
+                        <h5> Atsiliepimas </h5>
                         {{ form_row(form.body, { 'attr': {'class': 'body'} }) }}
                         <h5> Įvertinimas </h5>
-                        {{ form_row(form.rate, { 'attr': {'class': 'rate'} }) }}
+                        <div class="rating">
+                            {% for radioRate in form.rate %}
+                                <label for="{{ radioRate.vars.id }}">
+                                    <i class="fa fa-futbol-o"></i>
+                                </label>
+                            {% endfor %}
+                            {{ form_row(form.rate, { 'attr': {'class': 'rate'} }) }}
+                        </div>
                         <h5> Atsiliepimo pavadinimas </h5>
                         {{ form_row(form.title, { 'attr': {'class': 'title'} }) }}
                         <div class="row">
@@ -153,6 +152,7 @@
                         </div>
                         {{ form_row(form.submit, { 'attr': {'class': 'button'} }) }}
                         {{ form_end(form) }}
+                        <br>
                     </div>
                 </div>
                 <div class="col-sm-5">
