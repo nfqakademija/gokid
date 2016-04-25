@@ -18,9 +18,9 @@
                             {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input'}}) }}
                         </div>
                         <div class="col-sm-2">
-                            <select class="activities-select">
-                                {% for activity in activities %}
-                                    <option value="{{ activity }}">{{ activity }}</option>
+                            <select name="activity" class="activities-select">
+                                {% for key, activity in activities %}
+                                    <option value="{{ key + 1 }}">{{ activity }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -48,12 +48,12 @@
                 <div class="button-table">
                     <div class="button-row">
                         {% for i in age_list[0] %}
-                            <div class="button-container">{{ i }}</div>
+                            <div onclick="ajaxUpdate()" class="button-container">{{ i }}</div>
                         {% endfor %}
                     </div>
                     <div class="button-row">
                         {% for i in age_list[1] %}
-                            <div class="button-container">{{ i }}</div>
+                            <div onclick="ajaxUpdate()" class="button-container">{{ i }}</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -169,6 +169,9 @@
                     return false;
                 }
                 ajaxUpdate();
+            });
+            $('.popover').click(function() {
+                alert(/a/);
             });
         });
     </script>
