@@ -23,8 +23,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "beberlei/DoctrineExtensions": "^1.0",
-        "friendsofsymfony/comment-bundle": "^2.0",
-        "symfony/assetic-bundle": "^2.8"
+        "bmatzner/fontawesome-bundle": "~4.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

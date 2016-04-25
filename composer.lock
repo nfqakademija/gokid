@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ad07d45acf87184c579dfaea2e9c068a",
-    "content-hash": "bfc7b4a16e739522e68e7d7a131893f6",
+    "hash": "94aa4628c687c815f0dd4b9ce07b37fe",
+    "content-hash": "81e67631b9a85a34f95402336a8d6a71",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -68,6 +68,53 @@
                 "orm"
             ],
             "time": "2016-03-24 18:00:50"
+        },
+        {
+            "name": "bmatzner/fontawesome-bundle",
+            "version": "4.5.0",
+            "target-dir": "Bmatzner/FontAwesomeBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bmatzner/BmatznerFontAwesomeBundle.git",
+                "reference": "93a080975bba1e62ec7e0b5d5172b2d71e95848f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bmatzner/BmatznerFontAwesomeBundle/zipball/93a080975bba1e62ec7e0b5d5172b2d71e95848f",
+                "reference": "93a080975bba1e62ec7e0b5d5172b2d71e95848f",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": ">=2.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Bmatzner\\FontAwesomeBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "CC BY 3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bernd Matzner",
+                    "email": "bernd@matznermatzner.de",
+                    "homepage": "http://berndmatzner.de"
+                }
+            ],
+            "description": "FontAwesome Bundle for Symfony2",
+            "homepage": "http://fortawesome.github.com/Font-Awesome/",
+            "keywords": [
+                "css",
+                "graphics",
+                "symfony",
+                "typography",
+                "webfonts"
+            ],
+            "time": "2016-03-26 19:47:17"
         },
         {
             "name": "doctrine/annotations",
