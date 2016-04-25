@@ -40,7 +40,7 @@
                     </div>
                     {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
                     {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
-                    {{ form_row(form.distance, {'attr': {'class': 'hidden distance-field'}}) }}
+                    {{ form_row(form.distance, {'attr': {'class': 'hidden distance-field', 'id': 'distance'}}) }}
                 </div>
                 {{ form_end(form) }}
             </div>
@@ -63,6 +63,11 @@
     <div class="container offers">
         <div class="row">
             <div class="col-md-7 col-sm-12">
+                <div class="offers-range">
+                    <span class="col-md-4 col-sm-4">Atstumas (<span id="dist">10</span> km): </span>
+                    <div class="col-md-8 col-sm-8 offers-slider" id="slider-range"></div>
+                </div>
+                <div class="clearfix"></div>
                 <div class="row">
                     {% for offer in offers.getItems() %}
                         <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
@@ -110,6 +115,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script type="text/javascript">
         // Address input element
         var input = (document.getElementById('address'));
@@ -125,6 +132,19 @@
             $('select.activities-select').niceSelect();
             $('select.age-select').niceSelect();
             $("#map").sticky({topSpacing:0, bottomSpacing: 85});
+
+            $( "#slider-range" ).slider({
+                range: "min",
+                value: $( "#distance" ).val(),
+                min: 1,
+                max: 100,
+                slide: function( event, ui ) {
+                    $( "#distance" ).val( ui.value );
+                    $( "#dist" ).html( ui.value );
+                }
+            });
+            $( "#distance" ).val( $( "#slider-range" ).slider( "value" ) );
+            $('#dist').html( $( "#slider-range" ).slider( "value" ) );
         });
     </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
