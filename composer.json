@@ -24,7 +24,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "beberlei/DoctrineExtensions": "^1.0",
         "kartik-v/bootstrap-fileinput": "@dev",
-        "vich/uploader-bundle": "^1.0"
+        "vich/uploader-bundle": "^1.0",
         "bmatzner/fontawesome-bundle": "~4.4"
     },
     "require-dev": {
