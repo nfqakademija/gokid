@@ -39,6 +39,13 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
 
+    // Offers scrips
+    gulp.src([
+            dir.assets + 'scripts/offers.js'
+        ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+
     // Index search form script
     gulp.src([
         dir.assets + 'scripts/index-search.js'

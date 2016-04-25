@@ -73,6 +73,13 @@ class HomeController extends Controller
             );
         }
 
+        if ($request->get('ajax')) {
+            return $this->render('AppBundle:Home/includes:searchAjax.html.twig', [
+                'offers' => $offers,
+                'offers_json' => $offers_json,
+            ]);
+        }
+
         return $this->render('AppBundle:Home:search.html.twig', [
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),

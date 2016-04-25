@@ -122,7 +122,9 @@ function changeCoordinates(lat, lng) {
 function setCoordinatesInputs() {
     $(latitude).val(coordinates.lat);
     $(longitude).val(coordinates.lng);
-    ajaxUpdate();
+    if (typeof map != 'undefined') {
+        ajaxUpdate();
+    }
 }
 
 function locateUserAddress() {
