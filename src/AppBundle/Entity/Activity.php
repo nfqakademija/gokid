@@ -32,7 +32,30 @@ class Activity
     /**
      * @ORM\OneToMany(targetEntity="Offer", mappedBy="activity")
      */
-    protected $offers;
+    private $offers;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage")
+     * @ORM\JoinColumn(name="default_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $defaultImage;
+
+    /**
+     * @return OfferImage
+     */
+    public function getDefaultImage()
+    {
+        return $this->defaultImage;
+    }
+
+    /**
+     * @param OfferImage $defaultImage
+     */
+    public function setDefaultImage($defaultImage)
+    {
+        $this->defaultImage = $defaultImage;
+    }
 
     /**
      * Activity constructor.

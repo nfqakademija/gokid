@@ -24,6 +24,9 @@ class OfferType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Papildoma informacija',
             ])
+            ->add('contactInfo', TextareaType::class, [
+                'label' => 'Kontaktinė informacija',
+            ])
             ->add('price', null, [
                 'label' => 'Kaina',
             ])

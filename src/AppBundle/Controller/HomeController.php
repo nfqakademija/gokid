@@ -2,15 +2,19 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Activity;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Repository\ActivityRepository;
+use AppBundle\Repository\OfferImageRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Form\IndexSearchOffer;
 use AppBundle\Form\OfferType;
 use AppBundle\Entity\Offer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class HomeController
@@ -21,7 +25,8 @@ class HomeController extends Controller
     /**
      * Home page index action.
      *
-     * @return Response
+     * @Template("AppBundle:Home:index.html.twig")
+     * @return array
      */
     public function indexAction()
     {
@@ -33,15 +38,18 @@ class HomeController extends Controller
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
 
-        return $this->render('AppBundle:Home:index.html.twig', [
+        return [
             'form' => $form->createView(),
             'activities' => $activityRepository->getActivityList(),
-        ]);
+        ];
     }
 
     /**
+     * Offer search action
+     *
+     * @Template("AppBundle:Home:search.html.twig")
      * @param Request $request
-     * @return Response
+     * @return array
      */
     public function searchAction(Request $request)
     {
@@ -58,17 +66,17 @@ class HomeController extends Controller
 
         $offers = $offerRepository->search($offer);
 
-        return $this->render('AppBundle:Home:search.html.twig', [
+        return [
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
             'offers_json' => $offerRepository->prepareJSON($offers),
             'form' => $form->createView(),
-        ]);
+        ];
     }
 
     /**
-     * Coach info action.
+     * Offer and account registration action.
      *
      * @param Request $request
      * @return Response
@@ -110,6 +118,7 @@ class HomeController extends Controller
                 $this->get('session')->getFlashBag()->clear();
             }
             $em = $this->getDoctrine()->getManager();
+            $em->persist($offer->getMainImage());
             $em->persist($offer);
             $em->flush();
             // Unset the form so that the fields do not get repopulated
@@ -120,10 +129,9 @@ class HomeController extends Controller
             if (!$loggedIn && $response && $response->getContent() === 'Ok') {
                 $this->addFlash('success', 'Jūsų paskyra sukurta, o būrelis patalpintas į sistemą');
                 return $this->redirect($this->generateUrl('fos_user_profile_edit'));
-            } else {
-                $form->remove('user');
-                $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
             }
+            $form->remove('user');
+            $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
         }
 
         // Checking if class level assertions failed and setting variables
@@ -147,34 +155,98 @@ class HomeController extends Controller
     }
 
     /**
-     * @param int $id
+     * Individual offer details action.
+     *
+     * @Template("AppBundle:Home:offerDetails.html.twig")
+     * @param Offer $offer
      * @return Response
      */
-    public function offerDetailsAction($id)
+    public function offerDetailsAction(Offer $offer)
     {
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
-        $offer = $offerRepository->find($id);
 
         if (empty($offer)) {
             return $this->redirect($this->generateUrl('app.search'));
         }
 
-        return $this->render('AppBundle:Home:offerDetails.html.twig', [
+        return [
             'offer' => $offer,
             'similarOffers' => $offerRepository->searchSimilarOffers($offer),
-        ]);
+        ];
     }
     
     /**
-     * @return Response
+     * Users registered offers action.
+     *
+     * @Template("AppBundle:Home:offers.html.twig")
+     * @Security("has_role('ROLE_USER')")
+     * @return array
      */
     public function offersAction()
     {
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
         $offers = $offerRepository->getUsersOffers($this->getUser());
 
-        return $this->render('AppBundle:Home:offers.html.twig', [
+        return  [
             'offers' => $offers,
-        ]);
+        ];
+    }
+
+    /**
+     * Offer import action.
+     *
+     * @Template("AppBundle:Home:offerImport.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Request $request
+     * @return array
+     */
+    public function offerImportAction(Request $request)
+    {
+        if ($file = $request->files->get('fileInput')) {
+            if (($handle = fopen($file->getRealPath(), "r")) !== false) {
+                $entityManager = $this->getDoctrine()->getManager();
+                /** @var ActivityRepository $activityRepository */
+                $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
+                /** @var OfferImageRepository $imageRepository */
+                $imageRepository = $this->getDoctrine()->getRepository('AppBundle:OfferImage');
+                $images = $imageRepository->getImages();
+                $offers = [];
+                $activities = [];
+                while (($data = fgetcsv($handle, null, "|")) !== false) {
+                    $offer = new Offer();
+                    $offer->setImported(true);
+                    $offer->setName($data[0]);
+                    $offer->setDescription($data[1]);
+                    $offer->setLatitude($data[2]);
+                    $offer->setLongitude($data[3]);
+                    $offer->setPrice($data[4]);
+                    $offer->setPaymentType($data[5]);
+                    if ($activity = $activityRepository->findBy(['name' => $data[6]])) {
+                        /** @var Activity[] $activity */
+                        $offer->setActivity($activity[0]);
+                        $offer->setMainImage($activity[0]->getDefaultImage());
+                    } else {
+                        $activity = new Activity();
+                        $activity->setName($data[6]);
+                        $entityManager->persist($activity);
+                        $activities[] = $activity;
+                        $offer->setActivity($activity);
+                        $offer->setMainImage($images[0]);
+                    }
+                    $offer->setContactInfo(
+                        $data[7] . ' ' . $data[8] . ' - ' . $data[9]
+                    );
+                    $offer->setMale($data[10] == '1' ? true : false);
+                    $offer->setFemale($data[11] == '1' ? true : false);
+                    $offer->setAgeFrom($data[12]);
+                    $offer->setAgeTo($data[13]);
+                    $offer->setAddress($data[14]);
+                    $offers[] = $offer;
+                    $entityManager->persist($offer);
+                }
+                $entityManager->flush();
+                fclose($handle);
+            }
+        }
     }
 }

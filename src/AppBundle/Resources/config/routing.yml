@@ -17,3 +17,7 @@ app.offerDetails:
 app.registeredOffers:
   path: /offers
   defaults: { _controller: AppBundle:Home:offers }
+
+app.offerImport:
+  path: /import
+  defaults: { _controller: AppBundle:Home:offerImport }
