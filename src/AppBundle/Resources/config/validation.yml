@@ -1,0 +1,104 @@
+AppBundle\Entity\User:
+    properties:
+    # Your custom fields in your user entity, here is an example with FirstName
+        firstName:
+            - NotBlank:
+                message: "Prašome įvesti savo vardą"
+                groups: [ "CustomProfile", "CustomRegistration" ]
+        lastName:
+            - NotBlank:
+                message: "Prašome įvesti savo pavardę"
+                groups: [ "CustomProfile", "CustomRegistration" ]
+        phone:
+            - NotBlank:
+                message: "Prašome įvesti savo telefono numerį"
+                groups: [ "CustomProfile", "CustomRegistration" ]
+            - Type:
+                type: "numeric"
+                message: "Telefono gali būti sudarytas tik iš skaitmenų"
+                groups : [ "CustomProfile", "CustomRegistration" ]
+
+FOS\UserBundle\Model\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+             fields: email
+             errorPath: email
+             message: fos_user.email.already_used
+             groups: [ "CustomRegistration", "CustomProfile" ]
+
+    properties:
+        email:
+            - NotBlank:
+                message: fos_user.email.blank
+                groups: [ "CustomRegistration", "CustomProfile" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.email.short
+                max: 255
+                maxMessage: fos_user.email.long
+                groups: [ "CustomRegistration", "ResetPassword" ]
+            - Email:
+                message: fos_user.email.invalid
+                groups: [ "CustomRegistration", "CustomProfile" ]
+        plainPassword:
+            - NotBlank:
+                message: fos_user.password.blank
+                groups: [ "CustomRegistration", "ResetPassword", "ChangePassword" ]
+            - Length:
+                min: 2
+                max: 4096
+                minMessage: fos_user.password.short
+                groups: [ "CustomRegistration", "CustomProfile", "ResetPassword", "ChangePassword"]
+
+FOS\UserBundle\Model\Group:
+    properties:
+        name:
+            - NotBlank:
+                message: fos_user.group.blank
+                groups: [ "CustomRegistration" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.group.short
+                max: 255
+                maxMessage: fos_user.group.long
+                groups: [ "CustomRegistration" ]
+
+FOS\UserBundle\Propel\User:
+    properties:
+        email:
+            - NotBlank:
+                message: fos_user.email.blank
+                groups: [ "CustomRegistration", "CustomProfile" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.email.short
+                max: 255
+                maxMessage: fos_user.email.long
+                groups: [ "CustomRegistration", "ResetPassword" ]
+            - Email:
+                message: fos_user.email.invalid
+                groups: [ "CustomRegistration", "CustomProfile" ]
+
+        plainPassword:
+            - NotBlank:
+                message: fos_user.password.blank
+                groups: [ "CustomRegistration", "ResetPassword", "ChangePassword" ]
+            - Length:
+                min: 2
+                max: 4096
+                minMessage: fos_user.password.short
+                groups: [ "CustomRegistration", "CustomProfile", "ResetPassword", "ChangePassword"]
+
+
+FOS\UserBundle\Propel\Group:
+    properties:
+        name:
+            - NotBlank:
+                message: fos_user.group.blank
+                groups: [ "CustomRegistration" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.group.short
+                max: 255
+                maxMessage: fos_user.group.long
+                groups: [ "CustomRegistration" ]

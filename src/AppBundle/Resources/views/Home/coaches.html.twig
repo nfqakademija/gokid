@@ -1,13 +1,139 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    <div class="container content-container">
-        <h1>Puslapis treneriams</h1>
-        <hr/>
-
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia turpis ornare vestibulum elementum. Phasellus commodo, nunc id interdum ultricies, sapien odio molestie tortor, quis viverra justo lorem nec ligula. In ut dignissim ipsum, a eleifend est. Nulla nec velit augue. Nulla posuere mauris at placerat ultricies. Aliquam pulvinar sit amet ante et placerat. Fusce scelerisque egestas arcu, sed bibendum nisi semper tempor. Pellentesque eleifend dolor facilisis, blandit quam id, tincidunt velit. Praesent orci nulla, sodales a dolor a, efficitur tristique ex. Nullam sodales nec purus et condimentum. Suspendisse posuere semper nulla eget rutrum.
-
-        Curabitur viverra nunc ac eros euismod pellentesque. Sed non lacus laoreet, ornare sem lobortis, sodales ipsum. Praesent cursus non tellus sed vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas tellus nunc, quis ultrices purus ultricies eu. Sed cursus dolor arcu, ac porta sem tristique eget. Maecenas finibus vel metus dignissim vulputate. Nam eu nulla sed nunc interdum faucibus fermentum eu enim. Etiam condimentum mollis ultricies. Fusce dignissim auctor augue.
-
+    <div class="background-image">
+        <div class="va-middle header-text">
+            <h1 class="title">
+                Įkelkite savo būrelį
+            </h1>
+        </div>
     </div>
+    <div class="container content-form {% if app.user %}logged-in offer-registration{% endif %}">
+        {% for flash_message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        {% form_theme form 'AppBundle:form:OfferRegistrationFields.html.twig' %}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'registration-form'}}) }}
+        {% if not app.user %}
+            <div class="registration-up">
+                    <legend>
+                        Paskyros duomenys
+                    </legend>
+                    <p class="registration-paragraph">
+                        Jeigu jau turite paskyrą, <a href="{{ path("fos_user_security_login") }}">prisijunkite</a>
+                    </p>
+                    {% for row in form.user %}
+                        {{ form_row(row) }}
+                    {% endfor %}
+                <input type="hidden" name="_registration_token" value="{{ csrf_token('fos_user_registration_form') }}"/>
+            </div>
+        {% endif %}
+        {{ form_row(form.name) }}
+        {{ form_row(form.description, {'attr': {'class': 'desciption'}}) }}
+        <div class="form-group {%  if form.price.vars.errors|length %}has-error{% endif %}">
+            <label class="control-label required">
+                Kaina
+            </label>
+            <div class="input-group">
+                {{ form_widget(form.price, {'attr': {'min': '0'}}) }}
+                <div class="input-group-addon euro-sign">
+                    &#8364;
+                </div>
+                <div class="input-group-btn">
+                    {{ form_widget(form.paymentType, {'attr': {'class': 'btn payment-type'}}) }}
+                </div>
+            </div>
+            {{ form_errors(form.price) }}
+        </div>
+        <div class="form-group {% if errors.gender %}has-error{% endif %}">
+            <label class="control-label required">
+                Lytis
+            </label>
+            {{ form_row(form.male, {'attr': {'class': 'checkbox'}}) }}
+            {{ form_row(form.female, {'attr': {'class': 'checkbox'}}) }}
+            {% if errors.gender %}
+                <span class="help-block">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-exclamation-sign"></span> {{ errors.gender }}
+                        </li>
+                    </ul>
+                </span>
+            {% endif %}
+        </div>
+        <div class="form-group {% if errors.ages or not form.ageFrom.vars.valid or not form.ageTo.vars.valid %}has-error{% endif %}">
+            <label class="control-label required">
+                Amžius: nuo - iki
+            </label>
+            <br/>
+            {{ form_widget(form.ageFrom, {'attr': {'min': '0', 'class': 'age-input'}}) }}
+            {{ form_widget(form.ageTo, {'attr': {'min': '0', 'class': 'age-input'}}) }}
+            {{ form_errors(form.ageFrom) }}
+            {{ form_errors(form.ageTo) }}
+            {% if errors.ages %}
+                <span class="help-block">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-exclamation-sign"></span> {{ errors.ages }}
+                        </li>
+                    </ul>
+                </span>
+            {% endif %}
+        </div>
+        {{ form_row(form.address, {'attr': {'placeholder': ''}}) }}
+        {{ form_row(form.mainImage, {'attr': {'class': 'file-loading'}}) }}
+        {{ form_row(form.images, {'attr': {'class': 'file-loading'}}) }}
+        <div class="form-group {% if form.activity.vars.errors|length %}has-error{% endif %}">
+            <label class="control-label required">
+                Sporto šaka
+            </label>
+            {{ form_widget(form.activity, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.activity) }}
+        </div>
+        {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
+        {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
+        <button type="submit" class="btn btn-default submit">Įkelti</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Address input element
+        var input = (document.getElementById('offer_address'));
+        var latitude = $('#offer_latitude');
+        var longitude = $('#offer_longitude');
+        var form = $('.registration-form');
+    </script>
+    <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fileinput.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/file-upload-plugin-translation.js') }}"></script>
+    <script type="text/javascript">
+        $('#offer_images').fileinput({
+            language: 'lt',
+            showUpload: false,
+            previewSettings: {
+                image: {
+                    width: 'auto',
+                    height: '100px'
+                }
+            },
+            allowedFileTypes: ['image']
+        });
+        $('#offer_mainImage').fileinput({
+            language: 'lt',
+            showUpload: false,
+            previewSettings: {
+                image: {
+                    width: 'auto',
+                    height: '100px'
+                }
+            },
+            allowedFileTypes: ['image']
+        });
+    </script>
+    <script defer="defer" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
 {% endblock %}

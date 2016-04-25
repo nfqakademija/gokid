@@ -6,11 +6,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: lt
 
 framework:
     #esi:             ~
-    translator:      ~
+    translator:     { fallbacks: [en] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -76,9 +76,16 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\User
+    registration:
+        form:
+            type: AppBundle\Form\RegistrationType
+            validation_groups: [CustomRegistration]
 
-assetic:
-    debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
+vich_uploader:
+    db_driver: orm
+    mappings:
+        offer_image:
+            uri_prefix:         /images/offerImages
+            upload_destination: %kernel.root_dir%/../web/images/offerImages
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
