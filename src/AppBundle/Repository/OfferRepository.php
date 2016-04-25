@@ -122,8 +122,9 @@ class OfferRepository extends EntityRepository
             ->orderBy('o.ageFrom', 'ASC');
         $first = $qb->getQuery()->setMaxResults(1)->execute();
 
-        if(empty($first))
+        if (empty($first)) {
             return $list;
+        }
 
         $qb2 = $this->getEntityManager()->createQueryBuilder();
         $qb2->select('u.ageTo')
