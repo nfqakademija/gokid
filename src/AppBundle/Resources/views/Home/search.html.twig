@@ -44,31 +44,22 @@
                 </div>
                 {{ form_end(form) }}
             </div>
+            <div class="hidden" id="popover-content">
+                <div class="button-table">
+                    <div class="button-row">
+                        {% for i in age_list[0] %}
+                            <div class="button-container">{{ i }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="button-row">
+                        {% for i in age_list[1] %}
+                            <div class="button-container">{{ i }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    {#<div class="container">
-        <div class="locate-select col-md-3 col-sm-3 col-xs-12">
-            <div class="locate-me">
-                <span class="glyphicon glyphicon-globe" id="locate-me"></span>
-            </div>
-            <input id="index_search_offer_address" name="index_search_offer[address]" required="required" placeholder="Gyvenamoji vieta" class="location-select" oninvalid="setCustomValidity('Prašome įvesti gyvenamąją vietą')" type="text">
-        </div>
-
-        <select class="activities-select col-md-2 col-sm-2 col-xs-6">
-            {% for activity in activities %}
-                <option value="{{ activity }}">{{ activity }}</option>
-            {% endfor %}
-        </select>
-
-        <span class="age col-xs-2 col-md-1 col-sm-1">
-            Amžius:
-        </span>
-        <select class="age-select col-md-1 col-sm-1 col-xs-4">
-            {% for item in age_list %}
-                <option value="{{ item }}">{{ item }}</option>
-            {% endfor %}
-        </select>
-    </div>#}
     <div class="container offers">
         <div class="row">
             <div class="col-md-7 col-sm-12">

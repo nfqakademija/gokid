@@ -114,7 +114,7 @@ class OfferRepository extends EntityRepository
      */
     public function getAgeList()
     {
-        $list = [];
+        $list = [[],[]];
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o.ageFrom')
@@ -131,8 +131,19 @@ class OfferRepository extends EntityRepository
             ->orderBy('u.ageTo', 'DESC');
         $last = $qb2->getQuery()->setMaxResults(1)->execute();
 
-        for ($i=$first[0]['ageFrom']; $i<=$last[0]['ageTo']; $i++) {
-            array_push($list, $i);
+        $lowest     = $first[0]['ageFrom'];
+        $highest    = $last[0]['ageTo'];
+        $ageCount   = $highest-$lowest + 1;
+
+        $firstRow   = ceil($ageCount / 2);
+        $secRow     = floor($ageCount / 2);
+
+        for ($i=0; $i<$firstRow; $i++) {
+            array_push($list[0], $lowest++);
+        }
+
+        for ($i=0; $i<$secRow; $i++) {
+            array_push($list[1], $lowest++);
         }
 
         return $list;

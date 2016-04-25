@@ -33,9 +33,13 @@ class HomeController extends Controller
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
 
+        /** @var OfferRepository $offerRepository */
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+
         return $this->render('AppBundle:Home:index.html.twig', [
             'form' => $form->createView(),
             'activities' => $activityRepository->getActivityList(),
+            'age_list' => $offerRepository->getAgeList(),
         ]);
     }
 
