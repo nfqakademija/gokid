@@ -57,6 +57,18 @@
     padding-right: 15px;
   }
 
+  .offer-price .amount {
+    font-size: 19px;
+    display: block;
+    text-align: center;
+    line-height: 0.5;
+    color: #888;
+  }
+
+  .offer-price .type {
+    color: #bbb;
+  }
+
   .offer-location {
     float: right;
     color: #65c04c;

@@ -89,7 +89,7 @@
                                             </g>
                                         </svg>
                                         <span class="offer-price">
-                                            {{ offer.getPrice }} € / {% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas <savaitę></savaitę>{% else %}Kas mėnesį{% endif %}
+                                            <span class="amount">{{ offer.getPrice }} €</span><span class="type">{% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas <savaitę></savaitę>{% else %}Kas mėnesį{% endif %}</span>
                                         </span>
                                     </div>
                                 </div>
