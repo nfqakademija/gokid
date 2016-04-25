@@ -13,10 +13,9 @@ AppBundle\Entity\User:
             - NotBlank:
                 message: "Prašome įvesti savo telefono numerį"
                 groups: [ "CustomProfile", "CustomRegistration" ]
-            - Type:
-                type: "numeric"
-                message: "Telefono gali būti sudarytas tik iš skaitmenų"
-                groups : [ "CustomProfile", "CustomRegistration" ]
+            - AppBundle\Validator\Constraints\PhoneNumber:
+                message: "Telefono numeris neteisingas"
+                groups: [ "Customprofile", "CustomRegistration" ]
 
 FOS\UserBundle\Model\User:
     constraints:
