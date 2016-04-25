@@ -26,6 +26,16 @@ function initAutocomplete() {
                 location.geometry.location.lng()
             );
         }
+        return false;
+    });
+
+    $('input#address').change(function () {
+        if ($(this).val() == '') {
+            changeCoordinates(
+                0,
+                0
+            );
+        }
     });
 }
 

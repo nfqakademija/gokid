@@ -52,11 +52,10 @@ function setMapParameters(offers){
     for (var offer in offers) {
         bounds.extend(new google.maps.LatLng(offers[offer].latitude, offers[offer].longitude, offers[offer].longitude));
 
-        console.log(rootUrl);
         contentString[offer] = '<div class="marker-infowindow">' +
             '<div>' +
             '</div>' +
-            '<div class="image"><a href="offer/'+offer+'"><img width="100%" src="' + rootUrl + '/images' + offers[offer].image + '" /><div class="price">' + offers[offer].price + ' € / Mėn</div></a></div>' +
+            '<div class="image"><a href="offer/'+offer+'"><img width="100%" src="' + rootUrl + 'images/offerImages/' + offers[offer].image + '" /><div class="price">' + offers[offer].price + ' € / Mėn</div></a></div>' +
             '<a href="offer/'+offer+'"><h4 class="name">' + offers[offer].name + '</h4></a>' +
             '<div class="marker-content">' +
             '<span class="offer-activity">'+offers[offer].activity + '</span>' +
@@ -90,15 +89,6 @@ function closeWindows(windows){
         infowindow[window].close();
     }
 }
-
-/**
- * Prepare nice select
- */
-$(document).ready(function() {
-    $('select.activities-select').niceSelect();
-    $('select.age-select').niceSelect();
-    $("#map").sticky({topSpacing:0, bottomSpacing: 65});
-});
 
 /* End of Offers */
 
