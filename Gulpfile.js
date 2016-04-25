@@ -39,7 +39,7 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
 
-    // Offers scrips
+    // Offers scripts
     gulp.src([
             dir.assets + 'scripts/offers.js'
         ])
