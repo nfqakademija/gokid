@@ -63,12 +63,20 @@ class HomeController extends Controller
         $paginator  = $this->get('knp_paginator');
 
         $offers     = $offerRepository->search($offer, $paginator, $request);
+        $offers_json= $offerRepository->prepareJSON($offers->getItems());
+
+        if ($request->get('ajax')) {
+            return $this->render('AppBundle:Home/includes:searchAjax.html.twig', [
+                'offers' => $offers,
+                'offers_json' => $offers_json,
+            ]);
+        }
 
         return $this->render('AppBundle:Home:search.html.twig', [
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
-            'offers_json' => $offerRepository->prepareJSON($offers->getItems()),
+            'offers_json' => $offers_json,
             'form' => $form->createView(),
         ]);
     }
