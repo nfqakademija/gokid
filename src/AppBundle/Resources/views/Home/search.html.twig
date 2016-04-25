@@ -77,7 +77,7 @@
                         <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
                             <div class="col-xs-12 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
                                 <div class="offer-inner">
-                                    <img src="{{ asset('/images/'~offer.getMainImage) }}" class="img-responsive" alt="{{ offer.getName }}" />
+                                    <img src="{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}" />
                                     <div class="offer-content">
                                         <h2>{{ offer.getName }}</h2>
                                         <h5>{{ offer.getDescription|slice(0, 75) }}...</h5>
