@@ -6,6 +6,8 @@ use AppBundle\Entity\OfferSearch;
 use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * OfferRepository
@@ -19,7 +21,7 @@ class OfferRepository extends EntityRepository
      * @param OfferSearch $offer
      * @return mixed
      */
-    public function search(OfferSearch $offer)
+    public function search(OfferSearch $offer, $paginator, Request $request)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -55,15 +57,24 @@ class OfferRepository extends EntityRepository
             $qb->where("o.male = true");
         }
 
-        $results = $qb->getQuery()->execute();
+        $results = $paginator->paginate(
+            $qb,
+            $request->query->get('page', 1),
+            20,
+            array('wrap-queries'=>true)
+        );
 
         if ($offer->getLatitude() && $offer->getLongitude()) {
             $returnArray = [];
-            foreach ($results as $result) {
-                $result[0]->setDistance($result['distance']);
-                $returnArray[] = $result[0];
+            $items = $results->getItems();
+            foreach ($items as $item) {
+                $item[0]->setDistance($item['distance']);
+                $returnArray[] = $item[0];
             }
-            return $returnArray;
+
+            $results->setItems($returnArray);
+
+            return $results;
         }
 
         return $results;

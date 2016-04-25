@@ -1,0 +1,23 @@
+.navigation {
+  text-align: center;
+
+  .pagination .current {
+    color: #ababab;
+  }
+
+  .pagination span a,
+  .pagination .current {
+    float: left;
+    padding: 5px 10px;
+    margin-left: 10px;
+    text-decoration: none;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.075);
+  }
+
+  .pagination span {
+    color: #65c04c;
+  }
+
+}

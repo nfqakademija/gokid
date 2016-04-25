@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-md-7 col-sm-12">
                 <div class="row">
-                    {% for offer in offers %}
+                    {% for offer in offers.getItems() %}
                         <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
                             <div class="col-xs-12 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
                                 <div class="offer-inner">
@@ -95,6 +95,11 @@
                     {% endfor %}
                     <div class="clearfix"></div>
                 </div>
+
+                <div class="navigation">
+                    {{ knp_pagination_render(offers) }}
+                </div>
+
             </div>
             <div class="col-md-5 hidden-sm">
                 <div id="map" class="map"></div>

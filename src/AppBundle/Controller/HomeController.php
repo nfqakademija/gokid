@@ -60,13 +60,15 @@ class HomeController extends Controller
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
-        $offers = $offerRepository->search($offer);
+        $paginator  = $this->get('knp_paginator');
+
+        $offers     = $offerRepository->search($offer, $paginator, $request);
 
         return $this->render('AppBundle:Home:search.html.twig', [
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
-            'offers_json' => $offerRepository->prepareJSON($offers),
+            'offers_json' => $offerRepository->prepareJSON($offers->getItems()),
             'form' => $form->createView(),
         ]);
     }
