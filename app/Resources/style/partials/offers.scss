@@ -1,6 +1,35 @@
 .offers {
   padding-top: 20px;
 
+  .offers-range {
+    padding-bottom: 25px;
+    display: block;
+    margin-bottom: 25px;
+  }
+
+  .offers-range span {
+    padding-left: 0;
+    font-size: 19px;
+    font-weight: bold;
+  }
+
+  .offers-slider {
+    margin-top: 9px;
+  }
+
+  .ui-state-default {
+    background: #65c04c !important;
+    border: 1px solid rgba(0, 0, 0, 0.075) !important;
+  }
+
+  .ui-state-default:hover {
+    background: #65c04c !important;
+  }
+
+  .ui-widget-header {
+    background: #65c04c !important;
+  }
+
   h2 {
     font-size: 24px;
     margin-top: 5px;
