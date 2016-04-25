@@ -48,8 +48,11 @@ gulp.task('scripts', function() {
 
     // Bootstrap file input plugin script
     gulp.src([
+
+        './vendor/kartik-v/bootstrap-fileinput/js/fileinput.js',
         dir.assets + 'scripts/file-upload-plugin-translation.js'
     ])
+        .pipe(concat('fileinput.js'))
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
 
