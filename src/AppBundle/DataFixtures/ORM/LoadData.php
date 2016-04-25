@@ -332,52 +332,52 @@ DESCRIPTION;
         $manager->persist($offer10);
 
         $image1 = new OfferImage();
-        $image1->setImageName('/offerImages/sabonio.png');
+        $image1->setImageName('sabonio.png');
         $image1->setOffer($offer1);
         $manager->persist($image1);
 
         $image2 = new OfferImage();
-        $image2->setImageName('/offerImages/tornadas.jpg');
+        $image2->setImageName('tornadas.jpg');
         $image2->setOffer($offer2);
         $manager->persist($image2);
 
         $image3 = new OfferImage();
-        $image3->setImageName('/offerImages/tauras.jpg');
+        $image3->setImageName('tauras.jpg');
         $image3->setOffer($offer3);
         $manager->persist($image3);
 
         $image4 = new OfferImage();
-        $image4->setImageName('/offerImages/futbolas.jpg');
+        $image4->setImageName('futbolas.jpg');
         $image4->setOffer($offer4);
         $manager->persist($image4);
 
         $image5 = new OfferImage();
-        $image5->setImageName('/offerImages/viltis.jpg');
+        $image5->setImageName('viltis.jpg');
         $image5->setOffer($offer5);
         $manager->persist($image5);
 
         $image6 = new OfferImage();
-        $image6->setImageName('/offerImages/vilnius.jpg');
+        $image6->setImageName('vilnius.jpg');
         $image6->setOffer($offer6);
         $manager->persist($image6);
 
         $image7 = new OfferImage();
-        $image7->setImageName('/offerImages/tennis.png');
+        $image7->setImageName('tennis.png');
         $image7->setOffer($offer7);
         $manager->persist($image7);
 
         $image8 = new OfferImage();
-        $image8->setImageName('/offerImages/sabeckas.jpg');
+        $image8->setImageName('sabeckas.jpg');
         $image8->setOffer($offer8);
         $manager->persist($image8);
 
         $image9 = new OfferImage();
-        $image9->setImageName('/offerImages/swim.jpg');
+        $image9->setImageName('swim.jpg');
         $image9->setOffer($offer9);
         $manager->persist($image9);
 
         $image10 = new OfferImage();
-        $image10->setImageName('/offerImages/girstutis.jpg');
+        $image10->setImageName('girstutis.jpg');
         $image10->setOffer($offer10);
         $manager->persist($image10);
 

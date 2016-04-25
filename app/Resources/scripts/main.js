@@ -90,6 +90,15 @@ function closeWindows(windows){
     }
 }
 
+// Sets the map on all markers in the array.
+function clearMarkers() {
+    for (var marker in markers) {
+        markers[marker].setMap(null);
+    }
+
+    markers = [];
+}
+
 /* End of Offers */
 
 /* Index search */

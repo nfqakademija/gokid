@@ -122,6 +122,7 @@ function changeCoordinates(lat, lng) {
 function setCoordinatesInputs() {
     $(latitude).val(coordinates.lat);
     $(longitude).val(coordinates.lng);
+    ajaxUpdate();
 }
 
 function locateUserAddress() {

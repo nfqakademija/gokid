@@ -124,6 +124,29 @@
         var longitude = $('#longitude');
         var form = $('.index-form');
 
+        function ajaxUpdate() {
+            clearMarkers();
+            $.get( "http://127.0.0.1:8000/search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+"&json=1", function( data ) {
+                var offers = data;
+
+                for (var offer in offers) {
+                    markers[offer] = new google.maps.Marker({
+                        position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
+                        map: map,
+                        title: offers[offer].name,
+                        icon: green,
+                        id: offer
+                    });
+                    clusters.push(markers[offer]);
+                }
+
+                setMapParameters(offers);
+            });
+        }
+
+        $('input').change(function() {
+            ajaxUpdate();
+        });
 
         /**
          * Prepare nice select and sticky map
@@ -138,6 +161,9 @@
                 value: $( "#distance" ).val(),
                 min: 1,
                 max: 100,
+                change: function( event, ui ) {
+                    ajaxUpdate();
+                },
                 slide: function( event, ui ) {
                     $( "#distance" ).val( ui.value );
                     $( "#dist" ).html( ui.value );
@@ -156,13 +182,13 @@
         var infowindow = [];
         var map;
         var markerClusterer = null;
+        var green = 'http://maps.google.com/mapfiles/marker_green.png';
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 11,
                 center: {lat: 54.8931048, lng: 23.8666335}
             });
-            var green = 'http://maps.google.com/mapfiles/marker_green.png';
 
             for (var offer in offers) {
                 markers[offer] = new google.maps.Marker({
@@ -176,7 +202,7 @@
             }
             setMapParameters(offers);
 
-            markerClusterer = new MarkerClusterer(map, clusters);
+            //markerClusterer = new MarkerClusterer(map, clusters);
 
             initAutocomplete();
         }
