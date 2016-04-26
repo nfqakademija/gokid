@@ -115,6 +115,13 @@ class Offer
     /**
      * @var float
      *
+     * @ORM\Column(name="rating", type="float", nullable=true)
+     */
+    protected $rating;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="latitude", type="float")
      */
     private $latitude;
@@ -237,6 +244,22 @@ class Offer
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * @return float
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param float $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
     }
 
     /**
