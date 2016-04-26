@@ -106,13 +106,13 @@ function clearMarkers() {
 function ajaxUpdate(page) {
     var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+((page > 0) ? '&page='+page : '');
 
+    history.pushState(null, null, url);
+    
     $.get( url+"&ajax=1", function( data ) {
         clearMarkers();
 
         $('.offer-objects').fadeOut('fast');
         $('.offer-objects').html(data).fadeIn('fast');
-
-        history.pushState(null, null, url);
     });
 }
 
