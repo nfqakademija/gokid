@@ -1,17 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rimas
- * Date: 3/11/16
- * Time: 1:45 AM
- */
+
 namespace AppBundle\DataFixtures\ORM;
+
 use AppBundle\Entity\OfferImage;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Activity;
+
 /**
  * Class LoadData
  * @package AppBundle\DataFixtures\ORM
