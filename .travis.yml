@@ -12,4 +12,4 @@ before_script:
   - mysql -uroot -e 'create database symfony;'
   - composer install --no-interaction --prefer-dist
 script:
-  - vendor/bin/phpcs -p --standard=PSR2 --extensions=php ./src
+  - bin/phpcs -p --standard=PSR2 --extensions=php ./src

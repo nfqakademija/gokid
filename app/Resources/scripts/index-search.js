@@ -26,6 +26,16 @@ function initAutocomplete() {
                 location.geometry.location.lng()
             );
         }
+        return false;
+    });
+
+    $('input#address').change(function () {
+        if ($(this).val() == '') {
+            changeCoordinates(
+                0,
+                0
+            );
+        }
     });
 }
 
@@ -112,6 +122,9 @@ function changeCoordinates(lat, lng) {
 function setCoordinatesInputs() {
     $(latitude).val(coordinates.lat);
     $(longitude).val(coordinates.lng);
+    if (typeof map != 'undefined') {
+        ajaxUpdate();
+    }
 }
 
 function locateUserAddress() {

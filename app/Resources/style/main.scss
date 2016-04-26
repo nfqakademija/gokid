@@ -9,6 +9,7 @@
 
 // Bootstrap vendor stuff
 @import '../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
+@import '../../../bower_components/jquery-ui/themes/smoothness/jquery-ui.min';
 
 // Import font awesome styles
 @import '../../../node_modules/font-awesome/css/font-awesome.min';
@@ -28,3 +29,4 @@
 @import 'partials/nice-select';
 @import 'partials/forms';
 @import 'partials/accountPage';
+@import 'partials/pagination';

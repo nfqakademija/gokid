@@ -22,6 +22,7 @@ gulp.task('sass', function() {
 gulp.task('scripts', function() {
     gulp.src([
             dir.bower + 'jquery/dist/jquery.min.js',
+            dir.bower + 'jquery-ui/jquery-ui.min.js',
             // Bootstrap JS modules
             dir.bootstrapJS + 'transition.js',
             dir.bootstrapJS + 'collapse.js',
@@ -36,6 +37,13 @@ gulp.task('scripts', function() {
             dir.assets + 'scripts/main.js'
         ])
         .pipe(concat('script.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+
+    // Offers scripts
+    gulp.src([
+            dir.assets + 'scripts/offers.js'
+        ])
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
 

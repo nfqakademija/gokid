@@ -1,6 +1,41 @@
 .offers {
   padding-top: 20px;
 
+  .offers-range {
+    padding-bottom: 25px;
+    display: block;
+    margin-bottom: 25px;
+  }
+
+  .offers-range span {
+    padding-left: 0;
+    font-size: 19px;
+    font-weight: bold;
+  }
+
+  .offers-slider {
+    margin-top: 9px;
+  }
+
+  .ui-state-default {
+    background: #65c04c !important;
+    border: 1px solid rgba(0, 0, 0, 0.075) !important;
+  }
+
+  .ui-state-default:hover {
+    background: #65c04c !important;
+  }
+
+  .ui-widget-header {
+    background: #65c04c !important;
+  }
+
+  .not-found {
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+  }
+
   h2 {
     font-size: 24px;
     margin-top: 5px;
@@ -55,6 +90,18 @@
     font-weight: 700;
     float: right;
     padding-right: 15px;
+  }
+
+  .offer-price .amount {
+    font-size: 19px;
+    display: block;
+    text-align: center;
+    line-height: 0.5;
+    color: #888;
+  }
+
+  .offer-price .type {
+    color: #bbb;
   }
 
   .offer-location {
