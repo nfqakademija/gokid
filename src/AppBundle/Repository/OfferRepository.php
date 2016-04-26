@@ -60,7 +60,7 @@ class OfferRepository extends EntityRepository
         $results = $paginator->paginate(
             $qb,
             $request->query->get('page', 1),
-            18,
+            2,
             array('wrap-queries'=>true)
         );
 

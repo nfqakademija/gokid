@@ -22,6 +22,7 @@ gulp.task('sass', function() {
 gulp.task('scripts', function() {
     gulp.src([
             dir.bower + 'jquery/dist/jquery.min.js',
+            dir.bower + 'jquery-ui/jquery-ui.min.js',
             // Bootstrap JS modules
             dir.bootstrapJS + 'transition.js',
             dir.bootstrapJS + 'collapse.js',
