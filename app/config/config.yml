@@ -92,4 +92,4 @@ vich_uploader:
 
 knp_paginator:
     template:
-        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig
+        pagination: AppBundle:Home/includes:pagination.html.twig

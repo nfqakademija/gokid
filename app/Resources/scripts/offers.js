@@ -103,16 +103,63 @@ function clearMarkers() {
 /**
  * Updates offers by filter parameters
  */
-function ajaxUpdate() {
-    clearMarkers();
+function ajaxUpdate(page) {
+    var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+((page > 0) ? '&page='+page : '');
 
-    $.get( rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+"&ajax=1", function( data ) {
+    $.get( url+"&ajax=1", function( data ) {
+        clearMarkers();
+
         $('.offer-objects').fadeOut('fast');
         $('.offer-objects').html(data).fadeIn('fast');
+
+        history.pushState(null, null, url);
     });
 }
 
-/* End of Offers */
+/**
+ * Prepare nice select and sticky map
+ */
+$('select.activities-select').niceSelect();
+$('select.age-select').niceSelect();
+$("#map").sticky({topSpacing:0, bottomSpacing: 85});
+
+
+/**
+ * Distance slider
+ */
+$( "#slider-range" ).slider({
+    range: "min",
+    value: $( "#distance" ).val(),
+    min: 1,
+    max: 100,
+    change: function( event, ui ) {
+        ajaxUpdate();
+    },
+    slide: function( event, ui ) {
+        $( "#distance" ).val( ui.value );
+        $( "#dist" ).html( ui.value );
+    }
+});
+$( "#distance" ).val( $( "#slider-range" ).slider( "value" ) );
+$('#dist').html( $( "#slider-range" ).slider( "value" ) );
+
+
+/**
+ * Updates offers when filter parameters are changed
+ */
+$('input').change(function() {
+    if ($(this).attr('id') == 'address') {
+        return false;
+    }
+    ajaxUpdate();
+});
+$('.popover').click(function() {
+    alert(/a/);
+});
+$( ".offers" ).on( "click", ".pagination a", function() {
+    ajaxUpdate($(this).attr('page'));
+    return false;
+});
 
 /* Index search */
 
