@@ -10,6 +10,9 @@
 // Bootstrap vendor stuff
 @import '../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
 
+// Import font awesome styles
+@import '../../../node_modules/font-awesome/css/font-awesome.min';
+
 // File upload plugin styles
 @import '../../../vendor/kartik-v/bootstrap-fileinput/css/fileinput';
 
