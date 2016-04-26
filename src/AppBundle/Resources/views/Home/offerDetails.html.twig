@@ -4,9 +4,6 @@
 
 {% block body %}
     <link rel="stylesheet" href="{{ asset('bundles/bmatznerfontawesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <div class="offerDetails">
         <div class="carouselContainer">
             <br>
@@ -173,16 +170,16 @@
 
                                     var green = 'http://maps.google.com/mapfiles/marker_green.png';
 
-                                    {#var contentString_{{ offer.getId }} = '<div id="content">'+
+                                    var contentString = '<div id="content">'+
                                             '<div id="siteNotice">'+
                                             '</div>'+
-                                            '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
+                                            '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName|raw }}</h4></a>'+
                                             '<div class="bodyContent">'+
                                             '<a href=""><img width="100%" src="{{ asset('/images/'~ offer.getMainImage )}}" /></a>'+
-                                            '<p>{{ offer.getDescription }}</p>'+
+                                            '<p>{{ offer.getDescription|replace({"\n":' ', "\r":' '}) }}</p>'+
                                             '</div>'+
-                                            '</div>';#}
-                                    var infowindow_{{ offer.getId }} = new google.maps.InfoWindow({ content: contentString_{{ offer.getId }} });
+                                            '</div>';
+                                    var infowindow = new google.maps.InfoWindow({ content: contentString });
                                     markers[{{ offer.getId }}] = new google.maps.Marker({
                                         position: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
                                         map: map,
@@ -190,7 +187,7 @@
                                         icon: green
                                     });
                                     markers[{{ offer.getId }}].addListener('click', function() {
-                                        infowindow_{{ offer.getId }}.open(map, markers[{{ offer.getId }}]);
+                                        infowindow.open(map, markers[{{ offer.getId }}]);
                                         map.setCenter(marker.getPosition());
                                     });
 
