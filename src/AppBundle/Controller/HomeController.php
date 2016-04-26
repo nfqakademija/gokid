@@ -65,7 +65,9 @@ class HomeController extends Controller
         $offers     = $offerRepository->search($offer, $paginator, $request);
         $offers_json= $offerRepository->prepareJSON($offers->getItems());
 
-        if ($request->get('ajax')) {
+        if ($request->get('ajax') == 1) {
+            $offers->setParam('ajax', null);
+
             return $this->render('AppBundle:Home/includes:searchAjax.html.twig', [
                 'offers' => $offers,
                 'offers_json' => $offers_json,

@@ -121,59 +121,16 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/offers.js') }}"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ asset('js/offers.js') }}"></script>
+
     <script type="text/javascript">
         // Address input element
         var input = (document.getElementById('address'));
         var latitude = $('#latitude');
         var longitude = $('#longitude');
         var form = $('.index-form');
-
-        $(document).ready(function() {
-
-            /**
-             * Prepare nice select and sticky map
-             */
-            $('select.activities-select').niceSelect();
-            $('select.age-select').niceSelect();
-            $("#map").sticky({topSpacing:0, bottomSpacing: 85});
-
-
-            /**
-             * Distance slider
-             */
-            $( "#slider-range" ).slider({
-                range: "min",
-                value: $( "#distance" ).val(),
-                min: 1,
-                max: 100,
-                change: function( event, ui ) {
-                    ajaxUpdate();
-                },
-                slide: function( event, ui ) {
-                    $( "#distance" ).val( ui.value );
-                    $( "#dist" ).html( ui.value );
-                }
-            });
-            $( "#distance" ).val( $( "#slider-range" ).slider( "value" ) );
-            $('#dist').html( $( "#slider-range" ).slider( "value" ) );
-
-
-            /**
-             * Updates offers when filter parameters are changed
-             */
-            $('input').change(function() {
-                if ($(this).attr('id') == 'address') {
-                    return false;
-                }
-                ajaxUpdate();
-            });
-            $('.popover').click(function() {
-                alert(/a/);
-            });
-        });
     </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
     <script>
