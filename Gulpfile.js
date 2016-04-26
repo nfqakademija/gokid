@@ -64,6 +64,13 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(gulp.dest(dir.dist + 'js'));
 
+    // Age input popover script
+    gulp.src([
+        dir.assets + 'scripts/age-popover.js'
+        ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+
     // Bootstrap file input plugin translation
     gulp.src([
         './vendor/kartik-v/bootstrap-fileinput/js/fileinput.js'

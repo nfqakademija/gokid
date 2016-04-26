@@ -219,49 +219,30 @@ class HomeController extends Controller
     public function offerImportAction(Request $request)
     {
         if ($file = $request->files->get('fileInput')) {
-            if (($handle = fopen($file->getRealPath(), "r")) !== false) {
-                $entityManager = $this->getDoctrine()->getManager();
-                /** @var ActivityRepository $activityRepository */
-                $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
-                /** @var OfferImageRepository $imageRepository */
-                $imageRepository = $this->getDoctrine()->getRepository('AppBundle:OfferImage');
+            $entityManager = $this->getDoctrine()->getManager();
+            /** @var ActivityRepository $activityRepository */
+            $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
+            /** @var OfferImageRepository $imageRepository */
+            $imageRepository = $this->getDoctrine()->getRepository('AppBundle:OfferImage');
+            if ($data = $this->get('csv_parser')->parseCsv($file->getRealPath())) {
                 $images = $imageRepository->getImages();
-                $offers = [];
-                $activities = [];
-                while (($data = fgetcsv($handle, null, "|")) !== false) {
-                    $offer = new Offer();
-                    $offer->setImported(true);
-                    $offer->setName($data[0]);
-                    $offer->setDescription($data[1]);
-                    $offer->setLatitude($data[2]);
-                    $offer->setLongitude($data[3]);
-                    $offer->setPrice($data[4]);
-                    $offer->setPaymentType($data[5]);
-                    if ($activity = $activityRepository->findBy(['name' => $data[6]])) {
-                        /** @var Activity[] $activity */
+                foreach ($data as $offer) {
+                    /** @var Offer $offer */
+                    if ($activity = $activityRepository->findBy(
+                        ['name' => $offer->getActivity()->getName()]
+                    )
+                    ) {
                         $offer->setActivity($activity[0]);
                         $offer->setMainImage($activity[0]->getDefaultImage());
                     } else {
                         $activity = new Activity();
-                        $activity->setName($data[6]);
+                        $activity->setName($offer->getActivity()->getName());
                         $entityManager->persist($activity);
-                        $activities[] = $activity;
                         $offer->setActivity($activity);
-                        $offer->setMainImage($images[0]);
                     }
-                    $offer->setContactInfo(
-                        $data[7] . ' ' . $data[8] . ' - ' . $data[9]
-                    );
-                    $offer->setMale($data[10] == '1' ? true : false);
-                    $offer->setFemale($data[11] == '1' ? true : false);
-                    $offer->setAgeFrom($data[12]);
-                    $offer->setAgeTo($data[13]);
-                    $offer->setAddress($data[14]);
-                    $offers[] = $offer;
                     $entityManager->persist($offer);
                 }
                 $entityManager->flush();
-                fclose($handle);
             }
         }
     }
