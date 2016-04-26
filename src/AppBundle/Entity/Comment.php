@@ -54,9 +54,16 @@ class Comment
     /**
      * @var int
      *
-     * @ORM\Column(name="rate", type="integer")
+     * @ORM\Column(name="rate", type="float")
      */
     protected $rate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    protected $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Offer", inversedBy="comments")
@@ -86,6 +93,22 @@ class Comment
     public function getOffer()
     {
         return $this->offer;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
     /**
