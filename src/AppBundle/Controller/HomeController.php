@@ -38,9 +38,13 @@ class HomeController extends Controller
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
 
+        /** @var OfferRepository $offerRepository */
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+        
         return [
             'form' => $form->createView(),
             'activities' => $activityRepository->getActivityList(),
+            'age_list' => $offerRepository->getAgeList(),
         ];
     }
 
@@ -64,13 +68,25 @@ class HomeController extends Controller
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
-        $offers = $offerRepository->search($offer);
+        $paginator  = $this->get('knp_paginator');
+
+        $offers     = $offerRepository->search($offer, $paginator, $request);
+        $offers_json= $offerRepository->prepareJSON($offers->getItems());
+
+        if ($request->get('ajax') == 1) {
+            $offers->setParam('ajax', null);
+
+            return $this->render('AppBundle:Home/includes:searchAjax.html.twig', [
+                'offers' => $offers,
+                'offers_json' => $offers_json,
+            ]);
+        }
 
         return [
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
-            'offers_json' => $offerRepository->prepareJSON($offers),
+            'offers_json' => $offers_json,
             'form' => $form->createView(),
         ];
     }

@@ -9,6 +9,7 @@
 
 // Bootstrap vendor stuff
 @import '../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
+@import '../../../bower_components/jquery-ui/themes/smoothness/jquery-ui.min';
 
 // File upload plugin styles
 @import '../../../vendor/kartik-v/bootstrap-fileinput/css/fileinput';
@@ -25,3 +26,4 @@
 @import 'partials/nice-select';
 @import 'partials/forms';
 @import 'partials/accountPage';
+@import 'partials/pagination';

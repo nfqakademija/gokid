@@ -6,6 +6,8 @@ use AppBundle\Entity\OfferSearch;
 use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * OfferRepository
@@ -19,7 +21,7 @@ class OfferRepository extends EntityRepository
      * @param OfferSearch $offer
      * @return mixed
      */
-    public function search(OfferSearch $offer)
+    public function search(OfferSearch $offer, $paginator, Request $request)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -55,15 +57,24 @@ class OfferRepository extends EntityRepository
             $qb->where("o.male = true");
         }
 
-        $results = $qb->getQuery()->execute();
+        $results = $paginator->paginate(
+            $qb,
+            $request->query->get('page', 1),
+            18,
+            array('wrap-queries'=>true)
+        );
 
         if ($offer->getLatitude() && $offer->getLongitude()) {
             $returnArray = [];
-            foreach ($results as $result) {
-                $result[0]->setDistance($result['distance']);
-                $returnArray[] = $result[0];
+            $items = $results->getItems();
+            foreach ($items as $item) {
+                $item[0]->setDistance($item['distance']);
+                $returnArray[] = $item[0];
             }
-            return $returnArray;
+
+            $results->setItems($returnArray);
+
+            return $results;
         }
 
         return $results;
@@ -114,7 +125,7 @@ class OfferRepository extends EntityRepository
      */
     public function getAgeList()
     {
-        $list = [];
+        $list = [[],[]];
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o.ageFrom')
@@ -122,14 +133,29 @@ class OfferRepository extends EntityRepository
             ->orderBy('o.ageFrom', 'ASC');
         $first = $qb->getQuery()->setMaxResults(1)->execute();
 
+        if (empty($first)) {
+            return $list;
+        }
+
         $qb2 = $this->getEntityManager()->createQueryBuilder();
         $qb2->select('u.ageTo')
             ->from('AppBundle:Offer', 'u')
             ->orderBy('u.ageTo', 'DESC');
         $last = $qb2->getQuery()->setMaxResults(1)->execute();
 
-        for ($i=$first[0]['ageFrom']; $i<=$last[0]['ageTo']; $i++) {
-            array_push($list, $i);
+        $lowest     = $first[0]['ageFrom'];
+        $highest    = $last[0]['ageTo'];
+        $ageCount   = $highest-$lowest + 1;
+
+        $firstRow   = ceil($ageCount / 2);
+        $secRow     = floor($ageCount / 2);
+
+        for ($i=0; $i<$firstRow; $i++) {
+            array_push($list[0], $lowest++);
+        }
+
+        for ($i=0; $i<$secRow; $i++) {
+            array_push($list[1], $lowest++);
         }
 
         return $list;
