@@ -3,28 +3,28 @@
   .carousel-inner > .item > a > img {
     height: 400px;
     margin: auto;
-}
+  }
 
-.goToSearchContainer {
+  .goToSearchContainer {
     margin-top: 50px;
     border-bottom: solid;
     border-width: 1px;
     border-color: darkgrey;
 
     .goToSearch {
-        margin-left: 150px;
+      margin-left: 150px;
+      text-decoration: none;
+      color: grey;
+      font-size: small;
+
+      a:hover {
+        color: darkgreen;
         text-decoration: none;
-        color: grey;
-        font-size: small;
-
-        a:hover {
-            color: darkgreen;
-            text-decoration: none;
-        }
+      }
     }
-}
+  }
 
-.detailsContainer {
+  .detailsContainer {
     background-color: white;
     margin: 150px;
     margin-top: 0px;
@@ -33,9 +33,13 @@
       margin-bottom: 20px;
       color: darkgreen;
     }
-}
 
-.similarOffers {
+    .ratingContainer {
+      margin-bottom: 10px;
+    }
+  }
+
+  .similarOffers {
     margin-top: 50px;
     margin-left: 50px;
 
@@ -44,52 +48,47 @@
     }
   }
 
-.mapContainer {
-  #map {
-    height: 50vh;
-    margin-left: 50px;
-    margin-bottom: 50px;
-  }
-}
-
-#ratingContainer {
-    //margin-left: 150px;
-
+  .mapContainer {
+    #map {
+      height: 50vh;
+      margin-left: 50px;
+      margin-bottom: 50px;
+    }
   }
 
-.green {
+  .green {
     color: green;
   }
 
-.contactsContainer {
+  .contactsContainer {
     border-bottom: solid;
     border-width: 1px;
     border-color: darkgrey;
-    h4{
+    h4 {
       font-size: small;
     }
   }
 
-.interactionContainer {
+  .interactionContainer {
     margin-bottom: 30px;
-    h4{
+    h4 {
       text-align: left;
       font-size: medium;
     }
-    a{
+    a {
       color: darkgreen;
       text-decoration: none;
     }
 
   }
 
-.infoContainer {
+  .infoContainer {
     margin-bottom: 50px;
-    h5{
+    h5 {
       font-size: small;
       margin-left: 5%;
     }
-    p{
+    p {
       margin: 30px;
       margin-top: 0px;
       font-size: small;
@@ -98,28 +97,32 @@
     border: solid;
     border-width: 1px;
     border-color: darkgrey;
-}
+  }
 
-.reviewList{
-    .review{
+  .reviewList {
+    .review {
       border-bottom: solid;
       border-width: 1px;
       border-color: darkgrey;
     }
 
-    .center{
+    .createdAt{
+      color: darkgrey;
+    }
+
+    .center {
       margin: auto;
       width: 60%;
     }
 
-    h4{
+    h4 {
       border-bottom: solid;
       border-width: 1px;
       border-color: darkgrey;
       font-size: medium;
     }
 
-    h5{
+    h5 {
       font-size: small;
     }
 
@@ -132,17 +135,17 @@
     border-width: 1px;
     border-color: darkgrey;
 
-    h4{
+    h4 {
       margin-left: 5%;
       font-size: medium;
     }
 
-    h5{
+    h5 {
       font-size: small;
       margin-left: 5%;
     }
 
-    h6{
+    h6 {
       font-size: small;
       margin-left: 10%;
     }
@@ -152,6 +155,7 @@
       margin-left: 5%;
       width: 90%;
       height: 150px;
+      color: #333333;
     }
 
     .rate {
@@ -163,6 +167,7 @@
       margin-right: 5%;
       margin-left: 5%;
       width: 90%;
+      color: #333333;
     }
 
     .email {
@@ -170,9 +175,10 @@
       margin-left: 10%;
       width: 80%;
       float: right;
+      color: #333333;
     }
 
-    .name{
+    .name {
       margin-right: 10%;
       margin-left: 10%;
       width: 80%;
@@ -180,7 +186,7 @@
       color: #333333;
     }
 
-    .button{
+    .button {
       background-color: darkgreen;
       color: white;
       margin-left: 5%;
@@ -201,7 +207,7 @@
     }
 
     .rating input:checked ~ label {
-      color: darkgreen;
+      color: #E8E6E5 !important;
     }
 
     .rating:hover label{
@@ -212,5 +218,18 @@
       color: #E8E6E5 !important;
     }
   }
+
+  .offer-rating {
+    border: 3px solid #65c04c;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    width: 30px;
+  }
 }
+
+
 
