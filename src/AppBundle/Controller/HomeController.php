@@ -161,13 +161,20 @@ class HomeController extends Controller
         }
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $comment->setOffer($offer);
+            $comment->setCreatedAt(new \DateTime());
             $manager->persist($comment);
+
+            $rating = $offer->getRating();
+            $commentsCount = count($offer->getComments());
+            $offer->setRating(($rating * $commentsCount + $comment->getRate()) / ($commentsCount + 1));
+            $offer->addComment($comment);
+            $manager->persist($offer);
+
             $manager->flush();
 
             return $this->render('AppBundle:Home:offerDetails.html.twig', [
