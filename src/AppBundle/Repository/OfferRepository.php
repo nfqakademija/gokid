@@ -3,8 +3,11 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\OfferSearch;
+use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * OfferRepository
@@ -18,7 +21,7 @@ class OfferRepository extends EntityRepository
      * @param OfferSearch $offer
      * @return mixed
      */
-    public function search(OfferSearch $offer)
+    public function search(OfferSearch $offer, $paginator, Request $request)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -54,15 +57,24 @@ class OfferRepository extends EntityRepository
             $qb->where("o.male = true");
         }
 
-        $results = $qb->getQuery()->execute();
+        $results = $paginator->paginate(
+            $qb,
+            $request->query->get('page', 1),
+            18,
+            array('wrap-queries'=>true)
+        );
 
         if ($offer->getLatitude() && $offer->getLongitude()) {
             $returnArray = [];
-            foreach ($results as $result) {
-                $result[0]->setDistance($result['distance']);
-                $returnArray[] = $result[0];
+            $items = $results->getItems();
+            foreach ($items as $item) {
+                $item[0]->setDistance($item['distance']);
+                $returnArray[] = $item[0];
             }
-            return $returnArray;
+
+            $results->setItems($returnArray);
+
+            return $results;
         }
 
         return $results;
@@ -105,5 +117,85 @@ class OfferRepository extends EntityRepository
         }
 
         return $qb->getQuery()->setMaxResults(4)->execute();
+    }
+
+    /**
+     * Generates possible age list
+     * @return array
+     */
+    public function getAgeList()
+    {
+        $list = [[],[]];
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o.ageFrom')
+            ->from('AppBundle:Offer', 'o')
+            ->orderBy('o.ageFrom', 'ASC');
+        $first = $qb->getQuery()->setMaxResults(1)->execute();
+
+        if (empty($first)) {
+            return $list;
+        }
+
+        $qb2 = $this->getEntityManager()->createQueryBuilder();
+        $qb2->select('u.ageTo')
+            ->from('AppBundle:Offer', 'u')
+            ->orderBy('u.ageTo', 'DESC');
+        $last = $qb2->getQuery()->setMaxResults(1)->execute();
+
+        $lowest     = $first[0]['ageFrom'];
+        $highest    = $last[0]['ageTo'];
+        $ageCount   = $highest-$lowest + 1;
+
+        $firstRow   = ceil($ageCount / 2);
+        $secRow     = floor($ageCount / 2);
+
+        for ($i=0; $i<$firstRow; $i++) {
+            array_push($list[0], $lowest++);
+        }
+
+        for ($i=0; $i<$secRow; $i++) {
+            array_push($list[1], $lowest++);
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param Offer[]
+     * @return string
+     */
+    public function prepareJSON($offers)
+    {
+        $data = [];
+        foreach ($offers as $offer) {
+            /* @var $offer Offer */
+            $data[$offer->getId()]['id'] = $offer->getId();
+            $data[$offer->getId()]['activity'] = $offer->getActivity()->getName();
+            $data[$offer->getId()]['name'] = $offer->getName();
+            $data[$offer->getId()]['description'] = $offer->getDescription();
+            $data[$offer->getId()]['price'] = $offer->getPrice();
+            $data[$offer->getId()]['address'] = $offer->getAddress();
+            $data[$offer->getId()]['latitude'] = $offer->getLatitude();
+            $data[$offer->getId()]['longitude'] = $offer->getLongitude();
+            $data[$offer->getId()]['image'] = $offer->getMainImage()->getImageName();
+        }
+
+        return json_encode($data);
+    }
+
+    /**
+     * @param User $user
+     * @return Offer[]
+     */
+    public function getUsersOffers(User $user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('AppBundle:Offer', 'o');
+
+        $qb->where('o.user = :user')->setParameter('user', $user);
+
+        return $qb->getQuery()->execute();
     }
 }

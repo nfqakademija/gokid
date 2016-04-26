@@ -1,0 +1,21 @@
+.left-menu {
+  .nav>li>a,
+  .nav>li>a:hover,
+  .nav>li>a:active,
+  .nav>li>a:focus {
+    color: $gray-light;
+    background-color: transparent;
+  }
+
+  .nav>li>a:hover {
+    color: $neutral;
+  }
+
+  .active>a {
+    color: $neutral !important;
+  }
+}
+
+.badge.warning {
+  background-color: $brand-danger;
+}

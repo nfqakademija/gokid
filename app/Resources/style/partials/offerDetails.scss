@@ -1,216 +1,39 @@
-﻿.offerDetails {
-  .carousel-inner > .item > img,
-  .carousel-inner > .item > a > img {
-    height: 400px;
-    margin: auto;
-}
-
-.goToSearchContainer {
-    margin-top: 50px;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-
-    .goToSearch {
-        margin-left: 150px;
-        text-decoration: none;
-        color: grey;
-        font-size: small;
-
-        a:hover {
-            color: darkgreen;
-            text-decoration: none;
-        }
-    }
+﻿h1 {
+  margin-bottom: 50px;
 }
 
 .detailsContainer {
-    background-color: white;
-    margin: 150px;
-    margin-top: 0px;
+  background-color: #fff;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
 
-    .name {
-      margin-bottom: 20px;
-      color: darkgreen;
-    }
+  p {
+    margin-left: 10px;
+  }
+
+  div {
+    margin-top: 10px;
+  }
+
+  .userInfo {
+    margin-left: 70px;
+  }
 }
 
 .similarOffers {
-    margin-top: 50px;
+  margin-top: 100px;
+  margin-right: 50px;
+  margin-left: 50px;
+
+  h3, h4 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
+.detailsMap {
+    height: 80vh;
     margin-left: 50px;
-
-    h4, h5 {
-      text-align: center;
-    }
-  }
-
-.mapContainer {
-  #map {
-    height: 50vh;
-    margin-left: 50px;
-    margin-bottom: 50px;
-  }
+    margin-right: 50px;
 }
-
-#ratingContainer {
-    //margin-left: 150px;
-
-  }
-
-.green {
-    color: green;
-  }
-
-.contactsContainer {
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-    h4{
-      font-size: small;
-    }
-  }
-
-.interactionContainer {
-    margin-bottom: 30px;
-    h4{
-      text-align: left;
-      font-size: medium;
-    }
-    a{
-      color: darkgreen;
-      text-decoration: none;
-    }
-
-  }
-
-.infoContainer {
-    margin-bottom: 50px;
-    h5{
-      font-size: small;
-      margin-left: 5%;
-    }
-    p{
-      margin: 30px;
-      margin-top: 0px;
-      font-size: small;
-    }
-    background-color: #d9ffbe;
-    border: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-}
-
-.reviewList{
-    .review{
-      border-bottom: solid;
-      border-width: 1px;
-      border-color: darkgrey;
-    }
-
-    .center{
-      margin: auto;
-      width: 60%;
-    }
-
-    h4{
-      border-bottom: solid;
-      border-width: 1px;
-      border-color: darkgrey;
-      font-size: medium;
-    }
-
-    h5{
-      font-size: small;
-    }
-
-    margin-bottom: 50px;
-  }
-
-  .reviewForm {
-    background-color: #d9ffbe;
-    border: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-
-    h4{
-      margin-left: 5%;
-      font-size: medium;
-    }
-
-    h5{
-      font-size: small;
-      margin-left: 5%;
-    }
-
-    h6{
-      font-size: small;
-      margin-left: 10%;
-    }
-
-    .body {
-      margin-right: 5%;
-      margin-left: 5%;
-      width: 90%;
-      height: 150px;
-    }
-
-    .rate {
-      margin-left: 5%;
-
-    }
-
-    .title {
-      margin-right: 5%;
-      margin-left: 5%;
-      width: 90%;
-    }
-
-    .email {
-      margin-right: 10%;
-      margin-left: 10%;
-      width: 80%;
-      float: right;
-    }
-
-    .name{
-      margin-right: 10%;
-      margin-left: 10%;
-      width: 80%;
-      float: left;
-      color: #333333;
-    }
-
-    .button{
-      background-color: darkgreen;
-      color: white;
-      margin-left: 5%;
-    }
-
-    .rating {
-      font-size: 0;
-      margin-left: 5%;
-    }
-
-    .rating input {
-      display: none;
-    }
-
-    .rating label {
-      font-size: 15px;
-      color: darkgreen;
-    }
-
-    .rating input:checked ~ label {
-      color: darkgreen;
-    }
-
-    .rating:hover label{
-      color: darkgreen !important;
-    }
-
-    .rating label:hover ~ label{
-      color: #E8E6E5 !important;
-    }
-  }
-}
-

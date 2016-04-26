@@ -1,45 +1,145 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Homepage - {{ parent() }}{% endblock %}
-
 {% block body %}
-
-    <div class="container offers">
-        <div class="row">
-            <div class="col-md-7 col-sm-8">
-                <div class="row">
-
-                    {% for offer in offers %}
-                        <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
-                            <div class="col-xs-6 col-sm-6 col-md-4 offer" data-id="{{ offer.getId }}">
-                                <img src="{{ asset('/images/'~offer.getImage) }}" class="img-responsive" alt="{{ offer.getName }}">
-                                <h2>{{ offer.getName }}</h2>
+    <div class="offers-filter">
+        <div class="container">
+            <div class="col-sm-12">
+                {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
+                {{ form_start(form,  {'attr': {'action': path('app.search'),'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+                <div class="form-group gutter-remove">
+                    <div class="top-container">
+                        <div class="col-sm-3">
+                            <div class="locate-me">
+                                <span class="glyphicon glyphicon-globe" id="locate-me"></span>
                             </div>
-                        </a>
-
-                        {% if loop.index is divisibleby(3) %}
-                            <div class="clearfix hidden-sm hidden-xs"></div>
-                        {% endif %}
-
-                        {% if loop.index is divisibleby(2) %}
-                            <div class="clearfix hidden-lg hidden-md"></div>
-                        {% endif %}
-
-                    {% endfor %}
-
-                    <div class="clearfix"></div>
-
+                            {{  form_row(form.address, {'attr': {'class': 'place-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input'}}) }}
+                        </div>
+                        <div class="col-sm-2">
+                            <select name="activity" class="activities-select">
+                                {% for key, activity in activities %}
+                                    <option value="{{ key + 1 }}">{{ activity }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="gender-input text-center">
+                            <div class="icons-center">
+                                <div class="gender-icon"><b>&#9794;</b></div>
+                                {{ form_row(form.male, {'attr': {'class': 'gender-checkbox'}}) }}
+                                <div class="gender-icon"><b>&#9792;</b></div>
+                                {{ form_row(form.female, {'attr': {'class': 'gender-checkbox'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 submit-container">
+                        <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                    {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
+                    {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
+                    {{ form_row(form.distance, {'attr': {'class': 'hidden distance-field', 'id': 'distance'}}) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="hidden" id="popover-content">
+                <div class="button-table">
+                    <div class="button-row">
+                        {% for i in age_list[0] %}
+                            <div onclick="ajaxUpdate()" class="button-container">{{ i }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="button-row">
+                        {% for i in age_list[1] %}
+                            <div onclick="ajaxUpdate()" class="button-container">{{ i }}</div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-            <div class="col-md-5 col-sm-4">
+        </div>
+    </div>
+    <div class="container offers">
+        <div class="row">
+            <div class="col-md-7 col-sm-12">
+                <div class="offers-range">
+                    <span class="col-md-4 col-sm-4">Atstumas&nbsp;(<span id="dist">10</span>&nbsp;km): </span>
+                    <div class="col-md-8 col-sm-8 offers-slider" id="slider-range"></div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="offer-objects">
+                    {% if (offers|length > 0) %}
+                        <div class="row">
+                            {% for offer in offers.getItems() %}
+                                <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
+                                        <div class="offer-inner">
+                                            <img src="{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}" />
+                                            <div class="offer-content">
+                                                <h2>{{ offer.getName }}</h2>
+                                                <h5>{{ offer.getDescription|slice(0, 75) }}...</h5>
+                                                <span class="offer-rating">5.0</span>
+                                                <span class="offer-activity">{{ offer.getActivity.getName }}</span>
+                                                <svg class="offer-location" width="14px" height="20px">
+                                                    <g id="Page-1" stroke="none" stroke-width="1" fill="none">
+                                                        <path d="M7,0 C3.13383665,0 0,3.0828692 0,6.88540084 C0,10.68827 6.33390528,20 7,20 C7.66609472,20 14,10.68827 14,6.88540084 C14,3.0828692 10.8661633,0 7,0 L7,0 Z M7,9.87341772 C5.2947838,9.87341772 3.91146191,8.51274262 3.91146191,6.83544304 C3.91146191,5.15814346 5.2947838,3.79746835 7,3.79746835 C8.7052162,3.79746835 10.0885381,5.15814346 10.0885381,6.83544304 C10.0885381,8.51274262 8.7052162,9.87341772 7,9.87341772 L7,9.87341772 Z" id="Imported-Layers-Copy-5" fill="currentColor"></path>
+                                                    </g>
+                                                </svg>
+                                            <span class="offer-price">
+                                                <span class="amount">{{ offer.getPrice }} €</span><span class="type">{% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas <savaitę></savaitę>{% else %}Kas mėnesį{% endif %}</span>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                {% if loop.index is divisibleby(2) %}
+                                    <div class="clearfix hidden-sm hidden-xs"></div>
+                                {% endif %}
+                                {% if loop.index is divisibleby(2) %}
+                                    <div class="clearfix hidden-lg hidden-md"></div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="navigation">
+                            {{ knp_pagination_render(offers) }}
+                        </div>
+                    {% else %}
+                        <div class="not-found">Būrelių nerasta</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-5 hidden-sm hidden-xs">
                 <div id="map" class="map"></div>
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/offers.js') }}"></script>
+
+    <script type="text/javascript">
+        // Address input element
+        var input = (document.getElementById('address'));
+        var latitude = $('#latitude');
+        var longitude = $('#longitude');
+        var form = $('.index-form');
+    </script>
+    <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
     <script>
+        var rootUrl = "{{ asset('') }}";
+        var offers = {{ offers_json|raw }};
         var markers = [];
+        var clusters = [];
+        var infowindow = [];
         var map;
+        var markerClusterer = null;
+        var green = 'http://maps.google.com/mapfiles/marker_green.png';
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -47,42 +147,25 @@
                 center: {lat: 54.8931048, lng: 23.8666335}
             });
 
-            var bounds = new google.maps.LatLngBounds();
+            {% if (offers|length > 0) %}
+                for (var offer in offers) {
+                    markers[offer] = new google.maps.Marker({
+                        position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
+                        map: map,
+                        title: offers[offer].name,
+                        icon: green,
+                        id: offer
+                    });
+                    clusters.push(markers[offer]);
+                }
+                setMapParameters(offers);
+            {% endif %}
 
-            var green = 'http://maps.google.com/mapfiles/marker_green.png';
+            markerClusterer = new MarkerClusterer(map, clusters);
 
-            {% for offer in offers %}
-                bounds.extend( new google.maps.LatLng({{ offer.getLatitude }}, {{ offer.getLongitude }}) );
-
-                var contentString_{{ offer.getId }} = '<div id="content">'+
-                        '<div id="siteNotice">'+
-                        '</div>'+
-                        '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
-                        '<div class="bodyContent">'+
-                        '<a href=""><img width="100%" src="{{ asset('/images/'~offer.getImage) }}" /></a>'+
-                        '<p>{{ offer.getDescription }}</p>'+
-                        '</div>'+
-                        '</div>';
-
-                var infowindow_{{ offer.getId }} = new google.maps.InfoWindow({
-                    content: contentString_{{ offer.getId }}
-                });
-                markers[{{ offer.getId }}] = new google.maps.Marker({
-                    position: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
-                    map: map,
-                    title: '{{ offer.getName }}',
-                    icon: green
-                });
-                markers[{{ offer.getId }}].addListener('click', function() {
-                    infowindow_{{ offer.getId }}.open(map, markers[{{ offer.getId }}]);
-                    map.setCenter(marker.getPosition());
-                });
-            {% endfor %}
-            map.fitBounds(bounds);
+            initAutocomplete();
         }
-
     </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap" async defer></script>
-
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/1.0/src/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap&libraries=places" async defer></script>
 {% endblock %}

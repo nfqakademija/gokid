@@ -3,12 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OfferSearch;
-use AppBundle\Form\CommentType;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
-use AppBundle\Entity\Offer;
-use AppBundle\Entity\Comment;
 use AppBundle\Form\IndexSearchOffer;
+use AppBundle\Form\OfferType;
+use AppBundle\Entity\Offer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,105 +19,177 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
+     * Home page index action.
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        $form = $this->createForm(IndexSearchOffer::class, null, [
+            'action' => $this->generateUrl('app.search'),
+            'method' => 'GET',
+        ]);
+        
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
+
+        /** @var OfferRepository $offerRepository */
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+
+        return $this->render('AppBundle:Home:index.html.twig', [
+            'form' => $form->createView(),
+            'activities' => $activityRepository->getActivityList(),
+            'age_list' => $offerRepository->getAgeList(),
+        ]);
+    }
+
+    /**
      * @param Request $request
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function searchAction(Request $request)
     {
         $offer = new OfferSearch();
         $form = $this->createForm(IndexSearchOffer::class, $offer);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->forward('AppBundle:Home:search', ['offer' => $offer]);
-        }
-
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
-
-        return $this->render('AppBundle:Home:index.html.twig', [
-            'form' => $form->createView(),
-            'activities' => $activityRepository->getActivityList(),
-        ]);
-    }
-
-    /**
-     * @param OfferSearch $offer
-     *
-     * @return Response
-     */
-    public function searchAction(OfferSearch $offer = null)
-    {
-        if ($offer === null) {
-            $offer = new Offer();
-        }
 
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
-        return $this->render('AppBundle:Home:search.html.twig', [
-            'offers' => $offerRepository->search($offer),
-        ]);
-    }
+        $paginator  = $this->get('knp_paginator');
 
-    /**
-     * User login action.
-     *
-     * @return Response
-     */
-    public function loginAction()
-    {
-        return $this->render('AppBundle:Home:login.html.twig', []);
+        $offers     = $offerRepository->search($offer, $paginator, $request);
+        $offers_json= $offerRepository->prepareJSON($offers->getItems());
+
+        if ($request->get('ajax') == 1) {
+            $offers->setParam('ajax', null);
+
+            return $this->render('AppBundle:Home/includes:searchAjax.html.twig', [
+                'offers' => $offers,
+                'offers_json' => $offers_json,
+            ]);
+        }
+
+        return $this->render('AppBundle:Home:search.html.twig', [
+            'activities' => $activityRepository->getActivityList(),
+            'age_list' => $offerRepository->getAgeList(),
+            'offers' => $offers,
+            'offers_json' => $offers_json,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
      * Coach info action.
      *
+     * @param Request $request
      * @return Response
      */
-    public function coachesAction()
+    public function coachesAction(Request $request)
     {
-        return $this->render('AppBundle:Home:coaches.html.twig', []);
-    }
+        $loggedIn = $this->container->get('security.authorization_checker')
+            ->isGranted('IS_AUTHENTICATED_FULLY');
+        $offer = new Offer();
+        $form = $this->createForm(OfferType::class, $offer);
 
-    /**
-     * @param Request $request
-     * @param int     $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function offerDetailsAction(Request $request, $id)
-    {
-
-        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
-        $offer = $offerRepository->find($id);
-        if (empty($offer)) {
-            return $this->redirect($this->generateUrl('app.search'));
+        // If the user is logged in, don't show account creation fields
+        if ($loggedIn) {
+            $form->remove('user');
         }
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getDoctrine()->getManager();
-            $comment->setOffer($offer);
-            $manager->persist($comment);
-            $manager->flush();
+            // If user creates an account when registering an offer, we pass
+            // the offer being created and the user information to the
+            // user registration action, and then we persist the
+            // offer being created.
+            $response = null;
+            if (!$loggedIn) {
+                $userFields = $request->request->get('offer')['user'];
+                $userFields['_token'] = $request->request->get('_registration_token');
+                $request->request->set('_internal', true);
+                $request->request->set(
+                    'fos_user_registration_form',
+                    $userFields
+                );
+                $response = $this->forward(
+                    'FOSUserBundle:Registration:register',
+                    ['offer' => $offer]
+                );
+                // Remove the default FOSUserBundle account registration success
+                // flash message.
+                $this->get('session')->getFlashBag()->clear();
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($offer);
+            $em->flush();
+            unset($offer);
+            unset($form);
+            $offer = new Offer();
+            $form = $this->createForm(OfferType::class, $offer);
+            if (!$loggedIn && $response && $response->getContent() === 'Ok') {
+                $this->addFlash('success', 'Jūsų paskyra sukurta, o būrelis patalpintas į sistemą');
+                return $this->redirect($this->generateUrl('fos_user_profile_edit'));
+            } else {
+                $form->remove('user');
+                $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
+            }
+        }
 
-            return $this->render('AppBundle:Home:offerDetails.html.twig', [
-                'form' => $form->createView(),
-                'comments' => $offer->getComments(),
-                'offer' => $offer,
-                'similarOffers' => $offerRepository->searchSimilarOffers($offer),
-            ]);
+        // Checking if class level assertions failed and setting variables
+        // for the template to render error classes on invalid fields.
+        $errors = [
+            'ages' => false,
+            'gender' => false,
+        ];
+        foreach ($form->getErrors() as $error) {
+            if ($parameters = $error->getMessageParameters()) {
+                if (isset($parameters['id'])) {
+                    $errors[$parameters['id']] = $error->getMessage();
+                }
+            }
+        }
+
+        return $this->render('AppBundle:Home:coaches.html.twig', [
+            'form' => $form->createView(),
+            'errors' => $errors,
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function offerDetailsAction($id)
+    {
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+        $offer = $offerRepository->find($id);
+
+        if (empty($offer)) {
+            return $this->redirect($this->generateUrl('app.search'));
         }
 
         return $this->render('AppBundle:Home:offerDetails.html.twig', [
-            'form' => $form->createView(),
-            'comments' => $offer->getComments(),
             'offer' => $offer,
             'similarOffers' => $offerRepository->searchSimilarOffers($offer),
+        ]);
+    }
+    
+    /**
+     * @return Response
+     */
+    public function offersAction()
+    {
+        $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
+        $offers = $offerRepository->getUsersOffers($this->getUser());
+
+        return $this->render('AppBundle:Home:offers.html.twig', [
+            'offers' => $offers,
         ]);
     }
 }

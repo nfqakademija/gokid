@@ -13,3 +13,6 @@
 /web/js/
 /web/images/
 /web/fonts/
+Gulpfile.min.js
+app/Resources/scripts/*.min.js
+sass-lint.yml
