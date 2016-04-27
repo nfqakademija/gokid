@@ -40,7 +40,7 @@ class Activity
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage")
      * @ORM\JoinColumn(name="default_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     * @Assert\NotBlank(message="Prašome įkelti numatytają sporto šakos nuotrauką")
+     * @Assert\NotBlank(message="Prašome įkelti numatytają sporto šakos nuotrauką", groups={"creation"})
      */
     private $defaultImage;
 
