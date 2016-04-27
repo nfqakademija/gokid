@@ -93,11 +93,16 @@ function setMapParameters(offers){
 
         markers[offer].addListener('click', function() {
             closeWindows(offers);
+
             infowindow[this.id].open(map, markers[this.id]);
+
             return false;
         });
     }
-    map.fitBounds(bounds);
+
+    if (markers.length > 0) {
+        map.fitBounds(bounds);
+    }
 
     map.addListener('click', function() {
         closeWindows(offers);
@@ -122,10 +127,12 @@ function clearMarkers() {
         markers[marker].setMap(null);
     }
 
+    if (markers.length > 0) {
+        markerClusterer.clearMarkers();
+    }
+
     markers     = [];
     clusters    = [];
-
-    markerClusterer.clearMarkers();
 }
 
 /**
@@ -158,18 +165,7 @@ function ajaxUpdate(page) {
         $('.offer-objects').fadeOut('fast');
         $('.offer-objects').html(data).fadeIn('fast');
 
-        for (var offer in offers) {
-            markers[offer] = new google.maps.Marker({
-                position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
-                map: map,
-                title: offers[offer].name,
-                icon: green,
-                id: offer
-            });
-
-            clusters.push(markers[offer]);
-        }
-
+        setMarkers(offers);
         setMapParameters(offers);
 
         markerClusterer = new MarkerClusterer(map, clusters);
@@ -231,6 +227,7 @@ $('#age').popover({
 }).click(function() {
     $('.button-container').click(function () {
         $('#age').val($(this).text()).popover('hide');
+        ajaxUpdate();
     });
 });
 
