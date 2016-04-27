@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Activity
@@ -26,6 +27,7 @@ class Activity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=45)
+     * @Assert\NotBlank(message="Prašome įvesti sporto šakos pavadinimą")
      */
     private $name;
 
@@ -38,6 +40,7 @@ class Activity
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage")
      * @ORM\JoinColumn(name="default_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @Assert\NotBlank(message="Prašome įkelti numatytają sporto šakos nuotrauką")
      */
     private $defaultImage;
 

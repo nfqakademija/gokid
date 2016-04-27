@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Activity;
+use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
+use AppBundle\Form\ActivityType;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferImageRepository;
 use AppBundle\Repository\OfferRepository;
@@ -45,6 +47,7 @@ class HomeController extends Controller
             'form' => $form->createView(),
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),
+            'offer_count' => $offerRepository->getOfferCount(),
         ];
     }
 
@@ -222,28 +225,98 @@ class HomeController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             /** @var ActivityRepository $activityRepository */
             $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
-            /** @var OfferImageRepository $imageRepository */
-            $imageRepository = $this->getDoctrine()->getRepository('AppBundle:OfferImage');
-            if ($data = $this->get('csv_parser')->parseCsv($file->getRealPath())) {
-                $images = $imageRepository->getImages();
-                foreach ($data as $offer) {
+            if ($data = $this->get('import_helper')->parseCsv($file->getRealPath())) {
+                foreach ($data['offers'] as $offer) {
                     /** @var Offer $offer */
                     if ($activity = $activityRepository->findBy(
                         ['name' => $offer->getActivity()->getName()]
-                    )
-                    ) {
+                    )) {
                         $offer->setActivity($activity[0]);
-                        $offer->setMainImage($activity[0]->getDefaultImage());
+                        if (!$offer->getMainImage()) {
+                            $offer->setMainImage($activity[0]->getDefaultImage());
+                        }
                     } else {
-                        $activity = new Activity();
-                        $activity->setName($offer->getActivity()->getName());
-                        $entityManager->persist($activity);
-                        $offer->setActivity($activity);
+                        $entityManager->persist($offer->getActivity());
                     }
                     $entityManager->persist($offer);
+                    if ($offer->getMainImage()) {
+                        $entityManager->persist($offer->getMainImage());
+                    }
+                }
+                foreach ($data['offerImages'] as $image) {
+                    $entityManager->persist($image);
                 }
                 $entityManager->flush();
+                $this->addFlash('success', 'Būreliai sėkmingai įkelti');
             }
         }
+    }
+    
+    /**
+     * Activity creation action.
+     *
+     * @Template("AppBundle:Home:activityCreate.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @return array
+     */
+    public function activityCreateAction(Request $request)
+    {
+        $activity = new Activity();
+        $form = $this->createForm(ActivityType::class, $activity);
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $defaultImage = new OfferImage();
+            $defaultImage->setImageFile($activity->getDefaultImage());
+            $activity->setDefaultImage($defaultImage);
+            $entityManager = $this->getDoctrine()->getEntityManager();
+            $entityManager->persist($activity->getDefaultImage());
+            $entityManager->persist($activity);
+            $entityManager->flush();
+            $this->addFlash('success', 'Sporto šaka sukurta');
+            unset($activity);
+        }
+
+        return [
+            'activities' => $activityRepository->getAllActivities(),
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * Activity edit action.
+     *
+     * @Template("AppBundle:Home:activityEdit.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @return array
+     */
+    public function activityEditAction(Request $request, Activity $activity)
+    {
+        $form = $this->createForm(ActivityType::class, $activity);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getEntityManager();
+            if (isset($request->files->get('activity')['defaultImage'])) {
+                $entityManager->remove($activity->getDefaultImage());
+                $defaultImage = new OfferImage();
+                $defaultImage->setImageFile(
+                    $request->files->get('activity')['defaultImage']
+                );
+                $entityManager->persist($defaultImage);
+                $activity->setDefaultImage($defaultImage);
+            }
+            $entityManager->persist($activity);
+            $entityManager->flush();
+            $this->addFlash('success', 'Sporto šaka atnaujinta');
+            return $this->redirect($this->generateUrl('app.activityCreate'));
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 }

@@ -6,8 +6,11 @@
     <div class="container search-container">
         <div class="va-middle text-center">
             <h1 class="header-text">
-                Būrelių paieška
+                Aktyvus vaikas = Sveikas vaikas
             </h1>
+            <h3 class="header-subtext">
+                Suraskite būrelį savo vaikui, ieškodami tarp <span class="offer-count counter"><i>{{ offer_count }}</i></span> skelbimų
+            </h3>
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
                     {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
@@ -85,7 +88,7 @@
         var form = $('.index-form');
     </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
-    <script type=text/javascript src="{{ asset('js/age-popover.js') }}"
+    <script type=text/javascript src="{{ asset('js/age-popover.js') }}"></script>
     <script defer="defer" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
 {% endblock %}
 

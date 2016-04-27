@@ -4,6 +4,5 @@ parameters:
 #    parameter_name: value
 
 services:
-    csv_parser:
-        class: AppBundle\Utility\CsvParser
-        arguments: [ doctrine.orm.entity_manager ]
+    import_helper:
+        class: AppBundle\Utility\ImportHelper

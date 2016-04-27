@@ -9,7 +9,7 @@ use AppBundle\Validator\Constraints as CustomAssert;
 /**
  * Offer
  *
- * @ORM\Table(name="offers")
+ * @ORM\Table(name="offers",options={"engine":"MyISAM"})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OfferRepository")
  * @CustomAssert\GenderSelected
  * @CustomAssert\AgesAscending

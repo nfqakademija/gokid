@@ -9,11 +9,7 @@
         </div>
     </div>
     <div class="container content-form {% if app.user %}logged-in offer-registration{% endif %}">
-        {% for flash_message in app.session.flashBag.get('success') %}
-            <div class="alert alert-success">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
+        {% include '@App/Home/includes/flashBag.html.twig' %}
         {% form_theme form 'AppBundle:form:OfferRegistrationFields.html.twig' %}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'registration-form'}}) }}
         {% if not app.user %}

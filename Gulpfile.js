@@ -33,6 +33,9 @@ gulp.task('scripts', function() {
             // Nice select
             dir.assets + 'scripts/jquery.sticky.js',
             dir.assets + 'scripts/jquery.nice-select.min.js',
+            // Counter-up plugin
+            dir.bower + 'waypoints/waypoints.js',
+            dir.bower + 'counter-up/jquery.counterup.js',
             // Main JS file
             dir.assets + 'scripts/main.js'
         ])
