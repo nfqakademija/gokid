@@ -29,8 +29,7 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('body', TextareaType::class, [
-            'label' => false,
-            'attr' => array('class' => 'tinymce'),
+            'label' => 'Atsiliepimas',
         ])->add('rate', ChoiceType::class, [
                 'label' => false,
                 'choice_label' => false,
@@ -44,11 +43,11 @@ class CommentType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
         ])->add('title', TextType::class, [
-                'label' => false,
+                'label' => 'Atsiliepimo pavadinimas',
         ])->add('name', TextType::class, [
-                'label' => false,
+                'label' => 'Jūsų vardas',
         ])->add('email', EmailType::class, [
-                'label' => false,
+                'label' => 'El. pašto adresas',
         ])->add('submit', 'submit', [
                 'label' => 'Įvertinti',
         ]);

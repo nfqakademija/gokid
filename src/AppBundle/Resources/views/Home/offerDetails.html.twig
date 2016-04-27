@@ -1,12 +1,13 @@
 {% extends "::base.html.twig" %}
 
-{% block title %} Būrelio informacija - {{ parent() }}{% endblock %}
+{% block title %} Gokid - {{ parent() }}{% endblock %}
 
 {% block body %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <div class="offerDetails">
-        <div class="carouselContainer">
-            <br>
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carouselContainer">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -44,50 +45,49 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-    </div>
-    <div class="goToSearchContainer">
-        <a class="goToSearch" href="{{ path('app.search') }}"> Grįžti į paiešką </a>
+
     </div>
     <div class="container-fluid">
-        <div class="detailsContainer">
-            <h1 class="name"> {{ offer.getName }} </h1>
             <div class="row">
-                <div class="col-sm-7">
+                <div class="col-xs-12 col-sm-offset-1 col-sm-6">
+                    <div class="goToSearchContainer">
+                        <a class="goToSearch" href="{{ path('app.search') }}"> Grįžti į paiešką </a>
+                    </div>
+                    <h2 class="name"> {{ offer.getName }} </h2>
                     <div class="ratingContainer">
                         <span class="offer-rating"> {{ offer.getRating|number_format(1, '.') }}</span>
                         <span> ({{ comments.count }})</span>
                     </div>
                     <div class="contactsContainer">
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-xs-6 col-sm-3">
                                 <h4> {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }} </h4>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-xs-6 col-sm-3">
                                 <h4> <span class="fa fa-phone" aria-hidden="true"></span> {{ offer.getUser.getPhone }} </h4>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-12 col-sm-6">
                                 <h4> <span class="fa fa-paper-plane-o" aria-hidden="true"></span> {{ offer.getUser.getEmail }} </h4>
                             </div>
                          </div>
                     </div>
                     <div class="interactionContainer">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-xs-12 col-sm-12">
                                 <h4> <a href="#reviewForm"> <span class="fa fa-commenting-o" aria-hidden="true"></span> Rašyti atsiliepimą </a> </h4>
                             </div>
-                            <div class="col-sm-4">
+                            {#<div class="col-xs-4 col-sm-4">
                                 <h4> <a href=""> <span class="fa fa-bookmark-o" aria-hidden="true"></span> Mėgstamiausias </a> </h4>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-xs-4 col-sm-4">
                                 <h4> <a href=""> <span class="fa fa-share" aria-hidden="true"></span> Dalintis </a> </h4>
-                            </div>
+                            </div>#}
                         </div>
                     </div>
                     <div class="infoContainer">
-                        <br>
                         <p> {{ offer.getDescription }} </p>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-xs-6 col-sm-6">
                                 <div>
                                     <h5> Sporto rūšis: {{ offer.getActivity.getName }} </h5>
                                 </div>
@@ -95,7 +95,7 @@
                                     <h5> Adresas: {{ offer.getAddress }}</h5>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6 col-sm-6">
                                 <div>
                                     <h5> Vaikų amžius: {{ offer.getAgeFrom }} - {{ offer.getAgeTo }} m. </h5>
                                 </div>
@@ -105,15 +105,66 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="mapContainer">
+                            <div id="map" class="map">
+                                <script>
+                                    var markers = [];
+                                    var map;
+                                    function initMap() {
+                                        map = new google.maps.Map(document.getElementById('map'), {
+                                            zoom: 11,
+                                            center: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}}
+                                        });
+
+                                        var green = 'http://maps.google.com/mapfiles/marker_green.png';
+
+                                        var contentString = '<div id="content">'+
+                                                '<div id="siteNotice">'+
+                                                '</div>'+
+                                                '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName|raw }}</h4></a>'+
+                                                '<div class="bodyContent">'+
+                                                '<a href=""><img width="100%" src="{{ asset('/images/'~ offer.getMainImage )}}" /></a>'+
+                                                '<p>{{ offer.getDescription|replace({"\n":' ', "\r":' '}) }}</p>'+
+                                                '</div>'+
+                                                '</div>';
+                                        var infowindow = new google.maps.InfoWindow({ content: contentString });
+                                        markers[{{ offer.getId }}] = new google.maps.Marker({
+                                            position: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
+                                            map: map,
+                                            title: '{{ offer.getName }}',
+                                            icon: green
+                                        });
+                                        markers[{{ offer.getId }}].addListener('click', function() {
+                                            infowindow.open(map, markers[{{ offer.getId }}]);
+                                            map.setCenter(marker.getPosition());
+                                        });
+
+                                    }
+                                </script>
+                                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap" async defer></script>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-offset-1 col-sm-6">
+
                     <div class="reviewList">
                         <h4> Atsiliepimai ({{ comments.count }})</h4>
                         {% for comment in comments %}
                             <div class="review">
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    <div class="col-xs-4 col-sm-4">
+                                        <div class="userIcon center">
+                                        <span class="fa fa-user fa-4x" aria-hidden="true"></span>
+                                        </div>
                                         <h5 class="center">{{ comment.getName }} </h5>
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-xs-8 col-sm-8">
                                         <h5> "{{ comment.getTitle }}" </h5>
                                         <span class="offer-rating">{{ comment.getRate|number_format(1, '.') }}</span>
                                         <span class="createdAt"> on {{ comment.getCreatedAt|date("F d, Y") }} </span>
@@ -123,110 +174,71 @@
                             </div>
                         {% endfor %}
                     </div>
+
                     <div id='reviewForm' class="reviewForm">
-                        <br>
                         <h4> Įvertinkite ir parašykite atsiliepimą </h4>
                         {{ form_start(form) }}
-                        <h5> Atsiliepimas </h5>
-                        {{ form_row(form.body, { 'attr': {'class': 'body'} }) }}
-                        <h5> Įvertinimas </h5>
+                        {{ form_row(form.body, { 'attr': {'class': 'body-input'} }) }}
+                        <label> Įvertinimas </label>
                         <div class="rating">
                             {% for radioRate in form.rate %}
                                 <label for="{{ radioRate.vars.id }}">
                                     <span class="fa fa-futbol-o"></span>
                                 </label>
                             {% endfor %}
-                            {{ form_row(form.rate, { 'attr': {'class': 'rate'} }) }}
+                            {{ form_row(form.rate, { 'attr': {'class': 'rate-input'} }) }}
                         </div>
-                        <h5> Atsiliepimo pavadinimas </h5>
-                        {{ form_row(form.title, { 'attr': {'class': 'title'} }) }}
+                        {{ form_row(form.title, { 'attr': {'class': 'title-input'} }) }}
                         <div class="row">
-                            <div class="col-sm-6">
-                                <h6> Jūsų vardas </h6>
-                                {{ form_row(form.name, { 'attr': {'class': 'name'} }) }}
+                            <div class="col-xs-6 col-sm-6">
+                                {{ form_row(form.name, { 'attr': {'class': 'name-input'} }) }}
                             </div>
-                            <div class="col-sm-6">
-                                <h6> El. pašto adresas </h6>
-                                {{ form_row(form.email, { 'attr': {'class': 'email'} }) }}
+                            <div class="col-xs-6 col-sm-6">
+                                {{ form_row(form.email, { 'attr': {'class': 'email-input'} }) }}
                             </div>
                         </div>
                         {{ form_row(form.submit, { 'attr': {'class': 'button'} }) }}
                         {{ form_end(form) }}
-                        <br>
                     </div>
                 </div>
-                <div class="col-sm-5">
-                    <div class="mapContainer">
-                        <div id="map" class="map">
-                            <script>
-                                var markers = [];
-                                var map;
-                                function initMap() {
-                                    map = new google.maps.Map(document.getElementById('map'), {
-                                        zoom: 11,
-                                        center: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}}
-                                    });
+                <div class="col-xs-12 col-sm-4">
 
-                                    var green = 'http://maps.google.com/mapfiles/marker_green.png';
-
-                                    var contentString = '<div id="content">'+
-                                            '<div id="siteNotice">'+
-                                            '</div>'+
-                                            '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName|raw }}</h4></a>'+
-                                            '<div class="bodyContent">'+
-                                            '<a href=""><img width="100%" src="{{ asset('/images/'~ offer.getMainImage )}}" /></a>'+
-                                            '<p>{{ offer.getDescription|replace({"\n":' ', "\r":' '}) }}</p>'+
-                                            '</div>'+
-                                            '</div>';
-                                    var infowindow = new google.maps.InfoWindow({ content: contentString });
-                                    markers[{{ offer.getId }}] = new google.maps.Marker({
-                                        position: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
-                                        map: map,
-                                        title: '{{ offer.getName }}',
-                                        icon: green
-                                    });
-                                    markers[{{ offer.getId }}].addListener('click', function() {
-                                        infowindow.open(map, markers[{{ offer.getId }}]);
-                                        map.setCenter(marker.getPosition());
-                                    });
-
-                                }
-                            </script>
-                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap" async defer></script>
-                        </div>
-                    </div>
                     <div class="similarOffers">
                         <h4> Panašūs būreliai </h4>
+
+
                         <div class="row">
                         {% if similarOffers |length >= 1 %}
-                            <div class="col-sm-6">
+                            <div class="col-xs-6 col-sm-6">
                                 <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[0].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[0].getName }}"> </a>
                                 <h5>{{ similarOffers[0].getName }}</h5>
                             </div>
                         {% endif %}
                         {% if similarOffers |length >= 2 %}
-                            <div class="col-sm-6">
+                            <div class="col-xs-6 col-sm-6">
                                 <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[1].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[1].getName }}"> </a>
                                 <h5>{{ similarOffers[1].getName }}</h5>
                             </div>
                         {% endif %}
                         {% if similarOffers |length >= 3 %}
-                            <div class="col-sm-6">
+                            <div class="col-xs-6 col-sm-6">
                                 <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[2].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[2].getName }}"> </a>
                                 <h5>{{ similarOffers[2].getName }}</h5>
                             </div>
                         {% endif %}
                         {% if similarOffers |length >= 4 %}
-                            <div class="col-sm-6">
+                            <div class="col-xs-6 col-sm-6">
                                 <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"><img src="{{ asset('/images/'~similarOffers[3].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[3].getName }}"> </a>
                                 <h5>{{ similarOffers[3].getName }}</h5>
                             </div>
                         {% endif %}
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 {% endblock %}

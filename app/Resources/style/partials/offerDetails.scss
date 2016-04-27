@@ -1,236 +1,181 @@
 .offerDetails {
-  .carousel-inner > .item > img,
-  .carousel-inner > .item > a > img {
-    height: 400px;
-    margin: auto;
-  }
+    $border: solid 1px darkgrey;
 
-  .goToSearchContainer {
-    margin-top: 50px;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-
-    .goToSearch {
-      margin-left: 150px;
-      text-decoration: none;
-      color: grey;
-      font-size: small;
-
-      a:hover {
-        color: darkgreen;
-        text-decoration: none;
-      }
+    .carouselContainer{
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            height: 400px;
+            margin: auto;
+        }
+        margin-bottom: 20px;
     }
-  }
 
-  .detailsContainer {
-    background-color: white;
-    margin: 150px;
-    margin-top: 0px;
+    .goToSearchContainer {
+        margin-bottom: 20px;
+        .goToSearch {
+            text-decoration: none;
+            color: grey;
+            font-size: small;
+        }
+        a:hover {
+            color: $neutral;
+            text-decoration: none;
+        }
+    }
 
     .name {
-      margin-bottom: 20px;
-      color: darkgreen;
+        margin-bottom: 20px;
+        color: $neutral;
     }
 
     .ratingContainer {
-      margin-bottom: 10px;
-    }
-  }
-
-  .similarOffers {
-    margin-top: 50px;
-    margin-left: 50px;
-
-    h4, h5 {
-      text-align: center;
-    }
-  }
-
-  .mapContainer {
-    #map {
-      height: 50vh;
-      margin-left: 50px;
-      margin-bottom: 50px;
-    }
-  }
-
-  .green {
-    color: green;
-  }
-
-  .contactsContainer {
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-    h4 {
-      font-size: small;
-    }
-  }
-
-  .interactionContainer {
-    margin-bottom: 30px;
-    h4 {
-      text-align: left;
-      font-size: medium;
-    }
-    a {
-      color: darkgreen;
-      text-decoration: none;
+        margin-bottom: 20px;
     }
 
-  }
-
-  .infoContainer {
-    margin-bottom: 50px;
-    h5 {
-      font-size: small;
-      margin-left: 5%;
-    }
-    p {
-      margin: 30px;
-      margin-top: 0px;
-      font-size: small;
-    }
-    background-color: #d9ffbe;
-    border: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-  }
-
-  .reviewList {
-    .review {
-      border-bottom: solid;
-      border-width: 1px;
-      border-color: darkgrey;
+    .similarOffers {
+        h4, h5 {
+            text-align: center;
+        }
     }
 
-    .createdAt{
-      color: darkgrey;
+    .mapContainer {
+        #map {
+            height: 50vh;
+            margin-bottom: 20px;
+        }
     }
 
-    .center {
-      margin: auto;
-      width: 60%;
+    .contactsContainer {
+        border-bottom: $border;
+        h4 {
+            font-size: small;
+        }
     }
 
-    h4 {
-      border-bottom: solid;
-      border-width: 1px;
-      border-color: darkgrey;
-      font-size: medium;
+    .interactionContainer {
+        margin-bottom: 20px;
+        h4 {
+            text-align: left;
+            font-size: medium;
+        }
+        a {
+            color: $neutral;
+            text-decoration: none;
+        }
     }
 
-    h5 {
-      font-size: small;
+    .infoContainer {
+        margin-bottom: 20px;
+        h5, p {
+            font-size: small;
+        }
+        background-color: $lightest;
+        border: $border;
+        padding: 10px;
     }
 
-    margin-bottom: 50px;
-  }
-
-  .reviewForm {
-    background-color: #d9ffbe;
-    border: solid;
-    border-width: 1px;
-    border-color: darkgrey;
-
-    h4 {
-      margin-left: 5%;
-      font-size: medium;
+    .reviewList {
+        .review {
+            border-bottom: $border;
+        }
+        .userIcon{
+            color: $neutral;
+        }
+        .center {
+            width: 50%;
+            margin: auto;
+        }
+        .createdAt {
+            color: darkgrey;
+        }
+        h4 {
+            border-bottom: $border;
+            font-size: medium;
+        }
+        h5 {
+            font-size: small;
+        }
+        margin-bottom: 20px;
     }
 
-    h5 {
-      font-size: small;
-      margin-left: 5%;
+    .reviewForm {
+        background-color: $lightest;
+        border: $border;
+        padding: 10px;
+        margin-bottom: 20px;
+        h4 {
+            font-size: medium;
+            border-bottom: $border;
+            margin-bottom: 10px;
+        }
+
+        .body-input {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+
+        .rate-input {
+            margin-bottom: 10px;
+        }
+
+        .title-input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .email-input {
+            width: 100%;
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .name-input {
+            width: 100%;
+            float: left;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            background-color: $neutral;
+            border-color: $neutral;
+            color: white;
+        }
+
+        .rating {
+            font-size: 0;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 15px;
+            color: $neutral;
+        }
+
+        .rating input:checked ~ label {
+            color: #E8E6E5 !important;
+        }
+
+        .rating:hover label {
+            color: $neutral !important;
+        }
+
+        .rating label:hover ~ label {
+            color: #E8E6E5 !important;
+        }
     }
 
-    h6 {
-      font-size: small;
-      margin-left: 10%;
+    .offer-rating {
+        border: 3px solid $neutral;
+        border-radius: 50%;
+        font-size: 13px;
+        font-weight: 600;
+        height: 30px;
+        padding: 5px;
+        text-align: center;
+        width: 30px;
     }
-
-    .body {
-      margin-right: 5%;
-      margin-left: 5%;
-      width: 90%;
-      height: 150px;
-      color: #333333;
-    }
-
-    .rate {
-      margin-left: 5%;
-
-    }
-
-    .title {
-      margin-right: 5%;
-      margin-left: 5%;
-      width: 90%;
-      color: #333333;
-      text-shadow: none;
-    }
-
-    .email {
-      margin-right: 10%;
-      margin-left: 10%;
-      width: 80%;
-      float: right;
-      color: #333333;
-    }
-
-    .name {
-      margin-right: 10%;
-      margin-left: 10%;
-      width: 80%;
-      float: left;
-      color: #333333;
-    }
-
-    .button {
-      background-color: darkgreen;
-      color: white;
-      margin-left: 5%;
-    }
-
-    .rating {
-      font-size: 0;
-      margin-left: 5%;
-    }
-
-    .rating input {
-      display: none;
-    }
-
-    .rating label {
-      font-size: 15px;
-      color: darkgreen;
-    }
-
-    .rating input:checked ~ label {
-      color: #E8E6E5 !important;
-    }
-
-    .rating:hover label{
-      color: darkgreen !important;
-    }
-
-    .rating label:hover ~ label{
-      color: #E8E6E5 !important;
-    }
-  }
-
-  .offer-rating {
-    border: 3px solid #65c04c;
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 600;
-    height: 30px;
-    padding: 5px;
-    text-align: center;
-    width: 30px;
-  }
 }
-
-
-

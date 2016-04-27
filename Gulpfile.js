@@ -84,11 +84,4 @@ gulp.task('fonts', function() {
         .pipe(gulp.dest(dir.dist + 'fonts'));
 });
 
-gulp.task('bundles', function() {
-    gulp.src([
-            dir.assets + 'bundles/**'
-        ])
-        .pipe(gulp.dest(dir.dist + 'bundles'));
-});
-
-gulp.task('default', ['sass', 'scripts', 'fonts', 'images', 'bundles']);
+gulp.task('default', ['sass', 'scripts', 'fonts', 'images']);
