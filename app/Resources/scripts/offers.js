@@ -1,4 +1,18 @@
 /**
+ * Variables
+ */
+var input = (document.getElementById('address'));
+var latitude = $('#latitude');
+var longitude = $('#longitude');
+var form = $('.index-form');
+var markers = [];
+var clusters = [];
+var infowindow = [];
+var map;
+var markerClusterer = null;
+var green = 'http://maps.google.com/mapfiles/marker_green.png';
+
+/**
  * Hightligths marker when offer hovered
  */
 $( ".offer" ).hover(
@@ -39,6 +53,19 @@ function highlightedIcon() {
 }
 
 /**
+ * Returns payment type
+ */
+function getPaymentType(id) {
+    if (id == 0) {
+        return 'Vienkartinis';
+    } else if (id == 1) {
+        return 'Kas savaitę';
+    } else {
+        return 'Kas mėnesį';
+    }
+}
+
+/**
  * Generates bounds, listeners, popup windows by given offers
  * @param offers
  * @returns {boolean}
@@ -53,7 +80,8 @@ function setMapParameters(offers){
         contentString[offer] = '<div class="marker-infowindow">' +
             '<div>' +
             '</div>' +
-            '<div class="image"><a href="offer/'+offer+'"><img width="100%" src="' + rootUrl + 'images/offerImages/' + offers[offer].image + '" /><div class="price">' + offers[offer].price + ' € / Mėn</div></a></div>' +
+            '<div class="image"><a href="offer/'+offer+'"><img width="100%" src="' + rootUrl + 'images/offerImages/' + offers[offer].image + '" />'+
+            '<div class="price">' + offers[offer].price + ' € / '+getPaymentType(offers[offer].paymentType)+'</div></a></div>' +
             '<a href="offer/'+offer+'"><h4 class="name">' + offers[offer].name + '</h4></a>' +
             '<div class="marker-content">' +
             '<span class="offer-activity">'+offers[offer].activity + '</span>' +
@@ -101,6 +129,22 @@ function clearMarkers() {
 }
 
 /**
+ * Sets markers
+ */
+function setMarkers(offers) {
+    for (var offer in offers) {
+        markers[offer] = new google.maps.Marker({
+            position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
+            map: map,
+            title: offers[offer].name,
+            icon: green,
+            id: offer
+        });
+        clusters.push(markers[offer]);
+    }
+}
+
+/**
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
@@ -113,6 +157,22 @@ function ajaxUpdate(page) {
 
         $('.offer-objects').fadeOut('fast');
         $('.offer-objects').html(data).fadeIn('fast');
+
+        for (var offer in offers) {
+            markers[offer] = new google.maps.Marker({
+                position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
+                map: map,
+                title: offers[offer].name,
+                icon: green,
+                id: offer
+            });
+
+            clusters.push(markers[offer]);
+        }
+
+        setMapParameters(offers);
+
+        markerClusterer = new MarkerClusterer(map, clusters);
     });
 }
 
