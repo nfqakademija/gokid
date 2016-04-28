@@ -196,7 +196,6 @@ $( "#slider-range" ).slider({
         $( "#dist" ).html( ui.value );
     }
 });
-$( "#distance" ).val( $( "#slider-range" ).slider( "value" ) );
 $('#dist').html( $( "#slider-range" ).slider( "value" ) );
 
 
