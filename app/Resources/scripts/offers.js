@@ -159,16 +159,19 @@ function ajaxUpdate(page) {
 
     history.pushState(null, null, url);
 
+    $('.offer-objects').addClass('loading');
+
     $.get( url+"&ajax=1", function( data ) {
         clearMarkers();
 
-        $('.offer-objects').fadeOut('fast');
-        $('.offer-objects').html(data).fadeIn('fast');
+        $('.offer-objects').html(data);
 
         setMarkers(offers);
         setMapParameters(offers);
 
         markerClusterer = new MarkerClusterer(map, clusters);
+
+        $('.offer-objects').removeClass('loading');
     });
 }
 

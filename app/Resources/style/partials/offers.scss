@@ -1,6 +1,10 @@
 .offers {
   padding-top: 20px;
 
+  .loading {
+    opacity: 0.2;
+  }
+
   .offers-range,
   .offers-price {
     padding-bottom: 25px;
