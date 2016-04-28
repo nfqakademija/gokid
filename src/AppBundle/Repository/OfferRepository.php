@@ -178,6 +178,7 @@ class OfferRepository extends EntityRepository
             $data[$offer->getId()]['latitude'] = $offer->getLatitude();
             $data[$offer->getId()]['longitude'] = $offer->getLongitude();
             $data[$offer->getId()]['image'] = $offer->getMainImage()->getImageName();
+            $data[$offer->getId()]['paymentType'] = $offer->getPaymentType();
         }
 
         return json_encode($data);

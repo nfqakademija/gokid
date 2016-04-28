@@ -78,7 +78,8 @@ class HomeController extends Controller
         if ($request->get('ajax') == 1) {
             $offers->setParam('ajax', null);
 
-            return $this->render('AppBundle:Home/includes:searchAjax.html.twig', [
+            return $this->render('AppBundle:Home/includes:offerObjects.html.twig', [
+                'ajax' => 1,
                 'offers' => $offers,
                 'offers_json' => $offers_json,
             ]);
