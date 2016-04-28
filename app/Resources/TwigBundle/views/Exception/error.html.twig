@@ -7,7 +7,9 @@
                 Ups!
             </div>
             <div class="message">
-                Įvyko klaida.
+                {% block error_message %}
+                    Įvyko klaida.
+                {% endblock %}
             </div>
             <div class="error-code">
                 Klaidos kodas: {{ status_code }}
