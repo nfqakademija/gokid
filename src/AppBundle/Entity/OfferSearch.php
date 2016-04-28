@@ -79,7 +79,7 @@ class OfferSearch
     }
 
     /**
-     * @param int $distance
+     * @param int $priceFrom
      */
     public function setPriceFrom($priceFrom)
     {
@@ -95,7 +95,7 @@ class OfferSearch
     }
 
     /**
-     * @param int $distance
+     * @param int $priceTo
      */
     public function setPriceTo($priceTo)
     {

@@ -155,7 +155,17 @@ function setMarkers(offers) {
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
-    var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+"&activity="+$( "#activity option:selected").val()+"&priceFrom="+$('#priceFrom').val()+"&priceTo="+$('#priceTo').val()+((page > 0) ? '&page='+page : '');
+    var url =   rootUrl + "search?address="+$('#address').val()+
+                (($('#male').is(':checked')) ? '&male=1' : '')+
+                (($('#female').is(':checked')) ? '&female=1' : '')+
+                "&age="+$('#age').val()+
+                "&latitude="+$('#latitude').val()+
+                "&longitude="+$('#longitude').val()+
+                "&distance="+$('#distance').val()+
+                "&activity="+$( "#activity option:selected").val()+
+                "&priceFrom="+$('#priceFrom').val()+
+                (($('#priceTo').val().indexOf('+') === -1) ? "&priceTo="+$('#priceTo').val() : '')+
+                ((page > 0) ? '&page='+page : '');
 
     history.pushState(null, null, url);
 
@@ -205,27 +215,37 @@ $('#dist').html( $( "#slider-range" ).slider( "value" ) );
 /**
  * Price slider
  */
+var maxPrice = 200;
 $( "#slider-price" ).slider({
     range: true,
-    min: 0,
-    max: 300,
+    min: 1,
+    max: maxPrice,
     values: [ $( "#priceFrom" ).val(), $( "#priceTo" ).val() ],
     change: function( event, ui ) {
         ajaxUpdate();
     },
     slide: function( event, ui ) {
-        if(ui.values[ 1 ]>299)
-        {
-            ui.values[ 1 ] = '300+';
+        if(ui.values[ 1 ] == maxPrice) {
+            ui.values[ 1 ] = maxPrice+'+';
         }
 
-        $( "#price" ).html( "€" + ui.values[ 0 ] + " - €" + ui.values[ 1 ] );
+        $( "#price" ).html( "€" + ui.values[ 0 ] + "&nbsp;-&nbsp;€" + ui.values[ 1 ] );
         $( "#priceFrom" ).val( ui.values[ 0 ] );
-        $( "#priceTo" ).val( ui.values[ 1 ] );
+
+        if (ui.values[1].toString().indexOf('+') === -1) {
+            $("#priceTo").val(ui.values[1]);
+        } else {
+            $("#priceTo").val(maxPrice);
+        }
+
     }
 });
 $( "#price" ).html( "€" + $( "#slider-price" ).slider( "values", 0 ) +
-    " - €" + $( "#slider-price" ).slider( "values", 1 ) );
+    "&nbsp;-&nbsp;€" +
+    (
+        ($( "#slider-price" ).slider( "values", 1 ) == maxPrice) ?
+        maxPrice + '+' : $( "#slider-price" ).slider( "values", 1 ))
+    );
 
 /**
  * Updates offers when filter parameters are changed
