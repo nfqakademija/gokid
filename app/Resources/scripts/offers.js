@@ -29,8 +29,8 @@ $( ".offer" ).hover(
 /**
  * Focuses to location on map
  */
-$( ".offer-location" ).click(
-    function(){
+
+$( ".offers" ).on( "click", ".offer-location", function() {
         closeWindows(markers);
         var id = $(this).closest('.offer').attr('data-id');
         infowindow[id].open(map, markers[id]);
@@ -250,7 +250,7 @@ $( "#price" ).html( "€" + $( "#slider-price" ).slider( "values", 0 ) +
 /**
  * Updates offers when filter parameters are changed
  */
-$('input').change(function() {
+$('.offers-filter input').change(function() {
     if ($(this).attr('id') == 'address') {
         return false;
     }
