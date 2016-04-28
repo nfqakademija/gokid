@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Activity;
 use \Doctrine\ORM\EntityRepository;
 
 /**
@@ -26,5 +27,15 @@ class ActivityRepository extends EntityRepository
         }
 
         return $activities;
+    }
+
+    /**
+     * @return Activity[]
+     */
+    public function getAllActivities()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')->from('AppBundle:Activity', 'a');
+        return $qb->getQuery()->execute();
     }
 }

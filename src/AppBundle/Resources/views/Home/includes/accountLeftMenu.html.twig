@@ -10,6 +10,16 @@
             <li class="{% if app.request.attributes.get('_route') == 'app.registeredOffers' %}active{% endif %}">
                 <a href="{{ path('app.registeredOffers') }}">Jūsų būreliai</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="{% if app.request.attributes.get('_route') == 'app.offerImport' %}active{% endif %}">
+                    <a href="{{ path('app.offerImport') }}">Būrelių importavimas</a>
+                </li>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="{% if app.request.attributes.get('_route') == 'app.activityCreate' %}active{% endif %}">
+                    <a href="{{ path('app.activityCreate') }}">Sporto šakos</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </div>

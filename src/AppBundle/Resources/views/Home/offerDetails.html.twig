@@ -19,19 +19,19 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <img src="{{ asset ('/images/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+                    <img src="{{ asset ('/images/offerImages/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
                 </div>
 
                 <div class="item">
-                    <img src="{{ asset ('/images/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+                    <img src="{{ asset ('/images/offerImages/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
                 </div>
 
                 <div class="item">
-                    <img src="{{ asset ('/images/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+                    <img src="{{ asset ('/images/offerImages/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
                 </div>
 
                 <div class="item">
-                    <img src="{{ asset ('/images/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+                    <img src="{{ asset ('/images/offerImages/'~ offer.getImages[0].getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
                 </div>
             </div>
 
@@ -58,6 +58,8 @@
                         <span class="offer-rating"> {{ offer.getRating|number_format(1, '.') }}</span>
                         <span> ({{ comments.count }})</span>
                     </div>
+
+                    {% if not offer.imported %}
                     <div class="contactsContainer">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
@@ -71,6 +73,7 @@
                             </div>
                          </div>
                     </div>
+                    {% endif %}
                     <div class="interactionContainer">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12">

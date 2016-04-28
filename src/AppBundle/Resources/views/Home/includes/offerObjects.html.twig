@@ -16,7 +16,7 @@
                                 </g>
                             </svg>
                             <span class="offer-price">
-                                <span class="amount">{{ offer.getPrice }} €</span><span class="type">{% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas <savaitę></savaitę>{% else %}Kas mėnesį{% endif %}</span>
+                                <span class="amount">{{ offer.getPrice }} €</span><span class="type">{% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas savaitę{% else %}Kas mėnesį{% endif %}</span>
                             </span>
                         </div>
                     </div>
@@ -35,27 +35,16 @@
     <div class="navigation">
         {{ knp_pagination_render(offers) }}
     </div>
-
-    <script>
-        var offers = {{ offers_json|raw }};
-
-        for (var offer in offers) {
-            markers[offer] = new google.maps.Marker({
-                position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
-                map: map,
-                title: offers[offer].name,
-                icon: green,
-                id: offer
-            });
-            clusters.push(markers[offer]);
-        }
-
-        setMapParameters(offers);
-
-        markerClusterer = new MarkerClusterer(map, clusters);
-    </script>
 {% else %}
     <div class="not-found">Būrelių nerasta</div>
-
-    <script>map.setCenter({lat: 54.8931048, lng: 23.8666335});</script>
+    <script>
+        window.document.onload = function(e){
+            map.setCenter({lat: 54.8931048, lng: 23.8666335});
+        }
+    </script>
+{% endif %}
+{% if ajax is defined %}
+    <script>
+        var offers = {{ offers_json|raw }};
+    </script>
 {% endif %}

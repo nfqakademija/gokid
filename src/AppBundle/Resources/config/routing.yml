@@ -17,3 +17,15 @@ app.offerDetails:
 app.registeredOffers:
   path: /offers
   defaults: { _controller: AppBundle:Home:offers }
+
+app.offerImport:
+  path: /import
+  defaults: { _controller: AppBundle:Home:offerImport }
+
+app.activityCreate:
+  path: /activity
+  defaults: { _controller: AppBundle:Home:activityCreate }
+
+app.activityEdit:
+  path: /activityEdit/{id}
+  defaults: { _controller: AppBundle:Home:activityEdit }

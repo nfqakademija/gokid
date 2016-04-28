@@ -107,22 +107,42 @@ class LoadData implements FixtureInterface
 
         $activity1 = new Activity();
         $activity1->setName('Krepšinis');
+        $defaultImage1 = new OfferImage();
+        $defaultImage1->setImageName('/offerImages/sabonio.png');
+        $activity1->setDefaultImage($defaultImage1);
+        $manager->persist($defaultImage1);
         $manager->persist($activity1);
 
         $activity2 = new Activity();
         $activity2->setName('Futbolas');
+        $defaultImage2 = new OfferImage();
+        $defaultImage2->setImageName('/offerImages/futbolas.jpg');
+        $activity2->setDefaultImage($defaultImage2);
+        $manager->persist($defaultImage2);
         $manager->persist($activity2);
 
         $activity3 = new Activity();
         $activity3->setName('Lengvoji atletika');
+        $defaultImage3 = new OfferImage();
+        $defaultImage3->setImageName('/offerImages/viltis.jpg');
+        $activity3->setDefaultImage($defaultImage3);
+        $manager->persist($defaultImage3);
         $manager->persist($activity3);
 
         $activity4 = new Activity();
         $activity4->setName('Tenisas');
+        $defaultImage4 = new OfferImage();
+        $defaultImage4->setImageName('/offerImages/tennis.png');
+        $activity4->setDefaultImage($defaultImage4);
+        $manager->persist($defaultImage4);
         $manager->persist($activity4);
 
         $activity5 = new Activity();
         $activity5->setName('Plaukimas');
+        $defaultImage5 = new OfferImage();
+        $defaultImage5->setImageName('/offerImages/swim.jpg');
+        $activity5->setDefaultImage($defaultImage5);
+        $manager->persist($defaultImage5);
         $manager->persist($activity5);
 
         $offer1 = new Offer();
@@ -143,6 +163,12 @@ DESCRIPTION;
         $offer1->setUser($user1);
         $offer1->setPrice(10.0);
         $offer1->setPaymentType(0);
+        $offer1->setImported(true);
+        $offer1->setContactInfo(
+            $offer1->getUser()->getFirstName() . ' ' .
+            $offer1->getUser()->getLastName() . ' - ' .
+            $offer1->getUser()->getPhone()
+        );
         $manager->persist($offer1);
 
         $offer2 = new Offer();
@@ -165,6 +191,12 @@ DESCRIPTION;
         $offer2->setUser($user2);
         $offer2->setPrice(10.0);
         $offer2->setPaymentType(0);
+        $offer2->setImported(true);
+        $offer2->setContactInfo(
+            $offer2->getUser()->getFirstName() . ' ' .
+            $offer2->getUser()->getLastName() . ' - ' .
+            $offer2->getUser()->getPhone()
+        );
         $manager->persist($offer2);
 
         $offer3 = new Offer();
@@ -185,6 +217,12 @@ DESCRIPTION;
         $offer3->setUser($user3);
         $offer3->setPrice(10.0);
         $offer3->setPaymentType(0);
+        $offer3->setImported(true);
+        $offer3->setContactInfo(
+            $offer3->getUser()->getFirstName() . ' ' .
+            $offer3->getUser()->getLastName() . ' - ' .
+            $offer3->getUser()->getPhone()
+        );
         $manager->persist($offer3);
 
         $offer4 = new Offer();
@@ -206,6 +244,12 @@ DESCRIPTION;
         $offer4->setUser($user4);
         $offer4->setPrice(10.0);
         $offer4->setPaymentType(0);
+        $offer4->setImported(true);
+        $offer4->setContactInfo(
+            $offer4->getUser()->getFirstName() . ' ' .
+            $offer4->getUser()->getLastName() . ' - ' .
+            $offer4->getUser()->getPhone()
+        );
         $manager->persist($offer4);
 
         $offer5 = new Offer();
@@ -226,6 +270,12 @@ DESCRIPTION;
         $offer5->setUser($user5);
         $offer5->setPrice(10.0);
         $offer5->setPaymentType(0);
+        $offer5->setImported(true);
+        $offer5->setContactInfo(
+            $offer5->getUser()->getFirstName() . ' ' .
+            $offer5->getUser()->getLastName() . ' - ' .
+            $offer5->getUser()->getPhone()
+        );
         $manager->persist($offer5);
 
         $offer6 = new Offer();
@@ -246,6 +296,12 @@ DESCRIPTION;
         $offer6->setUser($user6);
         $offer6->setPrice(10.0);
         $offer6->setPaymentType(0);
+        $offer6->setImported(true);
+        $offer6->setContactInfo(
+            $offer6->getUser()->getFirstName() . ' ' .
+            $offer6->getUser()->getLastName() . ' - ' .
+            $offer6->getUser()->getPhone()
+        );
         $manager->persist($offer6);
 
         $offer7 = new Offer();
@@ -267,6 +323,12 @@ DESCRIPTION;
         $offer7->setUser($user7);
         $offer7->setPrice(10.0);
         $offer7->setPaymentType(0);
+        $offer7->setImported(true);
+        $offer7->setContactInfo(
+            $offer7->getUser()->getFirstName() . ' ' .
+            $offer7->getUser()->getLastName() . ' - ' .
+            $offer7->getUser()->getPhone()
+        );
         $manager->persist($offer7);
 
         $offer8 = new Offer();
@@ -288,6 +350,12 @@ DESCRIPTION;
         $offer8->setUser($user8);
         $offer8->setPrice(10.0);
         $offer8->setPaymentType(0);
+        $offer8->setImported(true);
+        $offer8->setContactInfo(
+            $offer8->getUser()->getFirstName() . ' ' .
+            $offer8->getUser()->getLastName() . ' - ' .
+            $offer8->getUser()->getPhone()
+        );
         $manager->persist($offer8);
 
         $offer9 = new Offer();
@@ -308,6 +376,12 @@ DESCRIPTION;
         $offer9->setUser($user8);
         $offer9->setPrice(10.0);
         $offer9->setPaymentType(0);
+        $offer9->setImported(true);
+        $offer9->setContactInfo(
+            $offer9->getUser()->getFirstName() . ' ' .
+            $offer9->getUser()->getLastName() . ' - ' .
+            $offer9->getUser()->getPhone()
+        );
         $manager->persist($offer9);
 
         $offer10 = new Offer();
@@ -328,6 +402,12 @@ DESCRIPTION;
         $offer10->setUser($user8);
         $offer10->setPrice(10.0);
         $offer10->setPaymentType(0);
+        $offer10->setImported(true);
+        $offer10->setContactInfo(
+            $offer10->getUser()->getFirstName() . ' ' .
+            $offer10->getUser()->getLastName() . ' - ' .
+            $offer10->getUser()->getPhone()
+        );
         $manager->persist($offer10);
 
         $image1 = new OfferImage();

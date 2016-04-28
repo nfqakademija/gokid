@@ -6,7 +6,6 @@ use AppBundle\Entity\OfferSearch;
 use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -179,6 +178,7 @@ class OfferRepository extends EntityRepository
             $data[$offer->getId()]['latitude'] = $offer->getLatitude();
             $data[$offer->getId()]['longitude'] = $offer->getLongitude();
             $data[$offer->getId()]['image'] = $offer->getMainImage()->getImageName();
+            $data[$offer->getId()]['paymentType'] = $offer->getPaymentType();
         }
 
         return json_encode($data);
@@ -197,5 +197,15 @@ class OfferRepository extends EntityRepository
         $qb->where('o.user = :user')->setParameter('user', $user);
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @return integer
+     */
+    public function getOfferCount()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('count(o)')->from('AppBundle:Offer', 'o');
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

@@ -2,17 +2,23 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Activity;
+use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
+use AppBundle\Form\ActivityType;
 use AppBundle\Form\CommentType;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
-use AppBundle\Entity\Offer;
 use AppBundle\Entity\Comment;
+use AppBundle\Entity\Offer;
 use AppBundle\Form\IndexSearchOffer;
 use AppBundle\Form\OfferType;
+use AppBundle\Utility\ImportHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class HomeController
@@ -23,7 +29,8 @@ class HomeController extends Controller
     /**
      * Home page index action.
      *
-     * @return Response
+     * @Template("AppBundle:Home:index.html.twig")
+     * @return array
      */
     public function indexAction()
     {
@@ -38,16 +45,20 @@ class HomeController extends Controller
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
-        return $this->render('AppBundle:Home:index.html.twig', [
+        return [
             'form' => $form->createView(),
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),
-        ]);
+            'offer_count' => $offerRepository->getOfferCount(),
+        ];
     }
 
     /**
+     * Offer search action
+     *
+     * @Template("AppBundle:Home:search.html.twig")
      * @param Request $request
-     * @return Response
+     * @return array
      */
     public function searchAction(Request $request)
     {
@@ -70,23 +81,24 @@ class HomeController extends Controller
         if ($request->get('ajax') == 1) {
             $offers->setParam('ajax', null);
 
-            return $this->render('AppBundle:Home/includes:searchAjax.html.twig', [
+            return $this->render('AppBundle:Home/includes:offerObjects.html.twig', [
+                'ajax' => 1,
                 'offers' => $offers,
                 'offers_json' => $offers_json,
             ]);
         }
 
-        return $this->render('AppBundle:Home:search.html.twig', [
+        return [
             'activities' => $activityRepository->getActivityList(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
             'offers_json' => $offers_json,
             'form' => $form->createView(),
-        ]);
+        ];
     }
 
     /**
-     * Coach info action.
+     * Offer and account registration action.
      *
      * @param Request $request
      * @return Response
@@ -128,8 +140,10 @@ class HomeController extends Controller
                 $this->get('session')->getFlashBag()->clear();
             }
             $em = $this->getDoctrine()->getManager();
+            $em->persist($offer->getMainImage());
             $em->persist($offer);
             $em->flush();
+            // Unset the form so that the fields do not get repopulated
             unset($offer);
             unset($form);
             $offer = new Offer();
@@ -137,10 +151,9 @@ class HomeController extends Controller
             if (!$loggedIn && $response && $response->getContent() === 'Ok') {
                 $this->addFlash('success', 'Jūsų paskyra sukurta, o būrelis patalpintas į sistemą');
                 return $this->redirect($this->generateUrl('fos_user_profile_edit'));
-            } else {
-                $form->remove('user');
-                $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
             }
+            $form->remove('user');
+            $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
         }
 
         // Checking if class level assertions failed and setting variables
@@ -164,18 +177,23 @@ class HomeController extends Controller
     }
 
     /**
+     * Individual offer details action.
+     *
      * @param Request $request
-     * @param int     $id
+     * @param Offer $offer
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Template("AppBundle:Home:offerDetails.html.twig")
      */
-    public function offerDetailsAction(Request $request, $id)
+    public function offerDetailsAction(Request $request, Offer $offer)
     {
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
-        $offer = $offerRepository->find($id);
 
         if (empty($offer)) {
             return $this->redirect($this->generateUrl('app.search'));
         }
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -194,32 +212,130 @@ class HomeController extends Controller
 
             $manager->flush();
 
-            return $this->render('AppBundle:Home:offerDetails.html.twig', [
+        return [
                 'form' => $form->createView(),
                 'comments' => $offer->getComments(),
                 'offer' => $offer,
                 'similarOffers' => $offerRepository->searchSimilarOffers($offer),
-            ]);
+            ];
         }
 
-        return $this->render('AppBundle:Home:offerDetails.html.twig', [
+        return [
             'form' => $form->createView(),
             'comments' => $offer->getComments(),
             'offer' => $offer,
             'similarOffers' => $offerRepository->searchSimilarOffers($offer),
-        ]);
+        ];
     }
 
     /**
-     * @return Response
+     * Users registered offers action.
+     *
+     * @Template("AppBundle:Home:offers.html.twig")
+     * @Security("has_role('ROLE_USER')")
+     * @return array
      */
     public function offersAction()
     {
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
         $offers = $offerRepository->getUsersOffers($this->getUser());
 
-        return $this->render('AppBundle:Home:offers.html.twig', [
+        return  [
             'offers' => $offers,
+        ];
+    }
+
+    /**
+     * Offer import action.
+     *
+     * @Template("AppBundle:Home:offerImport.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Request $request
+     * @return array
+     */
+    public function offerImportAction(Request $request)
+    {
+        if ($file = $request->files->get('fileInput')) {
+            /** @var ImportHelper $importer */
+            $importer = $this->get('import_helper');
+
+            try {
+                $data = $importer->parseCsv($file->getRealPath());
+                $importer->import($data);
+                $this->addFlash('success', 'Būreliai sėkmingai įkelti');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Įvyko klaida:' . $e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * Activity creation action.
+     *
+     * @Template("AppBundle:Home:activityCreate.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @return array
+     */
+    public function activityCreateAction(Request $request)
+    {
+        $activity = new Activity();
+        $form = $this->createForm(ActivityType::class, $activity, [
+            'validation_groups' => ['creation', 'Default']
         ]);
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $defaultImage = new OfferImage();
+            $defaultImage->setImageFile($activity->getDefaultImage());
+            $activity->setDefaultImage($defaultImage);
+            $entityManager = $this->getDoctrine()->getEntityManager();
+            $entityManager->persist($activity->getDefaultImage());
+            $entityManager->persist($activity);
+            $entityManager->flush();
+            $this->addFlash('success', 'Sporto šaka sukurta');
+            unset($activity);
+        }
+
+        return [
+            'activities' => $activityRepository->getAllActivities(),
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * Activity edit action.
+     *
+     * @Template("AppBundle:Home:activityEdit.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @return array
+     */
+    public function activityEditAction(Request $request, Activity $activity)
+    {
+        $form = $this->createForm(ActivityType::class, $activity);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getEntityManager();
+            if (isset($request->files->get('activity')['defaultImage'])) {
+                $entityManager->remove($activity->getDefaultImage());
+                $defaultImage = new OfferImage();
+                $defaultImage->setImageFile(
+                    $request->files->get('activity')['defaultImage']
+                );
+                $entityManager->persist($defaultImage);
+                $activity->setDefaultImage($defaultImage);
+            }
+            $entityManager->persist($activity);
+            $entityManager->flush();
+            $this->addFlash('success', 'Sporto šaka atnaujinta');
+            return $this->redirect($this->generateUrl('app.activityCreate'));
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 }

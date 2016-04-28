@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include '@App/Home/includes/flashBag.html.twig' %}
+        <div class="row">
+            <div class="col-sm-4">
+                {% include '@App/Home/includes/accountLeftMenu.html.twig' %}
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Jūsų įkelti būreliai
+                    </div>
+                    <div class="panel-body content-form logged-in no-shadow">
+                        <form method="POST" action="{{ path('app.offerImport') }}" novalidate="novalidate" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="fileInput" class="control-label">
+                                    CSV Failas
+                                </label>
+                                <input type="file" class="form-control-file" name="fileInput" accept="text/csv"/>
+                            </div>
+                            <input type="submit" class="submit" value="Importuoti"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

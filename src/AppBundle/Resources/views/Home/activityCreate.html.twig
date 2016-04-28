@@ -1,0 +1,37 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        {% include '@App/Home/includes/flashBag.html.twig' %}
+        <div class="row">
+            <div class="col-sm-4">
+                {% include '@App/Home/includes/accountLeftMenu.html.twig' %}
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Sporto šakos
+                    </div>
+                    <ul class="list-group">
+                        {% for activity in activities  %}
+                            <li class="list-group-item">
+                                {{ activity.name }}
+                                <a class="badge" href="{{ path('app.activityEdit', {'id': activity.id}) }}">Keisti</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="content-form logged-in no-shadow">
+                        {% form_theme form '@App/form/OfferRegistrationFields.html.twig' %}
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.defaultImage) }}
+                            <div>
+                                <input type="submit" value="Pridėti sporto šaką" class="submit"/>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
