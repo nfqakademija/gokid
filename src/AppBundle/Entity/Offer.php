@@ -608,6 +608,11 @@ class Offer
     {
         $this->comments[] = $comment;
 
+        $rating = $this->getRating();
+        $count = count($this->getComments());
+
+        $this->setRating(($rating * ($count - 1) + $comment->getRate()) / $count);
+
         return $this;
     }
 

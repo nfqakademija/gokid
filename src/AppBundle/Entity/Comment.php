@@ -72,6 +72,14 @@ class Comment
     protected $offer;
 
     /**
+     * Comment constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
      * Set offer
      *
      * @param Offer $offer

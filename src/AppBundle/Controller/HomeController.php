@@ -188,6 +188,7 @@ class HomeController extends Controller
      */
     public function offerDetailsAction(Request $request, Offer $offer)
     {
+        /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
         if (empty($offer)) {
@@ -199,20 +200,15 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $comment->setOffer($offer);
-            $comment->setCreatedAt(new \DateTime());
-            $manager->persist($comment);
-
-            $rating = $offer->getRating();
-            $commentsCount = count($offer->getComments());
-            $offer->setRating(($rating * $commentsCount + $comment->getRate()) / ($commentsCount + 1));
+            $em->persist($comment);
             $offer->addComment($comment);
-            $manager->persist($offer);
+            $em->persist($offer);
 
-            $manager->flush();
+            $em->flush();
 
-        return [
+            return [
                 'form' => $form->createView(),
                 'comments' => $offer->getComments(),
                 'offer' => $offer,
@@ -237,6 +233,7 @@ class HomeController extends Controller
      */
     public function offersAction()
     {
+        /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
         $offers = $offerRepository->getUsersOffers($this->getUser());
 
