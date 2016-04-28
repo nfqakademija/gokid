@@ -1,0 +1,29 @@
+// Error interface
+
+.error {
+  padding-bottom: 40px;
+
+  .message-title {
+    font-size: 60px;
+    padding-bottom: 20px;
+  }
+
+  .message {
+    font-size: 30px;
+  }
+
+  .error-code {
+    font-weight: bold;
+    padding-bottom: 20px;
+  }
+
+  div.links {
+    font-weight: bold;
+  }
+
+  .links ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+}

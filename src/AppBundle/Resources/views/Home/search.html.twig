@@ -48,12 +48,12 @@
                 <div class="button-table">
                     <div class="button-row">
                         {% for i in age_list[0] %}
-                            <div onclick="ajaxUpdate()" class="button-container">{{ i }}</div>
+                            <div class="button-container">{{ i }}</div>
                         {% endfor %}
                     </div>
                     <div class="button-row">
                         {% for i in age_list[1] %}
-                            <div onclick="ajaxUpdate()" class="button-container">{{ i }}</div>
+                            <div class="button-container">{{ i }}</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -70,46 +70,7 @@
                 <div class="clearfix"></div>
 
                 <div class="offer-objects">
-                    {% if (offers|length > 0) %}
-                        <div class="row">
-                            {% for offer in offers.getItems() %}
-                                <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
-                                    <div class="col-xs-12 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
-                                        <div class="offer-inner">
-                                            <img src="{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}" />
-                                            <div class="offer-content">
-                                                <h2>{{ offer.getName }}</h2>
-                                                <h5>{{ offer.getDescription|slice(0, 75) }}...</h5>
-                                                <span class="offer-rating">5.0</span>
-                                                <span class="offer-activity">{{ offer.getActivity.getName }}</span>
-                                                <svg class="offer-location" width="14px" height="20px">
-                                                    <g id="Page-1" stroke="none" stroke-width="1" fill="none">
-                                                        <path d="M7,0 C3.13383665,0 0,3.0828692 0,6.88540084 C0,10.68827 6.33390528,20 7,20 C7.66609472,20 14,10.68827 14,6.88540084 C14,3.0828692 10.8661633,0 7,0 L7,0 Z M7,9.87341772 C5.2947838,9.87341772 3.91146191,8.51274262 3.91146191,6.83544304 C3.91146191,5.15814346 5.2947838,3.79746835 7,3.79746835 C8.7052162,3.79746835 10.0885381,5.15814346 10.0885381,6.83544304 C10.0885381,8.51274262 8.7052162,9.87341772 7,9.87341772 L7,9.87341772 Z" id="Imported-Layers-Copy-5" fill="currentColor"></path>
-                                                    </g>
-                                                </svg>
-                                            <span class="offer-price">
-                                                <span class="amount">{{ offer.getPrice }} €</span><span class="type">{% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas <savaitę></savaitę>{% else %}Kas mėnesį{% endif %}</span>
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                {% if loop.index is divisibleby(2) %}
-                                    <div class="clearfix hidden-sm hidden-xs"></div>
-                                {% endif %}
-                                {% if loop.index is divisibleby(2) %}
-                                    <div class="clearfix hidden-lg hidden-md"></div>
-                                {% endif %}
-                            {% endfor %}
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="navigation">
-                            {{ knp_pagination_render(offers) }}
-                        </div>
-                    {% else %}
-                        <div class="not-found">Būrelių nerasta</div>
-                    {% endif %}
+                    {% include '@App/Home/includes/offerObjects.html.twig' %}
                 </div>
             </div>
             <div class="col-md-5 hidden-sm hidden-xs">
@@ -122,24 +83,10 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/offers.js') }}"></script>
-
-    <script type="text/javascript">
-        // Address input element
-        var input = (document.getElementById('address'));
-        var latitude = $('#latitude');
-        var longitude = $('#longitude');
-        var form = $('.index-form');
-    </script>
     <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
     <script>
         var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};
-        var markers = [];
-        var clusters = [];
-        var infowindow = [];
-        var map;
-        var markerClusterer = null;
-        var green = 'http://maps.google.com/mapfiles/marker_green.png';
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -148,20 +95,10 @@
             });
 
             {% if (offers|length > 0) %}
-                for (var offer in offers) {
-                    markers[offer] = new google.maps.Marker({
-                        position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
-                        map: map,
-                        title: offers[offer].name,
-                        icon: green,
-                        id: offer
-                    });
-                    clusters.push(markers[offer]);
-                }
+                setMarkers(offers);
                 setMapParameters(offers);
+                markerClusterer = new MarkerClusterer(map, clusters);
             {% endif %}
-
-            markerClusterer = new MarkerClusterer(map, clusters);
 
             initAutocomplete();
         }
