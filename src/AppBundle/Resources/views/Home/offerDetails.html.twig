@@ -49,7 +49,7 @@
     </div>
     <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 col-sm-offset-1 col-sm-6">
+                <div class="col-xs-12 col-sm-8 col-md-offset-1 col-md-6">
                     <div class="goToSearchContainer">
                         <a class="goToSearch" href="{{ path('app.search') }}"> Grįžti į paiešką </a>
                     </div>
@@ -60,13 +60,13 @@
                     </div>
                     <div class="contactsContainer">
                         <div class="row">
-                            <div class="col-xs-6 col-sm-3">
+                            <div class="col-xs-12 col-sm-4 col-md-4">
                                 <h4> {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }} </h4>
                             </div>
-                            <div class="col-xs-6 col-sm-3">
+                            <div class="col-xs-5 col-sm-3 col-md-3">
                                 <h4> <span class="fa fa-phone" aria-hidden="true"></span> {{ offer.getUser.getPhone }} </h4>
                             </div>
-                            <div class="col-xs-12 col-sm-6">
+                            <div class="col-xs-7 col-sm-5 col-md-5">
                                 <h4> <span class="fa fa-paper-plane-o" aria-hidden="true"></span> {{ offer.getUser.getEmail }} </h4>
                             </div>
                          </div>
@@ -89,10 +89,10 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-6">
                                 <div>
-                                    <h5> Sporto rūšis: {{ offer.getActivity.getName }} </h5>
+                                    <h5> Sporto rūšis: {{ offer.getActivity.getName }}. </h5>
                                 </div>
                                 <div>
-                                    <h5> Adresas: {{ offer.getAddress }}</h5>
+                                    <h5> Adresas: {{ offer.getAddress }}. </h5>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6">
@@ -100,13 +100,13 @@
                                     <h5> Vaikų amžius: {{ offer.getAgeFrom }} - {{ offer.getAgeTo }} m. </h5>
                                 </div>
                                 <div>
-                                    <h5> Kaina: {{ offer.getPrice }} EUR </h5>
+                                    <h5> Kaina: {{ offer.getPrice }} €. </h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
                         <div class="mapContainer">
                             <div id="map" class="map">
                                 <script>
@@ -151,7 +151,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-12 col-sm-offset-1 col-sm-6">
+                    <div class="col-xs-12 col-sm-8 col-md-offset-1 col-md-6">
 
                     <div class="reviewList">
                         <h4> Atsiliepimai ({{ comments.count }})</h4>
@@ -201,41 +201,35 @@
                         {{ form_end(form) }}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-4">
-
+                <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="similarOffers">
                         <h4> Panašūs būreliai </h4>
-
-
-                        <div class="row">
-                        {% if similarOffers |length >= 1 %}
-                            <div class="col-xs-6 col-sm-6">
-                                <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[0].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[0].getName }}"> </a>
-                                <h5>{{ similarOffers[0].getName }}</h5>
-                            </div>
-                        {% endif %}
-                        {% if similarOffers |length >= 2 %}
-                            <div class="col-xs-6 col-sm-6">
-                                <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[1].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[1].getName }}"> </a>
-                                <h5>{{ similarOffers[1].getName }}</h5>
-                            </div>
-                        {% endif %}
-                        {% if similarOffers |length >= 3 %}
-                            <div class="col-xs-6 col-sm-6">
-                                <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <img src="{{ asset('/images/'~similarOffers[2].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[2].getName }}"> </a>
-                                <h5>{{ similarOffers[2].getName }}</h5>
-                            </div>
-                        {% endif %}
-                        {% if similarOffers |length >= 4 %}
-                            <div class="col-xs-6 col-sm-6">
-                                <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"><img src="{{ asset('/images/'~similarOffers[3].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[3].getName }}"> </a>
-                                <h5>{{ similarOffers[3].getName }}</h5>
-                            </div>
-                        {% endif %}
+                        <div class="offer-objects">
+                            {% if (similarOffers|length > 0) %}
+                                <div class="row">
+                                    {% for offer in similarOffers %}
+                                        <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                                            <div class="col-xs-12 col-sm-12 offer" data-id="{{ offer.getId }}">
+                                                <div class="offer-inner">
+                                                    <img src="{{ asset ('/images/' ~ offer.getMainImage)}}" class="img-responsive center-block" alt="{{ offer.getName }}" />
+                                                    <div class="offer-content">
+                                                        <h2>{{ offer.getName }}</h2>
+                                                        <h5>{{ offer.getDescription|slice(0, 75) }}...</h5>
+                                                        <span class="offer-rating">{{ offer.getRating|number_format(1, '.') }}</span>
+                                                        <span class="offer-activity">{{ offer.getActivity.getName }}</span>
+                                                        <span class="offer-price">
+                                                            <span class="amount">{{ offer.getPrice }} €</span><span>{% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas <savaitę></savaitę>{% else %}Kas mėnesį{% endif %}</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="not-found">Būrelių nerasta</div>
+                            {% endif %}
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
