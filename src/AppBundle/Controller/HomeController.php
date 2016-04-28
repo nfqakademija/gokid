@@ -11,6 +11,7 @@ use AppBundle\Repository\OfferRepository;
 use AppBundle\Form\IndexSearchOffer;
 use AppBundle\Form\OfferType;
 use AppBundle\Entity\Offer;
+use AppBundle\Utility\ImportHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -222,36 +223,19 @@ class HomeController extends Controller
     public function offerImportAction(Request $request)
     {
         if ($file = $request->files->get('fileInput')) {
-            $entityManager = $this->getDoctrine()->getManager();
-            /** @var ActivityRepository $activityRepository */
-            $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
-            if ($data = $this->get('import_helper')->parseCsv($file->getRealPath())) {
-                foreach ($data['offers'] as $offer) {
-                    /** @var Offer $offer */
-                    if ($activity = $activityRepository->findBy(
-                        ['name' => $offer->getActivity()->getName()]
-                    )) {
-                        $offer->setActivity($activity[0]);
-                        if (!$offer->getMainImage()) {
-                            $offer->setMainImage($activity[0]->getDefaultImage());
-                        }
-                    } else {
-                        $entityManager->persist($offer->getActivity());
-                    }
-                    $entityManager->persist($offer);
-                    if ($offer->getMainImage()) {
-                        $entityManager->persist($offer->getMainImage());
-                    }
-                }
-                foreach ($data['offerImages'] as $image) {
-                    $entityManager->persist($image);
-                }
-                $entityManager->flush();
+            /** @var ImportHelper $importer */
+            $importer = $this->get('import_helper');
+
+            try {
+                $data = $importer->parseCsv($file->getRealPath());
+                $importer->import($data);
                 $this->addFlash('success', 'Būreliai sėkmingai įkelti');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Įvyko klaida:' . $e->getMessage());
             }
         }
     }
-    
+
     /**
      * Activity creation action.
      *

@@ -5,6 +5,9 @@ namespace AppBundle\Utility;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\Activity;
 use AppBundle\Entity\OfferImage;
+use AppBundle\Repository\ActivityRepository;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -15,6 +18,27 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class ImportHelper
 {
+    /**
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var ActivityRepository
+     */
+    protected $activityRepo;
+
+    /**
+     * ImportHelper constructor.
+     *
+     * @param EntityManager $manager
+     */
+    public function __construct($manager)
+    {
+        $this->em = $manager;
+        $this->activityRepo = $manager->getRepository('AppBundle:Activity');
+    }
+
     /**
      * @param String $filepath
      * @return null|array
@@ -66,12 +90,43 @@ class ImportHelper
                 $offers[] = $offer;
             }
             fclose($handle);
+
             return [
                 'offers' => $offers,
                 'offerImages' => $offerImages
             ];
         }
-        return null;
+
+        throw new FileNotFoundException($filepath);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function import($data)
+    {
+        /** @var Offer $offer */
+        foreach ($data['offers'] as $offer) {
+            /** @var Activity[] $activity */
+            if ($activity = $this->activityRepo->findBy(
+                ['name' => $offer->getActivity()->getName()]
+            )) {
+                $offer->setActivity($activity[0]);
+                if (!$offer->getMainImage()) {
+                    $offer->setMainImage($activity[0]->getDefaultImage());
+                }
+            } else {
+                $this->em->persist($offer->getActivity());
+            }
+            $this->em->persist($offer);
+            if ($offer->getMainImage()) {
+                $this->em->persist($offer->getMainImage());
+            }
+        }
+        foreach ($data['offerImages'] as $image) {
+            $this->em->persist($image);
+        }
+        $this->em->flush();
     }
 
     /**
