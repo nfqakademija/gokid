@@ -87,7 +87,7 @@ class HomeController extends Controller
         }
 
         return [
-            'activities' => $activityRepository->getActivityList(),
+            'activities' => $activityRepository->getAllActivities(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
             'offers_json' => $offers_json,

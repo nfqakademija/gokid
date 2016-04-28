@@ -20,7 +20,7 @@
                         <div class="col-sm-2">
                             <select name="activity" class="activities-select">
                                 {% for key, activity in activities %}
-                                    <option value="{{ key + 1 }}">{{ activity }}</option>
+                                    <option value="{{ activity.getId }}">{{ activity }}</option>
                                 {% endfor %}
                             </select>
                         </div>

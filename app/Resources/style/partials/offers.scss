@@ -43,6 +43,10 @@
     color: #65c04c;
   }
 
+  a:hover h2 {
+    text-decoration: none;
+  }
+
   h5 {
     margin-bottom: 20px;
   }
@@ -107,6 +111,7 @@
   .offer-location {
     float: right;
     color: #65c04c;
+    cursor: pointer;
   }
 
   .offer img {
