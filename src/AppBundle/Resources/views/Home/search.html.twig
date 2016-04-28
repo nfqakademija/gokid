@@ -41,6 +41,8 @@
                     {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
                     {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
                     {{ form_row(form.distance, {'attr': {'class': 'hidden distance-field', 'id': 'distance'}}) }}
+                    {{ form_row(form.priceFrom, {'attr': {'class': 'hidden', 'id': 'priceFrom'}}) }}
+                    {{ form_row(form.priceTo, {'attr': {'class': 'hidden', 'id': 'priceTo'}}) }}
                 </div>
                 {{ form_end(form) }}
             </div>
@@ -66,6 +68,10 @@
                 <div class="offers-range">
                     <span class="col-md-4 col-sm-4">Atstumas&nbsp;(<span id="dist">10</span>&nbsp;km): </span>
                     <div class="col-md-8 col-sm-8 offers-slider" id="slider-range"></div>
+                </div>
+                <div class="offers-price">
+                    <span class="col-md-4 col-sm-4">Kaina&nbsp;(<span id="price">10</span>&nbsp;): </span>
+                    <div class="col-md-8 col-sm-8 offers-slider" id="slider-price"></div>
                 </div>
                 <div class="clearfix"></div>
 

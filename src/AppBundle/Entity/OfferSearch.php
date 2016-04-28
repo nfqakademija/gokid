@@ -40,12 +40,22 @@ class OfferSearch
     private $female;
 
     /**
-     * @var float
+     * @var int
      */
     private $distance;
 
     /**
-     * @return float
+     * @var int
+     */
+    private $priceFrom;
+
+    /**
+     * @var int
+     */
+    private $priceTo;
+
+    /**
+     * @return int
      */
     public function getDistance()
     {
@@ -53,11 +63,43 @@ class OfferSearch
     }
 
     /**
-     * @param float $distance
+     * @param int $distance
      */
     public function setDistance($distance)
     {
         $this->distance = $distance;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceFrom()
+    {
+        return $this->priceFrom;
+    }
+
+    /**
+     * @param int $distance
+     */
+    public function setPriceFrom($priceFrom)
+    {
+        $this->priceFrom = $priceFrom;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceTo()
+    {
+        return $this->priceTo;
+    }
+
+    /**
+     * @param int $distance
+     */
+    public function setPriceTo($priceTo)
+    {
+        $this->priceTo = $priceTo;
     }
 
     /**

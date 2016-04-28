@@ -1,13 +1,15 @@
 .offers {
   padding-top: 20px;
 
-  .offers-range {
+  .offers-range,
+  .offers-price {
     padding-bottom: 25px;
     display: block;
     margin-bottom: 25px;
   }
 
-  .offers-range span {
+  .offers-range span,
+  .offers-price span {
     padding-left: 0;
     font-size: 19px;
     font-weight: bold;

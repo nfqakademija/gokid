@@ -32,6 +32,12 @@ class IndexSearchOffer extends AbstractType
         ])->add('distance', TextType::class, [
             'label' => false,
             'data' => '10',
+        ])->add('priceFrom', TextType::class, [
+            'label' => false,
+            'data' => '1',
+        ])->add('priceTo', TextType::class, [
+            'label' => false,
+            'data' => '200',
         ]);
     }
     

@@ -48,6 +48,14 @@ class OfferRepository extends EntityRepository
                 ->andWhere("o.ageTo >= {$offer->getAge()}");
         }
 
+        if ($offer->getPriceFrom()) {
+            $qb->andWhere("o.price >= {$offer->getPriceFrom()}");
+        }
+
+        if ($offer->getPriceTo()) {
+            $qb->andWhere("o.price <= {$offer->getPriceTo()}");
+        }
+
         if ($offer->isFemale()) {
             $qb->where("o.female = true");
         }

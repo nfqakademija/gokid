@@ -155,7 +155,7 @@ function setMarkers(offers) {
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
-    var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+((page > 0) ? '&page='+page : '');
+    var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+"&priceFrom="+$('#priceFrom').val()+"&priceTo="+$('#priceTo').val()+((page > 0) ? '&page='+page : '');
 
     history.pushState(null, null, url);
 
@@ -187,7 +187,7 @@ $( "#slider-range" ).slider({
     range: "min",
     value: $( "#distance" ).val(),
     min: 1,
-    max: 100,
+    max: 20,
     change: function( event, ui ) {
         ajaxUpdate();
     },
@@ -198,6 +198,31 @@ $( "#slider-range" ).slider({
 });
 $('#dist').html( $( "#slider-range" ).slider( "value" ) );
 
+
+/**
+ * Price slider
+ */
+$( "#slider-price" ).slider({
+    range: true,
+    min: 0,
+    max: 300,
+    values: [ $( "#priceFrom" ).val(), $( "#priceTo" ).val() ],
+    change: function( event, ui ) {
+        ajaxUpdate();
+    },
+    slide: function( event, ui ) {
+        if(ui.values[ 1 ]>299)
+        {
+            ui.values[ 1 ] = '300+';
+        }
+
+        $( "#price" ).html( "€" + ui.values[ 0 ] + " - €" + ui.values[ 1 ] );
+        $( "#priceFrom" ).val( ui.values[ 0 ] );
+        $( "#priceTo" ).val( ui.values[ 1 ] );
+    }
+});
+$( "#price" ).html( "€" + $( "#slider-price" ).slider( "values", 0 ) +
+    " - €" + $( "#slider-price" ).slider( "values", 1 ) );
 
 /**
  * Updates offers when filter parameters are changed
