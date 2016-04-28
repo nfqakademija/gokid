@@ -155,7 +155,7 @@ function setMarkers(offers) {
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
-    var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+"&priceFrom="+$('#priceFrom').val()+"&priceTo="+$('#priceTo').val()+((page > 0) ? '&page='+page : '');
+    var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+"&activity="+$( "#activity option:selected").val()+"&priceFrom="+$('#priceFrom').val()+"&priceTo="+$('#priceTo').val()+((page > 0) ? '&page='+page : '');
 
     history.pushState(null, null, url);
 
@@ -233,8 +233,8 @@ $('input').change(function() {
     }
     ajaxUpdate();
 });
-$('.popover').click(function() {
-    alert(/a/);
+$('#activity').change(function() {
+    ajaxUpdate();
 });
 $( ".offers" ).on( "click", ".pagination a", function() {
     ajaxUpdate($(this).attr('page'));

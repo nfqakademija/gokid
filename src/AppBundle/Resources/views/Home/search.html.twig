@@ -18,7 +18,7 @@
                             {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input'}}) }}
                         </div>
                         <div class="col-sm-2">
-                            <select name="activity" class="activities-select">
+                            <select name="activity" id="activity" class="activities-select">
                                 {% for key, activity in activities %}
                                     <option value="{{ activity.getId }}">{{ activity }}</option>
                                 {% endfor %}
