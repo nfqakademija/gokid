@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <div class="error col-md-offset-2 col-md-10">
+            <div class="message-title">
+                Ups!
+            </div>
+            <div class="message">
+                Puslapio, kurio ieškote nėra.
+            </div>
+            <div class="error-code">
+                Klaidos kodas: {{ status_code }}
+            </div>
+            <div class="links">
+                Siūlome šiuos puslapius:
+                <ul>
+                    <li><a href="{{ path('app.index') }}">Pagrindinis</a></li>
+                    <li><a href="{{ path('app.search') }}">Būreliai</a></li>
+                    <li><a href="{{ path('app.coaches') }}">Įkelti būrelį</a></li>
+                    <li><a href="{{ path('fos_user_security_login') }}">Prisijungti</a></li>
+                    <li><a href="{{ path('fos_user_registration_register') }}">Registruotis</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
