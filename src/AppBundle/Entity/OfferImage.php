@@ -26,7 +26,7 @@ class OfferImage
 
     /**
      * @ORM\ManyToOne(targetEntity="Offer", inversedBy="images")
-     * @ORM\JoinColumn(name="offer_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="offer_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
     private $offer;
 

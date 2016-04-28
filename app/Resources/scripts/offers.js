@@ -196,7 +196,6 @@ $( "#slider-range" ).slider({
         $( "#dist" ).html( ui.value );
     }
 });
-$( "#distance" ).val( $( "#slider-range" ).slider( "value" ) );
 $('#dist').html( $( "#slider-range" ).slider( "value" ) );
 
 
@@ -216,29 +215,3 @@ $( ".offers" ).on( "click", ".pagination a", function() {
     ajaxUpdate($(this).attr('page'));
     return false;
 });
-
-/* Index search */
-
-// Age input popover
-
-$('#age').popover({
-    content: $('#popover-content').html(),
-    html: true
-}).click(function() {
-    $('.button-container').click(function () {
-        $('#age').val($(this).text()).popover('hide');
-        ajaxUpdate();
-    });
-});
-
-$('body').on('click', function (e) {
-    $('[data-toggle="popover"]').each(function () {
-        //the 'is' for buttons that trigger popups
-        //the 'has' for icons within a button that triggers a popup
-        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-            $(this).popover('hide');
-        }
-    });
-});
-
-/* End of index search */

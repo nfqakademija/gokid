@@ -82,8 +82,13 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/offers.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/index-search.js') }}"></script>
+    <script type="text/javascript">
+        // Address input element
+        var input = (document.getElementById('address'));
+        var latitude = $('#latitude');
+        var longitude = $('#longitude');
+        var form = $('.index-form');
+    </script>
     <script>
         var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};

@@ -19,6 +19,8 @@
   "dependencies": {
     "bootstrap-sass": "~3.3.5",
     "jquery": "~2.1.4",
-    "jquery-ui": "~1.11.4"
+    "jquery-ui": "~1.11.4",
+    "counter-up": "^1.0.0",
+    "waypoints": "=2.0.3"
   }
 }

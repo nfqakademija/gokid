@@ -9,7 +9,7 @@ use AppBundle\Validator\Constraints as CustomAssert;
 /**
  * Offer
  *
- * @ORM\Table(name="offers")
+ * @ORM\Table(name="offers",options={"engine":"MyISAM"})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OfferRepository")
  * @CustomAssert\GenderSelected
  * @CustomAssert\AgesAscending
@@ -32,7 +32,7 @@ class Offer
 
     /**
      * @ORM\ManyToOne(targetEntity="Activity", inversedBy="offers")
-     * @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @Assert\NotNull(message="Prašome pasirinkti būrelio sporto šaką")
      */
     private $activity;
@@ -131,8 +131,9 @@ class Offer
     private $images;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage", cascade={"persist"})
-     * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OfferImage")
+     * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @Assert\NotBlank(message="Prašome įkelti pagrindinę būrelio nuotrauką")
      */
     private $mainImage;
 
@@ -140,6 +141,53 @@ class Offer
      * @var float
      */
     private $distance;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="imported", type="boolean")
+     */
+    private $imported = false;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contact_info", type="string", length=120)
+     * @Assert\NotBlank(message="Prašome įvesti būrelio kontaktinę informaciją")
+     */
+    private $contactInfo;
+
+    /**
+     * @return string
+     */
+    public function getContactInfo()
+    {
+        return $this->contactInfo;
+    }
+
+    /**
+     * @param string $contactInfo
+     */
+    public function setContactInfo($contactInfo)
+    {
+        $this->contactInfo = $contactInfo;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isImported()
+    {
+        return $this->imported;
+    }
+
+    /**
+     * @param boolean $imported
+     */
+    public function setImported($imported)
+    {
+        $this->imported = $imported;
+    }
 
     /**
      * @return mixed

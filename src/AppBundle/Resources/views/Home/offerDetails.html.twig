@@ -20,9 +20,11 @@
                         <p> Sporto rūšis: {{ offer.getActivity.getName }} </p>
                     </div>
                     <div>
+                        {% if not offer.imported %}
                         <p> Treneris: {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }} </p>
                         <p class="userInfo"> Telefonas: {{ offer.getUser.getPhone }} </p>
                         <p class="userInfo"> El. paštas: {{ offer.getUser.getEmail }} </p>
+                        {% endif %}
                     </div>
                     <div>
                         <p> Adresas: {{ offer.getAddress }}</p>
@@ -36,7 +38,7 @@
                 </div>
             </div>
          </div>
-         <div id="map" class="detailsMap">
+         <div id="map" class="detailsMap"></div>
             <script>
                 var markers = [];
                 var map;

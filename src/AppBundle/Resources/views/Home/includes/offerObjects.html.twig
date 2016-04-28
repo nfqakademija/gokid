@@ -37,8 +37,11 @@
     </div>
 {% else %}
     <div class="not-found">Būrelių nerasta</div>
-
-    <script>map.setCenter({lat: 54.8931048, lng: 23.8666335});</script>
+    <script>
+        window.document.onload = function(e){
+            map.setCenter({lat: 54.8931048, lng: 23.8666335});
+        }
+    </script>
 {% endif %}
 {% if ajax is defined %}
     <script>

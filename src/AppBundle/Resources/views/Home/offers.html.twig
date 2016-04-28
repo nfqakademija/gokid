@@ -2,11 +2,7 @@
 
 {% block body %}
     <div class="container">
-        {% for flash_message in app.session.flashBag.get('success') %}
-            <div class="alert alert-success">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
+        {% include '@App/Home/includes/flashBag.html.twig' %}
         <div class="row">
             <div class="col-sm-4">
                 {% include '@App/Home/includes/accountLeftMenu.html.twig' %}
@@ -17,12 +13,12 @@
                         Jūsų įkelti būreliai
                     </div>
                     <ul class="list-group">
-                            {% for offer in offers  %}
-                                <li class="list-group-item">
-                                    {{ offer.name }}
-                                    <a class="badge warning">Ištrinti</a>
-                                </li>
-                            {% endfor %}
+                        {% for offer in offers  %}
+                            <li class="list-group-item">
+                                {{ offer.name }}
+                                <a class="badge warning">Ištrinti</a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

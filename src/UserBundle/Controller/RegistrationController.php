@@ -64,10 +64,6 @@ class RegistrationController extends BaseController
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                // Remove the default FOSUserBundle account registration success
-                // flash message.
-                $this->get('session')->getFlashBag()->clear();
-                $this->addFlash('success', 'Jūsų paskyra sukurta');
                 $url = $this->generateUrl('fos_user_profile_edit');
                 $response = new RedirectResponse($url);
             }
@@ -76,6 +72,11 @@ class RegistrationController extends BaseController
                 FOSUserEvents::REGISTRATION_COMPLETED,
                 new FilterUserResponseEvent($user, $request, $response)
             );
+
+            // Remove the default FOSUserBundle account registration success
+            // flash message.
+            $this->get('session')->getFlashBag()->clear();
+            $this->addFlash('success', 'Jūsų paskyra sukurta');
 
             // Set the user of the offer to be registered to the just created
             // user.
