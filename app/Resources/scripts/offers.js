@@ -167,7 +167,6 @@ function setMarkers() {
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
-    var priceTo = $('#priceTo');
     var offerObjects = $('.offer-objects');
 
     var url =   rootUrl + "search?address="+$('#address').val()+
@@ -179,7 +178,7 @@ function ajaxUpdate(page) {
                 "&distance="+$('#distance').val()+
                 "&activity="+$( "#activity option:selected").val()+
                 "&priceFrom="+$('#priceFrom').val()+
-                ((priceTo.val().indexOf('+') === -1) ? "&priceTo="+priceTo.val() : '')+
+                "&priceTo="+$('#priceTo').val()+
                 ((page > 0) ? '&page='+page : '');
 
     history.pushState(null, null, url);
