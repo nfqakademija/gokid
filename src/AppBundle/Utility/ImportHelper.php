@@ -93,7 +93,7 @@ class ImportHelper
 
             return [
                 'offers' => $offers,
-                'offerImages' => $offerImages
+                'offerImages' => $offerImages,
             ];
         }
 
@@ -141,8 +141,10 @@ class ImportHelper
         if ($image = $this->downloadImage($fileUrl, $path)) {
             $offerImage = new OfferImage();
             $offerImage->setImageFile($image);
+
             return $offerImage;
         }
+
         return null;
     }
 
@@ -154,6 +156,7 @@ class ImportHelper
     {
         $extension = explode('.', $filename);
         $extension = $extension[sizeof($extension) - 1];
+
         return $extension;
     }
 
@@ -185,6 +188,7 @@ class ImportHelper
                 null,
                 true
             );
+
             return $file;
         } else {
             return null;

@@ -215,7 +215,7 @@ $('#dist').html( $( "#slider-range" ).slider( "value" ) );
 /**
  * Price slider
  */
-var maxPrice = 200;
+var maxPrice = 100;
 $( "#slider-price" ).slider({
     range: true,
     min: 1,

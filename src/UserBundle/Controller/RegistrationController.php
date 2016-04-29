@@ -82,6 +82,7 @@ class RegistrationController extends BaseController
             // user.
             if ($internal) {
                 $offer->setUser($user);
+
                 return new Response('Ok');
             }
 

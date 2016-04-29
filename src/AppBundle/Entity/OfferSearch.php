@@ -2,6 +2,10 @@
 
 namespace AppBundle\Entity;
 
+/**
+ * Class OfferSearch
+ * @package AppBundle\Entity
+ */
 class OfferSearch
 {
     /**

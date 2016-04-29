@@ -25,14 +25,14 @@ class ActivityType extends AbstractType
             ])
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Activity'
+            'data_class' => 'AppBundle\Entity\Activity',
         ));
     }
 }
