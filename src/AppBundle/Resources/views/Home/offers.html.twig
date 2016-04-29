@@ -14,10 +14,11 @@
                     </div>
                     <ul class="list-group">
                         {% for offer in offers  %}
-                            <li class="list-group-item">
+                            <form class="list-group-item" id="delete_{{ offer.id }}" method="post" action="{{ path('app.offerDelete', {'id': offer.id}) }}">
                                 {{ offer.name }}
-                                <a class="badge warning">Ištrinti</a>
-                            </li>
+                                <a class="badge warning" onclick="document.getElementById('delete_{{ offer.id }}').submit(); return false;">Ištrinti</a>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('offer_delete') }}"/>
+                            </form>
                         {% endfor %}
                     </ul>
                 </div>

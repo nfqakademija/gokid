@@ -160,7 +160,6 @@ var addressValue;
 function addressLoading(isLoading, failed) {
     if (isLoading) {
         $(input).attr('disabled', true);
-        $(input).addClass('loading-address');
         $('.locate-me').addClass('hidden');
         $('.loader-div').removeClass('hidden');
         $(input).attr('placeholder', '');
@@ -171,7 +170,6 @@ function addressLoading(isLoading, failed) {
         $(input).attr('placeholder', 'Gyvenamoji vieta');
         $('.loader-div').addClass('hidden');
         $(input).attr('disabled', false);
-        $(input).removeClass('loading-address');
         $('.locate-me').removeClass('hidden');
         $(input).removeClass('absolute');
     }

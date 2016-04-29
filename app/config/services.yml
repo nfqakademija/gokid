@@ -6,5 +6,6 @@ parameters:
 services:
     import_helper:
         arguments:
-            - @doctrine.orm.entity_manager
+            - @doctrine
+            - @security.token_storage
         class: AppBundle\Utility\ImportHelper

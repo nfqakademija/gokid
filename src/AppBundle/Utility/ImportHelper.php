@@ -6,9 +6,11 @@ use AppBundle\Entity\Offer;
 use AppBundle\Entity\Activity;
 use AppBundle\Entity\OfferImage;
 use AppBundle\Repository\ActivityRepository;
-use Doctrine\ORM\EntityManager;
+use ProxyManager\Proxy\Exception\RemoteObjectException;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Helper class for importing offers from a csv file.
@@ -19,23 +21,31 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ImportHelper
 {
     /**
-     * @var EntityManager
+     * @var ManagerRegistry
      */
-    protected $em;
+    private $managerRegistry;
 
     /**
      * @var ActivityRepository
      */
-    protected $activityRepo;
+    private $activityRepo;
+
+    /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
 
     /**
      * ImportHelper constructor.
      *
-     * @param EntityManager $manager
+     * @param ManagerRegistry $manager
      */
-    public function __construct($manager)
-    {
-        $this->em = $manager;
+    public function __construct(
+        ManagerRegistry $manager,
+        TokenStorage $tokenStorage
+    ) {
+        $this->managerRegistry = $manager;
+        $this->tokenStorage = $tokenStorage;
         $this->activityRepo = $manager->getRepository('AppBundle:Activity');
     }
 
@@ -70,10 +80,14 @@ class ImportHelper
                 $offer->setAgeTo($data[13]);
                 $offer->setAddress($data[14]);
                 if (isset($data[15])) {
-                    $offerImage = $this->createOfferImageFromFile(
+                    if (!($offerImage = $this->createOfferImageFromFile(
                         $data[15],
                         $i++
-                    );
+                    ))) {
+                        throw new RemoteObjectException(
+                            'Paveikslėlio parsiųsti iš ' . $data[15] . ' nepavyko'
+                        );
+                    };
                     $offer->setMainImage($offerImage);
                     $offerImage->setOffer($offer);
                     $index = 16;
@@ -105,6 +119,8 @@ class ImportHelper
      */
     public function import($data)
     {
+        $user = $this->tokenStorage->getToken()->getUser();
+        $entityManager = $this->managerRegistry->getManager();
         /** @var Offer $offer */
         foreach ($data['offers'] as $offer) {
             /** @var Activity[] $activity */
@@ -116,17 +132,18 @@ class ImportHelper
                     $offer->setMainImage($activity[0]->getDefaultImage());
                 }
             } else {
-                $this->em->persist($offer->getActivity());
+                $entityManager->persist($offer->getActivity());
             }
-            $this->em->persist($offer);
+            $offer->setUser($user);
+            $entityManager->persist($offer);
             if ($offer->getMainImage()) {
-                $this->em->persist($offer->getMainImage());
+                $entityManager->persist($offer->getMainImage());
             }
         }
         foreach ($data['offerImages'] as $image) {
-            $this->em->persist($image);
+            $entityManager->persist($image);
         }
-        $this->em->flush();
+        $entityManager->flush();
     }
 
     /**

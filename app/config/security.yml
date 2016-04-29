@@ -43,3 +43,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/account, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/offers/*, role: IS_AUTHENTICATED_FULLY }

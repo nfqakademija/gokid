@@ -15,11 +15,15 @@ app.offerDetails:
   defaults: { _controller: AppBundle:Home:offerDetails }
 
 app.registeredOffers:
-  path: /offers
+  path: /offers/
   defaults: { _controller: AppBundle:Home:offers }
 
+app.offerDelete:
+  path: /offers/delete/{id}
+  defaults: { _controller: AppBundle:Home:offerDelete }
+
 app.offerImport:
-  path: /import
+  path: /offers/import
   defaults: { _controller: AppBundle:Home:offerImport }
 
 app.activityCreate:
