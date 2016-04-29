@@ -215,36 +215,31 @@ $('#dist').html( $( "#slider-range" ).slider( "value" ) );
 /**
  * Price slider
  */
-var maxPrice = 100;
 $( "#slider-price" ).slider({
     range: true,
     min: 1,
-    max: maxPrice,
-    values: [ $( "#priceFrom" ).val(), $( "#priceTo" ).val() ],
+    max: 100,
+    values: [ priceFrom, priceTo ],
     change: function( event, ui ) {
         ajaxUpdate();
     },
     slide: function( event, ui ) {
-        if(ui.values[ 1 ] == maxPrice) {
-            ui.values[ 1 ] = maxPrice+'+';
-        }
+        $( "#price" ).html( "€" + ui.values[ 0 ] + "&nbsp;-&nbsp;€" + ui.values[ 1 ] +
+            (
+                (ui.values[ 1 ] == $("#slider-price").slider("option", "max")) ? '+' : ''
+            )
+        );
 
-        $( "#price" ).html( "€" + ui.values[ 0 ] + "&nbsp;-&nbsp;€" + ui.values[ 1 ] );
         $( "#priceFrom" ).val( ui.values[ 0 ] );
-
-        if (ui.values[1].toString().indexOf('+') === -1) {
-            $("#priceTo").val(ui.values[1]);
-        } else {
-            $("#priceTo").val(maxPrice);
-        }
-
+        $( "#priceTo" ).val( ui.values[ 1 ] );
     }
 });
+
 $( "#price" ).html( "€" + $( "#slider-price" ).slider( "values", 0 ) +
-    "&nbsp;-&nbsp;€" +
+    "&nbsp;-&nbsp;€" + $( "#slider-price" ).slider( "values", 1 ) +
     (
-        ($( "#slider-price" ).slider( "values", 1 ) == maxPrice) ?
-        maxPrice + '+' : $( "#slider-price" ).slider( "values", 1 ))
+        ($( "#slider-price" ).slider( "values", 1 ) === $("#slider-price").slider("option", "max")) ?
+        '+' : '')
     );
 
 /**

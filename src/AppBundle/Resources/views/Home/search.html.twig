@@ -20,7 +20,7 @@
                         <div class="col-sm-2">
                             <select name="activity" id="activity" class="activities-select">
                                 {% for key, activity in activities %}
-                                    <option value="{{ activity.getId }}">{{ activity }}</option>
+                                    <option value="{{ activity.getId }}" {% if offers.getParams['activity'] is defined and activity.getId == offers.getParams['activity'] %}selected{% endif %}>{{ activity }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -87,6 +87,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        var priceFrom = {% if offers.getParams.priceFrom is defined %}{{ offers.getParams.priceFrom }}{% else %}1{% endif %};
+        var priceTo = {% if offers.getParams.priceTo is defined %}{{ offers.getParams.priceTo }}{% else %}50{% endif %};
+    </script>
     {{ parent() }}
     <script type="text/javascript">
         // Address input element
@@ -94,8 +98,6 @@
         var latitude = $('#latitude');
         var longitude = $('#longitude');
         var form = $('.index-form');
-    </script>
-    <script>
         var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};
 

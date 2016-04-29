@@ -14,7 +14,18 @@
                         </h2>
                         <h5>{{ offer.getDescription|slice(0, 75) }}...</h5>
                         <span class="offer-rating">5.0</span>
-                        <a href="{{ path('app.search', {'activity': offer.getActivity.getId, 'latitude': offers.getParams.latitude, 'longitude': offers.getParams.longitude, 'distance': offers.getParams.distance}) }}">
+                        <a href="{{ path('app.search', {
+                            'address': ((offers.getParams.address is defined) ? offers.getParams.address : none),
+                            'male': ((offers.getParams.male is defined) ? offers.getParams.male : none),
+                            'female': ((offers.getParams.female is defined) ? offers.getParams.female : none),
+                            'latitude': ((offers.getParams.latitude is defined) ? offers.getParams.latitude : none),
+                            'longitude': ((offers.getParams.longitude is defined) ? offers.getParams.longitude : none),
+                            'distance': ((offers.getParams.distance is defined) ? offers.getParams.distance : none),
+                            'activity': offer.getActivity.getId,
+                            'age': ((offers.getParams.age is defined) ? offers.getParams.age : none),
+                            'priceFrom': ((offers.getParams.priceFrom is defined) ? offers.getParams.priceFrom : none),
+                            'priceTo': ((offers.getParams.priceTo is defined) ? offers.getParams.priceTo : none),
+                            }) }}">
                             <span class="offer-activity">{{ offer.getActivity.getName }}</span>
                         </a>
                         <svg class="offer-location" width="14px" height="20px">
