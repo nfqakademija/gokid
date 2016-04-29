@@ -7,7 +7,7 @@ var longitude = $('#longitude');
 var form = $('.index-form');
 var markers = [];
 var clusters = [];
-var infowindow = [];
+var infobox = [];
 var map;
 var markerClusterer = null;
 var green = 'http://maps.google.com/mapfiles/marker_green.png';
@@ -31,12 +31,12 @@ $( ".offer" ).hover(
  */
 
 $( ".offers" ).on( "click", ".offer-location", function() {
-        closeWindows(markers);
         var id = $(this).closest('.offer').attr('data-id');
-        infowindow[id].open(map, markers[id]);
-        map.setCenter(markers[id].getPosition());
+        openInfobox(id);
         map.setZoom(14);
+        map.setCenter(markers[id].getPosition());
         $(window).scrollTop($('#map').offset().top-20);
+
         return false;
     }
 );
@@ -66,35 +66,43 @@ function getPaymentType(id) {
 }
 
 /**
+ * Opens infobox in map
+ * @param marker
+ */
+function openInfobox(id) {
+    closeWindows();
+
+    markers[id].setVisible(false);
+    infobox[id].open(map, markers[id]);
+
+    return true;
+}
+
+/**
  * Generates bounds, listeners, popup windows by given offers
- * @param offers
  * @returns {boolean}
  */
-function setMapParameters(offers){
+function setMapParameters(){
     bounds = new google.maps.LatLngBounds();
-    var contentString = [];
 
-    for (var offer in offers) {
-        bounds.extend(new google.maps.LatLng(offers[offer].latitude, offers[offer].longitude, offers[offer].longitude));
+    for (var id in offers) {
+        bounds.extend(new google.maps.LatLng(offers[id].latitude, offers[id].longitude));
 
-        contentString[offer] = '<div class="marker-infowindow">' +
-            '<div>' +
-            '</div>' +
-            '<div class="image"><a href="offer/'+offer+'"><img width="100%" src="' + rootUrl + 'images/offerImages/' + offers[offer].image + '" />'+
-            '<div class="price">' + offers[offer].price + ' € / '+getPaymentType(offers[offer].paymentType)+'</div></a></div>' +
-            '<a href="offer/'+offer+'"><h4 class="name">' + offers[offer].name + '</h4></a>' +
+        infobox[id] = new InfoBox({
+            content: '<div class="marker-infowindow">' +
+            '<div class="image"><a href="offer/'+id+'"><img width="100%" src="' + rootUrl + 'images/offerImages/' + offers[id].image + '" />'+
+            '<div class="price">' + offers[id].price + ' € / '+getPaymentType(offers[id].paymentType)+'</div></a></div>' +
+            '<a href="offer/'+id+'"><h4 class="name">' + offers[id].name + '</h4></a>' +
             '<div class="marker-content">' +
-            '<span class="offer-activity">'+offers[offer].activity + '</span>' +
+            '<span class="offer-activity">'+offers[id].address + '</span>' +
             '<span class="offer-rating">5.0</span></div>' +
-            '</div>';
-        infowindow[offer] = new google.maps.InfoWindow({
-            content: contentString[offer]
+            '</div>',
+            closeBoxURL: '',
+            pixelOffset: new google.maps.Size(-130, -260)
         });
 
-        markers[offer].addListener('click', function() {
-            closeWindows(offers);
-
-            infowindow[this.id].open(map, markers[this.id]);
+        markers[id].addListener('click', function() {
+            openInfobox(this.id);
 
             return false;
         });
@@ -105,7 +113,7 @@ function setMapParameters(offers){
     }
 
     map.addListener('click', function() {
-        closeWindows(offers);
+        closeWindows();
     });
 
     return true;
@@ -115,16 +123,19 @@ function setMapParameters(offers){
  * Closes all given windows
  * @param windows
  */
-function closeWindows(windows){
-    for (var window in windows) {
-        infowindow[window].close();
+function closeWindows(){
+    for (var id in markers) {
+        infobox[id].close();
+        markers[id].setVisible(true);
     }
 }
 
 // Sets the map on all markers in the array.
 function clearMarkers() {
-    for (var marker in markers) {
-        markers[marker].setMap(null);
+    closeWindows();
+
+    for (var id in markers) {
+        markers[id].setMap(null);
     }
 
     if (markers.length > 0) {
@@ -133,21 +144,22 @@ function clearMarkers() {
 
     markers     = [];
     clusters    = [];
+    infobox     = [];
 }
 
 /**
  * Sets markers
  */
-function setMarkers(offers) {
-    for (var offer in offers) {
-        markers[offer] = new google.maps.Marker({
-            position: {lat: offers[offer].latitude, lng: offers[offer].longitude},
+function setMarkers() {
+    for (var id in offers) {
+        markers[id] = new google.maps.Marker({
+            position: {lat: offers[id].latitude, lng: offers[id].longitude},
             map: map,
-            title: offers[offer].name,
+            title: offers[id].name,
             icon: green,
-            id: offer
+            id: id
         });
-        clusters.push(markers[offer]);
+        clusters.push(markers[id]);
     }
 }
 
@@ -155,6 +167,9 @@ function setMarkers(offers) {
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
+    var priceTo = $('#priceTo');
+    var offerObjects = $('.offer-objects');
+
     var url =   rootUrl + "search?address="+$('#address').val()+
                 (($('#male').is(':checked')) ? '&male=1' : '')+
                 (($('#female').is(':checked')) ? '&female=1' : '')+
@@ -164,24 +179,24 @@ function ajaxUpdate(page) {
                 "&distance="+$('#distance').val()+
                 "&activity="+$( "#activity option:selected").val()+
                 "&priceFrom="+$('#priceFrom').val()+
-                (($('#priceTo').val().indexOf('+') === -1) ? "&priceTo="+$('#priceTo').val() : '')+
+                ((priceTo.val().indexOf('+') === -1) ? "&priceTo="+priceTo.val() : '')+
                 ((page > 0) ? '&page='+page : '');
 
     history.pushState(null, null, url);
 
-    $('.offer-objects').addClass('loading');
+    offerObjects.addClass('loading');
 
     $.get( url+"&ajax=1", function( data ) {
         clearMarkers();
 
-        $('.offer-objects').html(data);
+        offerObjects.html(data);
 
-        setMarkers(offers);
-        setMapParameters(offers);
+        setMarkers();
+        setMapParameters();
 
         markerClusterer = new MarkerClusterer(map, clusters);
 
-        $('.offer-objects').removeClass('loading');
+        offerObjects.removeClass('loading');
     });
 }
 

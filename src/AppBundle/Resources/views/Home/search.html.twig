@@ -88,6 +88,9 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/1.0/src/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&libraries=places"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js" async defer></script>
     <script type="text/javascript">
         // Address input element
         var input = (document.getElementById('address'));
@@ -100,18 +103,21 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 11,
-                center: {lat: 54.8931048, lng: 23.8666335}
+                center: {lat: 54.8931048, lng: 23.8666335},
+                scrollwheel: false,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_TOP
+                }
             });
 
             {% if (offers|length > 0) %}
-                setMarkers(offers);
-                setMapParameters(offers);
+                setMarkers();
+                setMapParameters();
                 markerClusterer = new MarkerClusterer(map, clusters);
             {% endif %}
 
             initAutocomplete();
         }
+        google.maps.event.addDomListener(window, 'load', initMap);
     </script>
-    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/1.0/src/markerclusterer.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap&libraries=places" async defer></script>
 {% endblock %}
