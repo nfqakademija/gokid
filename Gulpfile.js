@@ -69,6 +69,14 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest(dir.dist + 'js'))
 });
 
+    // Owl carousel
+    gulp.src([
+            dir.assets + 'owlcarousel/owl.carousel.min.js'
+        ])
+        .pipe(uglify())
+        .pipe(gulp.dest(dir.dist + 'js'));
+
+
 gulp.task('images', function() {
     gulp.src([
             dir.assets + 'images/**'
