@@ -219,7 +219,7 @@ $( "#slider-price" ).slider({
     range: true,
     min: 1,
     max: 100,
-    values: [ priceFrom, priceTo ],
+    values: [ $( "#priceFrom" ).val(), $( "#priceTo" ).val() ],
     change: function( event, ui ) {
         ajaxUpdate();
     },

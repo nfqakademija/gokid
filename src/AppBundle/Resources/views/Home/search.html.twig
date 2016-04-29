@@ -41,8 +41,8 @@
                     {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
                     {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
                     {{ form_row(form.distance, {'attr': {'class': 'hidden distance-field', 'id': 'distance'}}) }}
-                    {{ form_row(form.priceFrom, {'attr': {'class': 'hidden', 'id': 'priceFrom'}}) }}
-                    {{ form_row(form.priceTo, {'attr': {'class': 'hidden', 'id': 'priceTo'}}) }}
+                    {{ form_row(form.priceFrom, {'attr': {'class': 'hidden', 'id': 'priceFrom', 'value': ((offers.getParams.priceFrom is defined) ? offers.getParams.priceFrom : 1) }}) }}
+                    {{ form_row(form.priceTo, {'attr': {'class': 'hidden', 'id': 'priceTo', 'value': ((offers.getParams.priceTo is defined) ? offers.getParams.priceTo : 50) }}) }}
                 </div>
                 {{ form_end(form) }}
             </div>
@@ -87,10 +87,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        var priceFrom = {% if offers.getParams.priceFrom is defined %}{{ offers.getParams.priceFrom }}{% else %}1{% endif %};
-        var priceTo = {% if offers.getParams.priceTo is defined %}{{ offers.getParams.priceTo }}{% else %}50{% endif %};
-    </script>
     {{ parent() }}
     <script type="text/javascript">
         // Address input element
