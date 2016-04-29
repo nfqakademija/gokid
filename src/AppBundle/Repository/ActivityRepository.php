@@ -4,6 +4,8 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Activity;
 use \Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\Paginator;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ActivityRepository
@@ -38,5 +40,25 @@ class ActivityRepository extends EntityRepository
         $qb->select('a')->from('AppBundle:Activity', 'a');
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @return Activity[]
+     */
+    public function getAllActivitiesPaginated(
+        Paginator $paginator,
+        Request $request
+    ) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')->from('AppBundle:Activity', 'a');
+
+        $results = $paginator->paginate(
+            $qb,
+            $request->query->get('page', 1),
+            10,
+            array('wrap-queries' => true)
+        );
+
+        return $results;
     }
 }

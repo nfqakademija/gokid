@@ -6,6 +6,7 @@ use AppBundle\Entity\OfferSearch;
 use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
+use Knp\Component\Pager\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -198,15 +199,25 @@ class OfferRepository extends EntityRepository
      * @param User $user
      * @return Offer[]
      */
-    public function getUsersOffers(User $user)
-    {
+    public function getUsersOffers(
+        User $user,
+        Paginator $paginator,
+        Request $request
+    ) {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
             ->from('AppBundle:Offer', 'o');
 
         $qb->where('o.user = :user')->setParameter('user', $user);
 
-        return $qb->getQuery()->execute();
+        $results = $paginator->paginate(
+            $qb,
+            $request->query->get('page', 1),
+            15,
+            array('wrap-queries' => true)
+        );
+
+        return $results;
     }
 
     /**

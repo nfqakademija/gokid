@@ -20,6 +20,9 @@
                             </li>
                         {% endfor %}
                     </ul>
+                    <div class="navigation">
+                        {{ knp_pagination_render(activities) }}
+                    </div>
                     <div class="content-form logged-in no-shadow">
                         {% form_theme form '@App/form/OfferRegistrationFields.html.twig' %}
                         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}

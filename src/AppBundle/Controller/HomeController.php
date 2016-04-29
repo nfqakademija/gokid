@@ -208,10 +208,15 @@ class HomeController extends Controller
      * @Security("has_role('ROLE_USER')")
      * @return array
      */
-    public function offersAction()
+    public function offersAction(Request $request)
     {
+        $paginator = $this->get('knp_paginator');
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
-        $offers = $offerRepository->getUsersOffers($this->getUser());
+        $offers = $offerRepository->getUsersOffers(
+            $this->getUser(),
+            $paginator,
+            $request
+        );
 
         return  [
             'offers' => $offers,
@@ -274,8 +279,13 @@ class HomeController extends Controller
             unset($activity);
         }
 
+        $paginator = $this->get('knp_paginator');
+
         return [
-            'activities' => $activityRepository->getAllActivities(),
+            'activities' => $activityRepository->getAllActivities(
+                $paginator,
+                $request
+            ),
             'form' => $form->createView(),
         ];
     }
