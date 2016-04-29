@@ -3,11 +3,20 @@
 //  padding-top: 50px;
 //}
 
+@font-face {
+  font-family: 'Droid Sans';
+  src: url('../fonts/DroidSans.ttf') format('truetype');
+}
+
+* {
+  font-family: 'Droid Sans', Arial, sans-serif;
+}
+
 // Footer fix
 body,
 html {
   height: 100%;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 body {
