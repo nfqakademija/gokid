@@ -18,6 +18,8 @@ class OfferRepository extends EntityRepository
 {
     /**
      * @param OfferSearch $offer
+     * @param Paginator $paginator paging bundle
+     * @param Request $request search request
      * @return mixed
      */
     public function search(OfferSearch $offer, $paginator, Request $request)
@@ -48,6 +50,14 @@ class OfferRepository extends EntityRepository
                 ->andWhere("o.ageTo >= {$offer->getAge()}");
         }
 
+        if ($offer->getPriceFrom()) {
+            $qb->andWhere("o.price >= {$offer->getPriceFrom()}");
+        }
+
+        if ($offer->getPriceTo()) {
+            $qb->andWhere("o.price <= {$offer->getPriceTo()}");
+        }
+
         if ($offer->isFemale()) {
             $qb->where("o.female = true");
         }
@@ -60,7 +70,7 @@ class OfferRepository extends EntityRepository
             $qb,
             $request->query->get('page', 1),
             18,
-            array('wrap-queries'=>true)
+            array('wrap-queries' => true)
         );
 
         if ($offer->getLatitude() && $offer->getLongitude()) {
@@ -124,7 +134,7 @@ class OfferRepository extends EntityRepository
      */
     public function getAgeList()
     {
-        $list = [[],[]];
+        $list = [[], []];
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o.ageFrom')
@@ -149,11 +159,11 @@ class OfferRepository extends EntityRepository
         $firstRow   = ceil($ageCount / 2);
         $secRow     = floor($ageCount / 2);
 
-        for ($i=0; $i<$firstRow; $i++) {
+        for ($i = 0; $i < $firstRow; $i++) {
             array_push($list[0], $lowest++);
         }
 
-        for ($i=0; $i<$secRow; $i++) {
+        for ($i = 0; $i < $secRow; $i++) {
             array_push($list[1], $lowest++);
         }
 
@@ -161,7 +171,7 @@ class OfferRepository extends EntityRepository
     }
 
     /**
-     * @param Offer[]
+     * @param object $offers encodes array to json
      * @return string
      */
     public function prepareJSON($offers)
@@ -206,6 +216,7 @@ class OfferRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(o)')->from('AppBundle:Offer', 'o');
+
         return $qb->getQuery()->getSingleScalarResult();
     }
 }

@@ -74,7 +74,7 @@ class OfferType extends AbstractType
             ])
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

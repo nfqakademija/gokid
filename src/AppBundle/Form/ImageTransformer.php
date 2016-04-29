@@ -53,6 +53,7 @@ class ImageTransformer implements DataTransformerInterface
         } else {
             $offer->setImages(null);
         }
+
         return $offer;
     }
 }

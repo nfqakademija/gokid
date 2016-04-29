@@ -29,8 +29,8 @@ $( ".offer" ).hover(
 /**
  * Focuses to location on map
  */
-$( ".offer-location" ).click(
-    function(){
+
+$( ".offers" ).on( "click", ".offer-location", function() {
         closeWindows(markers);
         var id = $(this).closest('.offer').attr('data-id');
         infowindow[id].open(map, markers[id]);
@@ -155,20 +155,33 @@ function setMarkers(offers) {
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
-    var url = rootUrl + "search?address="+$('#address').val()+(($('#male').is(':checked')) ? '&male=1' : '')+(($('#female').is(':checked')) ? '&female=1' : '')+"&age="+$('#age').val()+"&latitude="+$('#latitude').val()+"&longitude="+$('#longitude').val()+"&distance="+$('#distance').val()+((page > 0) ? '&page='+page : '');
+    var url =   rootUrl + "search?address="+$('#address').val()+
+                (($('#male').is(':checked')) ? '&male=1' : '')+
+                (($('#female').is(':checked')) ? '&female=1' : '')+
+                "&age="+$('#age').val()+
+                "&latitude="+$('#latitude').val()+
+                "&longitude="+$('#longitude').val()+
+                "&distance="+$('#distance').val()+
+                "&activity="+$( "#activity option:selected").val()+
+                "&priceFrom="+$('#priceFrom').val()+
+                (($('#priceTo').val().indexOf('+') === -1) ? "&priceTo="+$('#priceTo').val() : '')+
+                ((page > 0) ? '&page='+page : '');
 
     history.pushState(null, null, url);
+
+    $('.offer-objects').addClass('loading');
 
     $.get( url+"&ajax=1", function( data ) {
         clearMarkers();
 
-        $('.offer-objects').fadeOut('fast');
-        $('.offer-objects').html(data).fadeIn('fast');
+        $('.offer-objects').html(data);
 
         setMarkers(offers);
         setMapParameters(offers);
 
         markerClusterer = new MarkerClusterer(map, clusters);
+
+        $('.offer-objects').removeClass('loading');
     });
 }
 
@@ -187,7 +200,7 @@ $( "#slider-range" ).slider({
     range: "min",
     value: $( "#distance" ).val(),
     min: 1,
-    max: 100,
+    max: 20,
     change: function( event, ui ) {
         ajaxUpdate();
     },
@@ -200,16 +213,51 @@ $('#dist').html( $( "#slider-range" ).slider( "value" ) );
 
 
 /**
+ * Price slider
+ */
+var maxPrice = 100;
+$( "#slider-price" ).slider({
+    range: true,
+    min: 1,
+    max: maxPrice,
+    values: [ $( "#priceFrom" ).val(), $( "#priceTo" ).val() ],
+    change: function( event, ui ) {
+        ajaxUpdate();
+    },
+    slide: function( event, ui ) {
+        if(ui.values[ 1 ] == maxPrice) {
+            ui.values[ 1 ] = maxPrice+'+';
+        }
+
+        $( "#price" ).html( "€" + ui.values[ 0 ] + "&nbsp;-&nbsp;€" + ui.values[ 1 ] );
+        $( "#priceFrom" ).val( ui.values[ 0 ] );
+
+        if (ui.values[1].toString().indexOf('+') === -1) {
+            $("#priceTo").val(ui.values[1]);
+        } else {
+            $("#priceTo").val(maxPrice);
+        }
+
+    }
+});
+$( "#price" ).html( "€" + $( "#slider-price" ).slider( "values", 0 ) +
+    "&nbsp;-&nbsp;€" +
+    (
+        ($( "#slider-price" ).slider( "values", 1 ) == maxPrice) ?
+        maxPrice + '+' : $( "#slider-price" ).slider( "values", 1 ))
+    );
+
+/**
  * Updates offers when filter parameters are changed
  */
-$('input').change(function() {
+$('.offers-filter input').change(function() {
     if ($(this).attr('id') == 'address') {
         return false;
     }
     ajaxUpdate();
 });
-$('.popover').click(function() {
-    alert(/a/);
+$('#activity').change(function() {
+    ajaxUpdate();
 });
 $( ".offers" ).on( "click", ".pagination a", function() {
     ajaxUpdate($(this).attr('page'));
