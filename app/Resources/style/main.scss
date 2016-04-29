@@ -17,6 +17,11 @@
 // File upload plugin styles
 @import '../../../vendor/kartik-v/bootstrap-fileinput/css/fileinput';
 
+// Owl carousel
+@import '../owlcarousel/assets/owl.carousel.min';
+@import '../owlcarousel/assets/owl.theme.default.min';
+@import '../owlcarousel/assets/animate';
+
 // Partials
 @import 'partials/navbar';
 @import 'partials/body';
