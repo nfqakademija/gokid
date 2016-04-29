@@ -2,11 +2,43 @@ $border: solid 1px darkgrey;
 .offerDetails {
 
     .carouselContainer{
-        .carousel-inner > .item > img,
-        .carousel-inner > .item > a > img {
-            width: auto;
-            margin: auto;
+
+        .owl-controls {
+            margin: 0;
         }
+
+        .owl-controls .owl-nav [class*=owl-] {
+            background: transparent;
+            color: $dark;
+            font-size: 20px;
+        }
+
+        .owl-controls .owl-nav [class*=owl-]:hover {
+            background: transparent;
+            color: $neutral;
+        }
+
+        .owl-controls .owl-prev,
+        .owl-controls .owl-next {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            height: 20%;
+            margin: auto !important;
+        }
+
+        .owl-controls .owl-prev {
+            left: 2%;
+        }
+
+        .owl-controls .owl-next {
+            right: 2%;
+        }
+
+        .owl-controls .owl-dots {
+            display: none !important;
+        }
+
         margin-bottom: 20px;
     }
 
