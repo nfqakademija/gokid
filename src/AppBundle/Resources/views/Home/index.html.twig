@@ -21,7 +21,10 @@
                                 <div class="locate-me">
                                     <span class="glyphicon glyphicon-globe" id="locate-me"></span>
                                 </div>
-                                {{  form_row(form.address, {'attr': {'class': 'place-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
+                                <div class="loader-div hidden">
+                                    <img class="loader" src="{{ asset('images/loading-spinner.gif') }}"/>
+                                </div>
+                                {{  form_row(form.address, {'attr': {'class': 'place-input address-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                             </div>
                             <div class="col-sm-3">
                                 {{

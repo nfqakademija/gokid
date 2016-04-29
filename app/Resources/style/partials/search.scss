@@ -48,11 +48,16 @@
   color: $neutral;
   transition: color 0.5s ease;
   text-align: center;
+  z-index: 2;
 }
 
 .locate-me:hover {
   cursor: pointer;
   color: $darkest;
+}
+
+.age-input:hover {
+  cursor: pointer;
 }
 
 .search-image {
@@ -70,6 +75,27 @@
   div {
     padding: 0;
   }
+}
+
+.loading-address {
+  background-color: $gray-light;
+}
+
+.loader-div {
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  width: 44px;
+}
+
+.loader {
+  width: 44px;
+  height: 44px;
+}
+
+.address-input {
+  position: absolute;
+  top: 0;
 }
 
 .search-container {
@@ -161,7 +187,6 @@
     transition: background-color 0.5s, color 0.5s;
   }
 
-
   .searchbar-submit:hover {
     background-color: $lightest;
     color: $darkest;
@@ -185,6 +210,10 @@
 @media (max-width: 768px) {
   .popover {
     width: 100%;
+  }
+
+  .address-input {
+    position: inherit;
   }
 
   .search-container {
@@ -230,4 +259,8 @@
     background-color: #ccc;
     border-radius: 3px;
   }
+}
+
+.absolute {
+  position: absolute !important;
 }
