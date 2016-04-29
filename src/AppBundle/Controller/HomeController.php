@@ -282,7 +282,7 @@ class HomeController extends Controller
         $paginator = $this->get('knp_paginator');
 
         return [
-            'activities' => $activityRepository->getAllActivities(
+            'activities' => $activityRepository->getAllActivitiesPaginated(
                 $paginator,
                 $request
             ),

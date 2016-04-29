@@ -20,6 +20,9 @@
                                 </label>
                                 <input type="file" class="form-control-file" name="fileInput" accept="text/csv"/>
                             </div>
+                            <div class="loader-div loader-submit hidden">
+                                <img class="loader" src="{{ asset('images/loading-spinner.gif') }}"/>
+                            </div>
                             <input type="submit" class="submit" value="Importuoti"/>
                         </form>
                     </div>
@@ -29,4 +32,12 @@
     </div>
 {% endblock %}
 
-
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" defer="defer">
+        $('.submit').click(function () {
+            $('.submit').addClass('hidden');
+            $('.loader-div').removeClass('hidden');
+        });
+    </script>
+{% endblock %}
