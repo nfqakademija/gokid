@@ -27,6 +27,7 @@ gulp.task('scripts', function() {
             // Counter-up plugin
             dir.bower + 'waypoints/waypoints.js',
             dir.bower + 'counter-up/jquery.counterup.js',
+            dir.bower + 'owl-carousel2/dist/owl.carousel.js',
 
             // Bootstrap JS modules
             dir.bootstrapJS + 'transition.js',
@@ -45,6 +46,7 @@ gulp.task('scripts', function() {
 
             // Application custom scripts
             dir.assets + 'scripts/offers.js',
+            dir.assets + 'scripts/offerDetails.js',
             dir.assets + 'scripts/file-upload-plugin-translation.js',
             dir.assets + 'scripts/age-popover.js',
             dir.assets + 'scripts/index-search.js',

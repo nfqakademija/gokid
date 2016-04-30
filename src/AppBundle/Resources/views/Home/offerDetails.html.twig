@@ -3,108 +3,13 @@
 {% block title %} Būrelio informacija - {{ parent() }}{% endblock %}
 
 {% block body %}
-
-    <div class="container-fluid">
-         <div class="detailsContainer">
-             <a href="{{ path('app.search') }}"> Grįžti į paiešką </a>
-            <h1> {{ offer.getName }} </h1>
-            <div class="row">
-                <div class="col-sm-5">
-                    <img src= "{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}">
-                </div>
-                <div class="col-sm-7">
-                    <div>
-                        <p> {{ offer.getDescription }} </p>
-                    </div>
-                    <div>
-                        <p> Sporto rūšis: {{ offer.getActivity.getName }} </p>
-                    </div>
-                    <div>
-                        {% if not offer.imported %}
-                        <p> Treneris: {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }} </p>
-                        <p class="userInfo"> Telefonas: {{ offer.getUser.getPhone }} </p>
-                        <p class="userInfo"> El. paštas: {{ offer.getUser.getEmail }} </p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p> Adresas: {{ offer.getAddress }}</p>
-                    </div>
-                    <div>
-                        <p> Vaikų amžius: {{ offer.getAgeFrom }} - {{ offer.getAgeTo }} m. </p>
-                    </div>
-                    <div>
-                        <p> Kaina: {{ offer.getPrice }} EUR </p>
-                    </div>
-                </div>
-            </div>
-         </div>
-         <div id="map" class="detailsMap"></div>
-            <script>
-                var markers = [];
-                var map;
-                function initMap() {
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 11,
-                        center: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}}
-                    });
-
-                var green = 'http://maps.google.com/mapfiles/marker_green.png';
-
-                var contentString_{{ offer.getId }} = '<div id="content">'+
-                                                        '<div id="siteNotice">'+
-                                                        '</div>'+
-                                                        '<a href=""><h4 id="firstHeading" class="firstHeading">{{ offer.getName }}</h4></a>'+
-                                                        '<div class="bodyContent">'+
-                                                        '<a href=""><img width="100%" src="{{ asset('/images/offerImages/'~ offer.getMainImage)}}" /></a>'+
-                                                        '<p>{{ offer.getDescription }}</p>'+
-                                                        '</div>'+
-                                                        '</div>';
-                var infowindow_{{ offer.getId }} = new google.maps.InfoWindow({ content: contentString_{{ offer.getId }} });
-                markers[{{ offer.getId }}] = new google.maps.Marker({
-                    position: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
-                    map: map,
-                    title: '{{ offer.getName }}',
-                    icon: green
-                    });
-                    markers[{{ offer.getId }}].addListener('click', function() {
-                                                infowindow_{{ offer.getId }}.open(map, markers[{{ offer.getId }}]);
-                                                map.setCenter(marker.getPosition());
-                                            });
-
-                                }
-            </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&callback=initMap" async defer></script>
-
+    <div class="owl-carousel">
+        {% if offer.getImages.count > 0 %}
+            {% for image in offer.getImages %}
+                <div> <img src="{{ asset ('/images/offerImages/'~ image.getImageName)}}" class="img-responsive" alt="{{ offer.getName }}"> </div>
+            {% endfor %}
+        {% else %}
+            <div> <img src="{{ asset ('/images/offerImages/'~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}"> </div>
+        {% endif %}
     </div>
-
-    <div class="similarOffers">
-        <h3> Panašūs būreliai </h3>
-        <div class="row">
-            {% if similarOffers |length >= 1 %}
-              <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[0].getId }) }}"> <img src="{{ asset('/images/offerImages/' ~ similarOffers[0].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[0].getName }}"> </a>
-                  <h4>{{ similarOffers[0].getName }}</h4>
-              </div>
-            {% endif %}
-            {% if similarOffers |length >= 2 %}
-              <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[1].getId }) }}"> <img src="{{ asset('/images/offerImages/' ~ similarOffers[1].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[1].getName }}"> </a>
-                  <h4>{{ similarOffers[1].getName }}</h4>
-              </div>
-            {% endif %}
-            {% if similarOffers |length >= 3 %}
-              <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[2].getId }) }}"> <img src="{{ asset('/images/offerImages/' ~ similarOffers[2].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[2].getName }}"> </a>
-                  <h4>{{ similarOffers[2].getName }}</h4>
-              </div>
-            {% endif %}
-            {% if similarOffers |length >= 4 %}
-              <div class="col-sm-3">
-                  <a href="{{ path('app.offerDetails', {'id': similarOffers[3].getId }) }}"><img src="{{ asset('/images/offerImages/' ~ similarOffers[3].getMainImage)}}" class="img-responsive" alt="{{ similarOffers[3].getName }}"> </a>
-                  <h4>{{ similarOffers[3].getName }}</h4>
-              </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
 {% endblock %}
