@@ -15,7 +15,7 @@ app.offerDetails:
   defaults: { _controller: AppBundle:Home:offerDetails }
 
 app.registeredOffers:
-  path: /offers/
+  path: /offers
   defaults: { _controller: AppBundle:Home:offers }
 
 app.offerDelete:

@@ -6,6 +6,7 @@ use AppBundle\Entity\Offer;
 use AppBundle\Entity\Activity;
 use AppBundle\Entity\OfferImage;
 use AppBundle\Repository\ActivityRepository;
+use AppBundle\Utility\Curl\CurlRequest;
 use ProxyManager\Proxy\Exception\RemoteObjectException;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -56,10 +57,10 @@ class ImportHelper
     public function parseCsv($filepath)
     {
         $i = 0;
-        if (($handle = fopen($filepath, "r")) !== false) {
+        if (file_exists($filepath) && ($handle = fopen($filepath, "r")) !== false) {
             $offers = [];
             $offerImages = [];
-            while (($data = fgetcsv($handle, null, "|")) !== false) {
+            while (($data = fgetcsv($handle, null, "|", "^")) !== false) {
                 $offer = new Offer();
                 $offer->setImported(true);
                 $offer->setName($data[0]);
@@ -155,10 +156,10 @@ class ImportHelper
     {
         $extension = $this->getFileExtension($fileUrl);
         $path = 'images/tmpImages/tmp' . $tmpFileIndex . '.' . $extension;
-        if ($image = $this->downloadImage($fileUrl, $path)) {
+        $curl = new CurlRequest($fileUrl);
+        if ($image = $this->downloadImage($curl, $fileUrl, $path)) {
             $offerImage = new OfferImage();
             $offerImage->setImageFile($image);
-
             return $offerImage;
         }
 
@@ -178,24 +179,24 @@ class ImportHelper
     }
 
     /**
+     * @param CurlRequest $curl
      * @param string $path
      * @param string $name
      * @return null|UploadedFile
      */
-    public function downloadImage($path, $name)
+    public function downloadImage($curl, $path, $name)
     {
-        $ch = curl_init($path);
         $fp = fopen($name, 'a+');
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl->setOption(CURLOPT_NOBODY, true);
+        $curl->execute();
+        $httpCode = $curl->getInfo(CURLINFO_HTTP_CODE);
         if ($httpCode == 200) {
-            curl_setopt($ch, CURLOPT_NOBODY, false);
-            curl_setopt($ch, CURLOPT_FILE, $fp);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            $fileType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-            curl_exec($ch);
-            curl_close($ch);
+            $curl->setOption(CURLOPT_NOBODY, false);
+            $curl->setOption(CURLOPT_FILE, $fp);
+            $curl->setOption(CURLOPT_HEADER, 0);
+            $fileType = $curl->getInfo(CURLINFO_CONTENT_TYPE);
+            $curl->execute();
+            $curl->close();
             fclose($fp);
             $file = new UploadedFile(
                 $name,
