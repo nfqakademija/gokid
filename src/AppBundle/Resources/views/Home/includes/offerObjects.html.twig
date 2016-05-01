@@ -3,18 +3,18 @@
         {% for offer in offers.getItems() %}
             <div class="col-xs-12 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
                 <div class="offer-inner">
-                    <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                    <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
                         <img src="{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}" />
                     </a>
                     <div class="offer-content">
                         <h2>
-                            <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                            <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
                                 {{ offer.getName }}
                             </a>
                         </h2>
                         <h5>{{ offer.getDescription|slice(0, 75) }}...</h5>
                         <span class="offer-rating">5.0</span>
-                        <a target="_blank" href="{{ path('app.search', {
+                        <a href="{{ path('app.search', {
                             'address': ((offers.getParams.address is defined) ? offers.getParams.address : none),
                             'male': ((offers.getParams.male is defined) ? offers.getParams.male : none),
                             'female': ((offers.getParams.female is defined) ? offers.getParams.female : none),

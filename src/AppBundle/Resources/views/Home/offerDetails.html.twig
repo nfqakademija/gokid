@@ -48,7 +48,42 @@
 
     <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-8">
-
+            <div class="middle-block">
+                {{ offer.getDescription }}
+            </div>
+            <div class="review-block">
+                <hr />
+                <span class="reviews">Atsiliepimai ( 1 )</span>
+                <hr />
+                <div class="review">
+                    <div class="row">
+                        <div class="user col-md-3">
+                            Vardenis Pavardenis
+                        </div>
+                        <div class="col-md-9">
+                            <div class="topic">
+                                Lorem ipsum - tai fiktyvus tekstas naudojamas spaudos
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span class="selected"></span>
+                                    <span></span>
+                                </div>
+                                <span class="date">
+                                    2016 Gegužės 1d.
+                                </span>
+                            </div>
+                            <div class="text">
+                                Lorem ipsum - tai fiktyvus tekstas naudojamas spaudos ir grafinio dizaino pasaulyje jau nuo XVI a. pradžios. Lorem Ipsum tapo standartiniu fiktyviu tekstu, kai nežinomas spaustuvininkas atsitiktine tvarka išdėliojo raides atspaudų prese ir tokiu būdu sukūrė raidžių egzempliorių. Šis tekstas išliko beveik nepasikeitęs ne tik penkis amžius, bet ir įžengė i kopiuterinio grafinio dizaino laikus. Jis išpopuliarėjo XX a. šeštajame dešimtmetyje, kai buvo išleisti Letraset lapai su Lorem Ipsum ištraukomis, o vėliau -leidybinė sistema AldusPageMaker, kurioje buvo ir Lorem Ipsum versija.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="side-block map-block">
@@ -56,22 +91,12 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&libraries=places"></script>
     <script>
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map-details'), {
-                zoom: 11,
-                center: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
-                scrollwheel: false,
-                zoomControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_TOP
-                }
-            });
-
-            initAutocomplete();
-        }
-        google.maps.event.addDomListener(window, 'load', initMap);
+        google.maps.event.addDomListener(window, 'load', detailsMap({{ offer.getLatitude }}, {{ offer.getLongitude }}));
     </script>
-
 {% endblock %}
