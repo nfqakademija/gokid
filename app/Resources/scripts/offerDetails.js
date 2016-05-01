@@ -9,7 +9,7 @@ var ratingStar = $('#rating label');
 $(".owl-carousel").owlCarousel({
     loop: true,
     autoplay: true,
-    autoplayTimeout: 2000,
+    autoplayTimeout: 10000,
     responsiveClass: true,
     responsive:{
         0:{

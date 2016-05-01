@@ -132,6 +132,20 @@
             <div class="side-block map-block">
                 <div id="map-details" class="map-details"></div>
             </div>
+            {% if offer.getImages.count > 0 %}
+                <div class="side-block">
+                    <span class="topic">Foto galerija</span>
+                    <div class="row">
+                        {% for image in offer.getImages %}
+                            <div class="col-md-4">
+                                <a href="{{ asset ('/images/offerImages/'~ image.getImageName)}}">
+                                    <img src="{{ asset ('/images/offerImages/'~ image.getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
