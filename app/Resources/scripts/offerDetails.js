@@ -1,3 +1,11 @@
+/**
+ * Variables
+ */
+var ratingStar = $('#rating label');
+
+/**
+ * Owl carousel
+ */
 $(".owl-carousel").owlCarousel({
     loop: true,
     autoplay: true,
@@ -16,6 +24,11 @@ $(".owl-carousel").owlCarousel({
     }
 });
 
+/**
+ * Initializes map
+ * @param lat
+ * @param lng
+ */
 function detailsMap(lat, lng) {
     map = new google.maps.Map(document.getElementById('map-details'), {
         zoom: 15,
@@ -31,3 +44,19 @@ function detailsMap(lat, lng) {
         icon: green,
     });
 }
+
+/**
+ * Keeps rating value after click
+ */
+ratingStar.click(function () {
+    $('.rating label').removeClass('selected');
+    $( this ).addClass('selected');
+});
+
+ratingStar.mouseover(function () {
+    $('#post-rating').html($(this).attr('title'));
+});
+
+ratingStar.mouseout(function () {
+    $('#post-rating').html($('#rating .selected').attr('title'));
+});
