@@ -201,7 +201,9 @@ class ImportHelperTest extends \PHPUnit_Framework_TestCase
                     'offerData' => [
                         [
                             'getName' => 'Sabonio krepšinio centras',
-                            'getDescription' => 'Strateginis krepšinio rinkos partneris, ugdantis aktyvius ir sveikus visuomenės narius, lyderiaujantis rengiant profesionalaus krepšinio pamainą.',
+                            'getDescription' => 'Strateginis krepšinio rinkos partneris, ugdantis aktyvius ir ' .
+                                'sveikus visuomenės narius, lyderiaujantis rengiant profesionalaus krepšinio ' .
+                                'pamainą.',
                             'getPaymentType' => '0',
                             'getPrice' => '10',
                             'isMale' => true,
@@ -216,7 +218,10 @@ class ImportHelperTest extends \PHPUnit_Framework_TestCase
                         ],
                         [
                             'getName' => '„TORNADO“ Krepšinio mokykla',
-                            'getDescription' => '"Tornado" krepšinio mokykla kasmet sulaukia vis didesnio būrio berniukų ir vaikinų,norinčių žaisti krepšinį. Šiuo metu mokykloje sportuoja daugiau nei 550 vaikų."Tornado" KM dirba patyrę treneriai, ne vienerius metus ugdantys krepšininkus nuo pirmųjų žingsnių krepšinio aikštelėje.',
+                            'getDescription' => '"Tornado" krepšinio mokykla kasmet sulaukia vis didesnio būrio ' .
+                                'berniukų ir vaikinų,norinčių žaisti krepšinį. Šiuo metu mokykloje sportuoja ' .
+                                'daugiau nei 550 vaikų."Tornado" KM dirba patyrę treneriai, ne vienerius '.
+                                'metus ugdantys krepšininkus nuo pirmųjų žingsnių krepšinio aikštelėje.',
                             'getPaymentType' => '2',
                             'getPrice' => '5',
                             'isMale' => false,
