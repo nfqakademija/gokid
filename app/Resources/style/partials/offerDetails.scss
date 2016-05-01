@@ -21,7 +21,7 @@
   }
 
   h2 {
-    color: #65c04c;
+    color: $neutral;
     padding-bottom: 10px;
   }
 
@@ -56,6 +56,79 @@
   border: 1px solid rgba(0, 0, 0, 0.075);
   padding: 25px;
   line-height: 2;
+
+  .topic {
+    font-size: 16px;
+  }
+
+  span {
+    font-weight: 600;
+    padding-bottom: 10px;
+    display: inline-block;
+  }
+
+  textarea,
+  input {
+    border: 1px solid rgba(0, 0, 0, 0.075);
+    border-radius: 3px;
+    display: block;
+    outline: 0;
+    padding: 0.8125rem 0.9375rem;
+    vertical-align: middle;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-bottom: 20px;
+  }
+
+  input[type="submit"] {
+    width: auto;
+    background-color: $neutral;
+    border: 0;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14.95px;
+    padding: 12px 24px;
+    text-align: center;
+    transition: 0.1s background-color ease-out;
+    -webkit-appearance: none;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #808080;
+  }
+
+  .rating {
+    font-size: 0;
+    padding-bottom: 20px;
+  }
+
+  .rating input {
+    display: none;
+  }
+
+  .rating label {
+    font-size: 19px;
+    color: $neutral;
+    padding-right: 10px;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .rating input:checked ~ label {
+    color: #E8E6E5 !important;
+  }
+
+  .rating:hover label {
+    color: $neutral !important;
+  }
+
+  .rating label:hover ~ label {
+    color: #E8E6E5 !important;
+  }
 }
 
 .map-block {
@@ -69,6 +142,10 @@
 
 .review-block {
   padding: 15px 0;
+}
+
+.bottom-block {
+  margin-bottom: 70px;
 }
 
 .reviews {
@@ -103,7 +180,7 @@
       display: inline-block;
       position: relative;
       width: 1.1em;
-      color: gold;
+      color: $neutral;
     }
 
     span:after {
@@ -118,7 +195,7 @@
 
   .stars > .selected,
   .stars > .selected ~ span {
-    color: gold;
+    color: $neutral;
   }
 
   .date {
