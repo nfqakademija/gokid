@@ -107,40 +107,12 @@ class HomeController extends Controller
      */
     public function coachesAction(Request $request)
     {
-        $loggedIn = $this->container->get('security.authorization_checker')
-            ->isGranted('IS_AUTHENTICATED_FULLY');
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
-
-        // If the user is logged in, don't show account creation fields
-        if ($loggedIn) {
-            $form->remove('user');
-        }
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // If user creates an account when registering an offer, we pass
-            // the offer being created and the user information to the
-            // user registration action, and then we persist the
-            // offer being created.
-            $response = null;
-            if (!$loggedIn) {
-                $userFields = $request->request->get('offer')['user'];
-                $userFields['_token'] = $request->request->get('_registration_token');
-                $request->request->set('_internal', true);
-                $request->request->set(
-                    'fos_user_registration_form',
-                    $userFields
-                );
-                $response = $this->forward(
-                    'FOSUserBundle:Registration:register',
-                    ['offer' => $offer]
-                );
-                // Remove the default FOSUserBundle account registration success
-                // flash message.
-                $this->get('session')->getFlashBag()->clear();
-            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($offer->getMainImage());
             $em->persist($offer);
@@ -150,12 +122,6 @@ class HomeController extends Controller
             unset($form);
             $offer = new Offer();
             $form = $this->createForm(OfferType::class, $offer);
-            if (!$loggedIn && $response && $response->getContent() === 'Ok') {
-                $this->addFlash('success', 'Jūsų paskyra sukurta, o būrelis patalpintas į sistemą');
-
-                return $this->redirect($this->generateUrl('fos_user_profile_edit'));
-            }
-            $form->remove('user');
             $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
         }
 

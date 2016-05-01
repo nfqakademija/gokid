@@ -56,10 +56,6 @@
   color: $darkest;
 }
 
-.age-input:hover {
-  cursor: pointer;
-}
-
 .search-image {
   position: absolute;
   left: 0;
@@ -112,6 +108,10 @@
   height: 100%;
   display: table;
   table-layout: fixed;
+
+  .link {
+    color: $neutral;
+  }
 
   .form-control:focus {
     box-shadow: none;
@@ -175,6 +175,10 @@
     border-radius: 0;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
+  }
+
+  .age-input:hover {
+    cursor: pointer;
   }
 
   .gutter-remove {

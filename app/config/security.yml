@@ -44,3 +44,4 @@ security:
         - { path: ^/account, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/offers/*, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/coaches, role: IS_AUTHENTICATED_FULLY }

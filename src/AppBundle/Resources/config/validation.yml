@@ -1,13 +1,8 @@
 AppBundle\Entity\User:
     properties:
-    # Your custom fields in your user entity, here is an example with FirstName
-        firstName:
+        name:
             - NotBlank:
-                message: "Prašome įvesti savo vardą"
-                groups: [ "CustomProfile", "CustomRegistration" ]
-        lastName:
-            - NotBlank:
-                message: "Prašome įvesti savo pavardę"
+                message: "Prašome įvesti savo vardą ir pavardę"
                 groups: [ "CustomProfile", "CustomRegistration" ]
         phone:
             - NotBlank:

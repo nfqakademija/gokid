@@ -8,25 +8,26 @@
             </h1>
         </div>
     </div>
-    <div class="container content-form {% if app.user %}logged-in offer-registration{% endif %}">
+    <div class="container content-form logged-in offer-registration">
         {% include '@App/Home/includes/flashBag.html.twig' %}
         {% form_theme form 'AppBundle:form:OfferRegistrationFields.html.twig' %}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'registration-form'}}) }}
-        {% if not app.user %}
-            <div class="registration-up">
-                    <legend>
-                        Paskyros duomenys
-                    </legend>
-                    <p class="registration-paragraph">
-                        Jeigu jau turite paskyrą, <a href="{{ path("fos_user_security_login") }}">prisijunkite</a>
-                    </p>
-                    {% for row in form.user %}
-                        {{ form_row(row) }}
-                    {% endfor %}
-                <input type="hidden" name="_registration_token" value="{{ csrf_token('fos_user_registration_form') }}"/>
-            </div>
-        {% endif %}
         {{ form_row(form.name) }}
+        <div class="form-group relative {%  if form.description.vars.errors|length %}has-error{% endif %}">
+            <label class="control-label required">
+                Papildoma informacija
+            </label>
+            {{ form_widget(form.description) }}
+            {{ form_errors(form.description) }}
+            <div class="popover-static"> <!-- NEW -->
+                <div class="popover left">
+                    <div class="arrow"></div>
+                    <div class="popover-content">
+                        Įveskite papildomos informacijos, kuri bus aktuali vaikų tėvams
+                    </div>
+                </div>
+            </div>
+        </div>
         {{ form_row(form.description, {'attr': {'class': 'desciption'}}) }}
         {{ form_row(form.contactInfo, {'attr': {'class': 'description'}}) }}
         <div class="form-group {%  if form.price.vars.errors|length %}has-error{% endif %}">
@@ -80,8 +81,36 @@
             {% endif %}
         </div>
         {{ form_row(form.address, {'attr': {'placeholder': ''}}) }}
-        {{ form_row(form.mainImage, {'attr': {'class': 'file-loading'}}) }}
-        {{ form_row(form.images, {'attr': {'class': 'file-loading'}}) }}
+        <div class="form-group relative {%  if form.mainImage.vars.errors|length %}has-error{% endif %}">
+            <label class="control-label required">
+                Pagrindinė nuotrauka
+            </label>
+            {{ form_widget(form.mainImage) }}
+            {{ form_errors(form.mainImage) }}
+            <div class="popover-static"> <!-- NEW -->
+                <div class="popover left">
+                    <div class="arrow"></div>
+                    <div class="popover-content">
+                        Pagrindinė nuotrauką bus matoma pagrindiniame puslapyje, vartotojams ieškant būrelių
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group relative {%  if form.images.vars.errors|length %}has-error{% endif %}">
+            <label class="control-label required">
+                Pagrindinė nuotrauka
+            </label>
+            {{ form_widget(form.images) }}
+            {{ form_errors(form.images) }}
+            <div class="popover-static"> <!-- NEW -->
+                <div class="popover right">
+                    <div class="arrow"></div>
+                    <div class="popover-content">
+                        Papildomas nuotraukas vartotojai pamatys, paspaudę ant jūsų būrelio skelbimo
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group {% if form.activity.vars.errors|length %}has-error{% endif %}">
             <label class="control-label required">
                 Sporto šaka
