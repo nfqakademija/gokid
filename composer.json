@@ -22,7 +22,6 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "beberlei/DoctrineExtensions": "^1.0",
         "kartik-v/bootstrap-fileinput": "@dev",
         "vich/uploader-bundle": "^1.0",
         "knplabs/knp-paginator-bundle": "^2.5"
