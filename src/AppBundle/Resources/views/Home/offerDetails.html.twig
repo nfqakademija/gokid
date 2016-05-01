@@ -6,10 +6,10 @@
     <div class="owl-carousel">
         {% if offer.getImages.count > 0 %}
             {% for image in offer.getImages %}
-                <div> <img src="{{ asset ('/images/offerImages/'~ image.getImageName)}}" class="img-responsive" alt="{{ offer.getName }}"> </div>
+                <img src="{{ asset ('/images/offerImages/'~ image.getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
             {% endfor %}
         {% else %}
-            <div> <img src="{{ asset ('/images/offerImages/'~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}"> </div>
+            <img src="{{ asset ('/images/offerImages/'~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}">
         {% endif %}
     </div>
 {% endblock %}
