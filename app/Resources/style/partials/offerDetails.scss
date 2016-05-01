@@ -1,4 +1,66 @@
-﻿.owl-carousel img {
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+﻿.owl-carousel {
+  margin-top: -19px;
+
+  img {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0) scale(1.0, 1.0);
+  }
+}
+
+.top-section {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  padding: 25px 0 20px 0;
+  position: relative;
+
+  .bc,
+  .address {
+    color: #808080;
+    font-size: 16px;
+  }
+
+  h2 {
+    color: #65c04c;
+    padding-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 16px;
+    color: #808080;
+    padding-bottom: 20px;
+  }
+
+  .glyphicon {
+    width: 16px;
+  }
+
+  .info div {
+    padding-bottom: 5px;
+  }
+
+  .mail,
+  .phone {
+    color: #333;
+  }
+}
+
+.side-block {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  padding: 15px;
+}
+
+.map-block {
+  margin-top: -200px;
+}
+
+.map-details {
+  height:250px;
+  width:100%;
+}
+
+@media (max-width: 991px) {
+  .map-block {
+    margin-top: 0;
+  }
 }

@@ -12,4 +12,66 @@
             <img src="{{ asset ('/images/offerImages/'~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}">
         {% endif %}
     </div>
+
+    <div class="top-section">
+        <div class="container">
+            <div class="col-xs-12 col-sm-12 col-md-8">
+                <a class="bc" href="{{ path('app.search') }}">Visi pasiūlymai</a> -> <a class="bc" href="{{ path('app.search', {'activity': offer.getActivity.getId, 'latitude': offer.getLatitude, 'longitude': offer.getLongitude, 'distance': 15}) }}">{{ offer.getActivity.getName }}</a>
+                <h2>{{ offer.getName }}</h2>
+                <h4><a class="address" href="{{ path('app.search', {
+                        'address': offer.getAddress,
+                        'latitude': offer.getLatitude,
+                        'longitude': offer.getLongitude,
+                        'distance': 15
+                    }) }}">{{ offer.getAddress }}</a></h4>
+                <div class="info row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <span class="glyphicon glyphicon-star"></span> Įvertinimas: 4.7
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <span class="glyphicon glyphicon-user"></span> {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }}
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <a class="phone" href="callto:{{ offer.getUser.getPhone }}">
+                            <span class="glyphicon glyphicon-earphone"></span> {{ offer.getUser.getPhone }}
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <a class="mail" href="mailto:{{ offer.getUser.getEmail }}">
+                            <span class="glyphicon glyphicon-envelope"></span> {{ offer.getUser.getEmail }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="col-xs-12 col-sm-12 col-md-8">
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="side-block map-block">
+                <div id="map-details" class="map-details"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&libraries=places"></script>
+    <script>
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map-details'), {
+                zoom: 11,
+                center: {lat: {{ offer.getLatitude }}, lng: {{ offer.getLongitude }}},
+                scrollwheel: false,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_TOP
+                }
+            });
+
+            initAutocomplete();
+        }
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+
 {% endblock %}
