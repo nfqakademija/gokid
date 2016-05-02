@@ -146,6 +146,40 @@
                     </div>
                 </div>
             {% endif %}
+            <div class="similar-offers side-block bottom-block">
+                <span class="topic">Panašūs būreliai</span>
+                {% if (similarOffers|length > 0) %}
+                    {% for offer in similarOffers %}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 offer" data-id="{{ offer.getId }}">
+                                <div class="offer-inner">
+                                    <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                                        <img src="{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}" />
+                                    </a>
+                                    <div class="offer-content">
+                                        <h2>
+                                            <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                                                {{ offer.getName }}
+                                            </a>
+                                        </h2>
+                                        <h5>{{ offer.getDescription|slice(0, 75) }}...</h5>
+                                        <span class="offer-rating">5.0</span>
+                                        <a href="{{ path('app.search', {
+                                            'activity': offer.getActivity.getId,
+                                            'distance': 15,
+                                        }) }}">
+                                            <span class="offer-activity">{{ offer.getActivity.getName }}</span>
+                                        </a>
+                                        <span class="offer-price">
+                                            <span class="amount">{{ offer.getPrice }} €</span><span class="type">{% if offer.paymentType == "0" %}Vienkartinis{% elseif offer.paymentType == "1" %}Kas savaitę{% else %}Kas mėnesį{% endif %}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -256,6 +256,58 @@
   }
 }
 
+.similar-offers {
+  .offer {
+    overflow: hidden;
+    margin-bottom: 30px;
+    display: inline-block;
+    position: relative;
+  }
+
+  .offer-content {
+    color: #ababab;
+    font-size: 14.95px;
+    font-weight: 400;
+  }
+
+  .offer-content a {
+    color: $neutral;
+  }
+
+  .offer-rating {
+    border: 2px solid #65c04c;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    width: 30px;
+  }
+
+  .offer-activity {
+    padding-left: 5px;
+  }
+
+  .offer-price {
+    font-weight: 700;
+    float: right;
+    padding-right: 15px;
+  }
+
+  .offer-price .amount {
+    font-size: 19px;
+    display: block;
+    text-align: center;
+    line-height: 0.5;
+    color: #888;
+  }
+
+  .offer-price .type {
+    color: #bbb;
+  }
+}
+
 @media (max-width: 991px) {
   .map-block {
     margin-top: 35px;
