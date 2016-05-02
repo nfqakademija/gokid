@@ -46,6 +46,23 @@ function detailsMap(lat, lng) {
 }
 
 /**
+ * Fancybox for image gallery
+ */
+$("a.fancy").fancybox({
+    padding: 0,
+    margin: [0, 50, 0, 50],
+    helpers: {
+        overlay: {
+            locked: false
+        },
+        thumbs	: {
+            width	: 50,
+            height	: 50,
+        }
+    }
+});
+
+/**
  * Keeps rating value after click
  */
 ratingStar.click(function () {

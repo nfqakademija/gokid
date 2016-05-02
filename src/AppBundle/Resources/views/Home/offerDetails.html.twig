@@ -138,7 +138,7 @@
                     <div class="row">
                         {% for image in offer.getImages %}
                             <div class="col-md-4">
-                                <a href="{{ asset ('/images/offerImages/'~ image.getImageName)}}">
+                                <a class="fancy" rel="fancy" href="{{ asset ('/images/offerImages/'~ image.getImageName)}}">
                                     <img src="{{ asset ('/images/offerImages/'~ image.getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
                                 </a>
                             </div>

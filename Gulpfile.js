@@ -28,6 +28,8 @@ gulp.task('scripts', function() {
             dir.bower + 'waypoints/waypoints.js',
             dir.bower + 'counter-up/jquery.counterup.js',
             dir.bower + 'owl-carousel2/dist/owl.carousel.js',
+            dir.bower + 'fancybox/source/jquery.fancybox.js',
+            dir.bower + 'fancybox/source/helpers/jquery.fancybox-thumbs.js',
 
             // Bootstrap JS modules
             dir.bootstrapJS + 'transition.js',
