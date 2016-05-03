@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rimas
- * Date: 4/30/16
- * Time: 4:02 PM
- */
 
-namespace AppBundle\Tests\Entity;
+namespace tests\AppBundle\Entity;
 
 use AppBundle\Entity\Activity;
 use AppBundle\Entity\Offer;

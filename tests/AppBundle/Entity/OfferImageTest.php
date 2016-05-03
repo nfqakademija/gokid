@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rimas
- * Date: 5/2/16
- * Time: 5:19 PM
- */
 
-namespace AppBundle\Tests\Entity;
+namespace tests\AppBundle\Entity;
 
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\OfferImage;
@@ -44,7 +38,7 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
      */
     public function getTestGetImageFileData()
     {
-        $image = fopen(__DIR__.'/../../../../app/Resources/images/offerImages/futbolas.jpg', 'r');
+        $image = fopen(__DIR__ . '/../../../app/Resources/images/offerImages/futbolas.jpg', 'r');
         return [
             [$image, $image],
         ];

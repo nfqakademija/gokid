@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Entity;
+namespace tests\AppBundle\Entity;
 
 use AppBundle\Entity\Activity;
 use AppBundle\Entity\Offer;
