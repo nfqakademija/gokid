@@ -6,6 +6,7 @@ use AppBundle\Entity\Activity;
 use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Form\ActivityType;
+use AppBundle\Form\ActivityTypeMapped;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Form\IndexSearchOffer;
@@ -223,7 +224,7 @@ class HomeController extends Controller
     public function activityCreateAction(Request $request)
     {
         $activity = new Activity();
-        $form = $this->createForm(ActivityType::class, $activity, [
+        $form = $this->createForm(ActivityTypeMapped::class, $activity, [
             'validation_groups' => ['creation', 'Default']
         ]);
         /** @var ActivityRepository $activityRepository */

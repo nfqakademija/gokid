@@ -60,7 +60,7 @@ class ImportHelper
         if (file_exists($filepath) && ($handle = fopen($filepath, "r")) !== false) {
             $offers = [];
             $offerImages = [];
-            while (($data = fgetcsv($handle, null, "|", "^")) !== false) {
+            while (($data = fgetcsv($handle, null, "|", "~")) !== false) {
                 $offer = new Offer();
                 $offer->setImported(true);
                 $offer->setName($data[0]);
@@ -75,24 +75,24 @@ class ImportHelper
                 $offer->setContactInfo(
                     $data[7] . ' ' . $data[8] . ' - ' . $data[9]
                 );
-                $offer->setMale($data[10] == '1' ? true : false);
-                $offer->setFemale($data[11] == '1' ? true : false);
-                $offer->setAgeFrom($data[12]);
-                $offer->setAgeTo($data[13]);
-                $offer->setAddress($data[14]);
-                if (isset($data[15])) {
+                $offer->setMale($data[8] == '1' ? true : false);
+                $offer->setFemale($data[9] == '1' ? true : false);
+                $offer->setAgeFrom($data[10]);
+                $offer->setAgeTo($data[11]);
+                $offer->setAddress($data[12]);
+                if (isset($data[13]) && $data[13] != "") {
                     if (!($offerImage = $this->createOfferImageFromFile(
-                        $data[15],
+                        $data[13],
                         $i++
                     ))) {
                         throw new RemoteObjectException(
-                            'Paveikslėlio parsiųsti iš ' . $data[15] . ' nepavyko'
+                            'Paveikslėlio parsiųsti iš ' . $data[13] . ' nepavyko'
                         );
                     };
                     $offer->setMainImage($offerImage);
                     $offerImage->setOffer($offer);
-                    $index = 16;
-                    while (isset($data[$index])) {
+                    $index = 14;
+                    while (isset($data[$index]) && $data[$index] != "") {
                         $offerImage = $this->createOfferImageFromFile(
                             $data[$index],
                             $i++
