@@ -176,7 +176,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getTest__toStringData()
+    public function getTestToStringData()
     {
         return [
             ['Basketball'],
@@ -186,9 +186,9 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $inputName
      *
-     * @dataProvider getTest__toStringData()
+     * @dataProvider getTestToStringData()
      */
-    public function test__toString($inputName)
+    public function testToString($inputName)
     {
         $activity = new Activity();
         $activity->setName($inputName);
