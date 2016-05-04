@@ -73,7 +73,8 @@ gulp.task('images', function() {
 
 gulp.task('fonts', function() {
     gulp.src([
-        dir.bower + 'bootstrap-sass/assets/fonts/**'
+        dir.bower + 'bootstrap-sass/assets/fonts/**',
+        './node_modules/font-awesome/fonts/**'
         ])
         .pipe(gulp.dest(dir.dist + 'fonts'));
 });

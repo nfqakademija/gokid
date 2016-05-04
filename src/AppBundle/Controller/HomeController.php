@@ -6,11 +6,13 @@ use AppBundle\Entity\Activity;
 use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Form\ActivityType;
+use AppBundle\Form\CommentType;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Offer;
 use AppBundle\Form\IndexSearchOffer;
 use AppBundle\Form\OfferType;
-use AppBundle\Entity\Offer;
 use AppBundle\Utility\ImportHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -178,19 +180,46 @@ class HomeController extends Controller
     /**
      * Individual offer details action.
      *
-     * @Template("AppBundle:Home:offerDetails.html.twig")
+     * @param Request $request
      * @param Offer $offer
-     * @return Response
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Template("AppBundle:Home:offerDetails.html.twig")
      */
-    public function offerDetailsAction(Offer $offer)
+    public function offerDetailsAction(Request $request, Offer $offer)
     {
+        /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
         if (empty($offer)) {
             return $this->redirect($this->generateUrl('app.search'));
         }
 
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $comment->setOffer($offer);
+            $em->persist($comment);
+            $offer->addComment($comment);
+            $em->persist($offer);
+
+            $em->flush();
+
+            return [
+                'form' => $form->createView(),
+                'comments' => $offer->getComments(),
+                'offer' => $offer,
+                'similarOffers' => $offerRepository->searchSimilarOffers($offer),
+            ];
+        }
+
         return [
+            'form' => $form->createView(),
+            'comments' => $offer->getComments(),
             'offer' => $offer,
             'similarOffers' => $offerRepository->searchSimilarOffers($offer),
         ];
@@ -205,6 +234,7 @@ class HomeController extends Controller
      */
     public function offersAction()
     {
+        /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
         $offers = $offerRepository->getUsersOffers($this->getUser());
 

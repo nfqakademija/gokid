@@ -35,7 +35,6 @@ class LoadData implements FixtureInterface
         $user1->setPassword('password');
         $user1->setRating(10);
         $manager->persist($user1);
-
         $user2 = new User();
         $user2->setFirstName('Darius');
         $user2->setLastName('Sirtautas');

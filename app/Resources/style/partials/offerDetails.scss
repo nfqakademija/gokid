@@ -1,39 +1,251 @@
-﻿h1 {
-  margin-bottom: 50px;
-}
+$border: solid 1px darkgrey;
+.offerDetails {
 
-.detailsContainer {
-  background-color: #fff;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 50px;
+    .carouselContainer{
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: auto;
+            margin: auto;
+        }
+        margin-bottom: 20px;
+    }
 
-  p {
-    margin-left: 10px;
-  }
+    .goToSearchContainer {
+        margin-bottom: 20px;
+        .goToSearch {
+            text-decoration: none;
+            color: grey;
+            font-size: small;
+        }
+        a:hover {
+            color: $neutral;
+            text-decoration: none;
+        }
+    }
 
-  div {
-    margin-top: 10px;
-  }
+    .name {
+        margin-bottom: 20px;
+        color: $neutral;
+    }
 
-  .userInfo {
-    margin-left: 70px;
-  }
-}
+    .ratingContainer {
+        margin-bottom: 20px;
+    }
 
-.similarOffers {
-  margin-top: 100px;
-  margin-right: 50px;
-  margin-left: 50px;
+    .similarOffers {
+        //offers
 
-  h3, h4 {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-}
+        .not-found {
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
 
-.detailsMap {
-    height: 80vh;
-    margin-left: 50px;
-    margin-right: 50px;
+        h2 {
+            font-size: 16px;
+            margin-top: 5px;
+            color: $neutral;
+        }
+
+        h5 {
+            margin-bottom: 20px;
+            color: darkgrey;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .offer {
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .offer-inner {
+            padding: 15px;
+            border: $border;
+        }
+
+        .offer-content {
+            font-size: 14.95px;
+
+        }
+
+        .offer-activity {
+            padding-left: 5px;
+        }
+
+        .offer-price {
+            float: right;
+            padding-right: 15px;
+        }
+
+        .offer-price .amount {
+            font-size: 19px;
+            display: block;
+            text-align: center;
+            line-height: 0.5;
+        }
+
+        .offer img {
+            -webkit-transition: all 0.4s ease;
+            -moz-transition: all 0.4s ease;
+            -o-transition: all 0.4s ease;
+            transition: all 0.4s ease;
+        }
+
+        .offer:hover img {
+            filter: saturate(150%);
+        }
+    }
+
+    .mapContainer {
+        #map {
+            height: 50vh;
+            margin-bottom: 20px;
+        }
+    }
+
+    .contactsContainer {
+        border-bottom: $border;
+        h4 {
+            font-size: small;
+        }
+        .col-sm-4{
+            padding-right: 0;
+        }
+        .col-sm-5{
+            padding-left: 0;
+        }
+    }
+
+    .interactionContainer {
+        margin-bottom: 20px;
+        h4 {
+            text-align: left;
+            font-size: medium;
+        }
+        a {
+            color: $neutral;
+            text-decoration: none;
+        }
+    }
+
+    .infoContainer {
+        margin-bottom: 20px;
+        h5, p {
+            font-size: small;
+        }
+        background-color: $lightest;
+        border: $border;
+        padding: 10px;
+    }
+
+    .reviewList {
+        .review {
+            border-bottom: $border;
+        }
+        .userIcon{
+            color: $neutral;
+        }
+        .center {
+            width: 6em;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .createdAt {
+            color: darkgrey;
+        }
+        h4 {
+            border-bottom: $border;
+            font-size: medium;
+        }
+        h5 {
+            font-size: small;
+        }
+        margin-bottom: 20px;
+    }
+
+    .reviewForm {
+        background-color: $lightest;
+        border: $border;
+        padding: 10px;
+        margin-bottom: 20px;
+        h4 {
+            font-size: medium;
+            border-bottom: $border;
+            margin-bottom: 10px;
+        }
+
+        .body-input {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+
+        .rate-input {
+            margin-bottom: 10px;
+        }
+
+        .title-input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .email-input {
+            width: 100%;
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .name-input {
+            width: 100%;
+            float: left;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            background-color: $neutral;
+            border-color: $neutral;
+            color: white;
+        }
+
+        .rating {
+            font-size: 0;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 15px;
+            color: $neutral;
+        }
+
+        .rating input:checked ~ label {
+            color: #E8E6E5 !important;
+        }
+
+        .rating:hover label {
+            color: $neutral !important;
+        }
+
+        .rating label:hover ~ label {
+            color: #E8E6E5 !important;
+        }
+    }
+
+    .offer-rating {
+        border: 2px solid $neutral;
+        border-radius: 50%;
+        font-size: 13px;
+        font-weight: 600;
+        height: 30px;
+        padding: 5px;
+        text-align: center;
+        width: 30px;
+    }
 }
