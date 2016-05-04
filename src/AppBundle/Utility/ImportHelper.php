@@ -192,9 +192,9 @@ class ImportHelper
         $httpCode = $curl->getInfo(CURLINFO_HTTP_CODE);
         if ($httpCode == 200) {
             $curl->setOption(CURLOPT_NOBODY, false);
-            $curl->setOption(CURLOPT_FILE, $fp);
             $curl->setOption(CURLOPT_HEADER, 0);
             $curl->setOption(CURLOPT_RETURNTRANSFER, 1);
+            $curl->setOption(CURLOPT_FILE, $fp);
             $fileType = $curl->getInfo(CURLINFO_CONTENT_TYPE);
             $curl->execute();
             $curl->close();
