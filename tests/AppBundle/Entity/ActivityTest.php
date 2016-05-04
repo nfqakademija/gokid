@@ -6,6 +6,10 @@ use AppBundle\Entity\Activity;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\OfferImage;
 
+/**
+ * Class ActivityTest
+ * @package tests\AppBundle\Entity
+ */
 class ActivityTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -20,8 +24,8 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputName
-     * @param $outputName
+     * @param string $inputName
+     * @param string $outputName
      *
      * @dataProvider getTestGetNameData()
      */
@@ -42,14 +46,15 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     {
         $image = new OfferImage();
         $image->setImageName('futbolas.jpg');
+
         return [
             [$image, $image],
         ];
     }
 
     /**
-     * @param $inputImage
-     * @param $outputImage
+     * @param OfferImage $inputImage
+     * @param OfferImage $outputImage
      *
      * @dataProvider getTestDefaultImageData()
      */
@@ -69,9 +74,9 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     public function getTestGetOffersData()
     {
         $offer1 = new Offer();
-        $offer1->setName('Offer1');
+        $offer1->setName('Sabonio krepšinio centras');
         $offer2 = new Offer();
-        $offer2->setName('Offer2');
+        $offer2->setName('Kauno futbolo mokykla „Tauras“');
         $offers = [];
         array_push($offers, $offer1, $offer2);
 
@@ -81,9 +86,9 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $offer1
-     * @param $offer2
-     * @param $offers
+     * @param Offer   $offer1
+     * @param Offer   $offer2
+     * @param Offer[] $offers
      *
      * @dataProvider getTestGetOffersData()
      */
@@ -105,7 +110,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     public function getTestAddOfferData()
     {
         $offer1 = new Offer();
-        $offer1->setName('Offer1');
+        $offer1->setName('Sabonio krepšinio centras');
 
         return [
             [$offer1, $offer1],
@@ -113,8 +118,8 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputOffer
-     * @param $outputOffer
+     * @param Offer $inputOffer
+     * @param Offer $outputOffer
      *
      * @dataProvider getTestAddOfferData()
      */
@@ -134,9 +139,9 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     public function getTestRemoveOfferData()
     {
         $offer1 = new Offer();
-        $offer1->setName('Offer1');
+        $offer1->setName('Sabonio krepšinio centras');
         $offer2 = new Offer();
-        $offer2->setName('Offer2');
+        $offer2->setName('Kauno futbolo mokykla „Tauras“');
         $inputActivity = new Activity();
 
         $inputActivity->addOffer($offer1);
@@ -152,9 +157,9 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputActivity
-     * @param $offerRemove
-     * @param $outputOffers
+     * @param Activity $inputActivity
+     * @param Offer    $offerRemove
+     * @param Offer[]  $outputOffers
      *
      * * @dataProvider getTestRemoveOfferData()
      */
@@ -178,7 +183,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputName
+     * @param string $inputName
      *
      * @dataProvider getTestToStringData()
      */

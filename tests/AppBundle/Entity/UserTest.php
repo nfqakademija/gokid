@@ -5,6 +5,10 @@ namespace tests\AppBundle\Entity;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Offer;
 
+/**
+ * Class UserTest
+ * @package tests\AppBundle\Entity
+ */
 class UserTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -14,13 +18,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Darius', 'Darius'],
-            ['', '']
+            ['', ''],
         ];
     }
 
     /**
-     * @param $inputFirstName
-     * @param $outputFirstName
+     * @param string $inputFirstName
+     * @param string $outputFirstName
      *
      * @dataProvider getTestGetFirstNameData()
      */
@@ -41,13 +45,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Sirtautas', 'Sirtautas'],
-            ['', '']
+            ['', ''],
         ];
     }
 
     /**
-     * @param $inputLastName
-     * @param $outputLastName
+     * @param string $inputLastName
+     * @param string $outputLastName
      *
      * @dataProvider getTestGetLastNameData()
      */
@@ -68,13 +72,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['8 686 37833', '8 686 37833'],
-            ['+370 657 78030', '+370 657 78030']
+            ['+370 657 78030', '+370 657 78030'],
         ];
     }
 
     /**
-     * @param $inputPhone
-     * @param $outputPhone
+     * @param string $inputPhone
+     * @param string $outputPhone
      *
      * @dataProvider getTestGetPhoneData()
      */
@@ -94,14 +98,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function getTestGetRatingData()
     {
         return [
-            ['5', '5'],
-            ['2', '2']
+            [5, 5],
+            [2, 2],
         ];
     }
 
     /**
-     * @param $inputRating
-     * @param $outputRating
+     * @param int $inputRating
+     * @param int $outputRating
      *
      * @dataProvider getTestGetRatingData()
      */
@@ -121,13 +125,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function getTestGetCurrentPasswordData()
     {
         return [
-            ['password', 'password']
+            ['password', 'password'],
         ];
     }
 
     /**
-     * @param $inputCurrentPassword
-     * @param $outputCurrentPassword
+     * @param mixed $inputCurrentPassword
+     * @param mixed $outputCurrentPassword
      *
      * @dataProvider getTestGetCurrentPasswordData()
      */
@@ -147,9 +151,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function getTestGetOffersData()
     {
         $offer1 = new Offer();
-        $offer1->setName('Offer1');
+        $offer1->setName('Sabonio krepšinio centras');
         $offer2 = new Offer();
-        $offer2->setName('Offer2');
+        $offer2->setName('Kauno futbolo mokykla „Tauras“');
         $offers = [];
         array_push($offers, $offer1, $offer2);
 
@@ -159,9 +163,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $offer1
-     * @param $offer2
-     * @param $offers
+     * @param Offer   $offer1
+     * @param Offer   $offer2
+     * @param Offer[] $offers
      *
      * @dataProvider getTestGetOffersData()
      */
@@ -191,8 +195,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputOffer
-     * @param $outputOffer
+     * @param Offer $inputOffer
+     * @param Offer $outputOffer
      *
      * @dataProvider getTestAddOfferData()
      */
@@ -212,9 +216,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function getTestRemoveOfferData()
     {
         $offer1 = new Offer();
-        $offer1->setName('Offer1');
+        $offer1->setName('Sabonio krepšinio centras');
         $offer2 = new Offer();
-        $offer2->setName('Offer2');
+        $offer2->setName('Kauno futbolo mokykla „Tauras“');
         $inputUser = new User();
 
         $inputUser->addOffer($offer1);
@@ -230,9 +234,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputUser
-     * @param $offerRemove
-     * @param $outputOffers
+     * @param User    $inputUser
+     * @param Offer   $offerRemove
+     * @param Offer[] $outputOffers
      *
      * * @dataProvider getTestRemoveOfferData()
      */

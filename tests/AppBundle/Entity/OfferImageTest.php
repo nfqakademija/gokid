@@ -4,7 +4,12 @@ namespace tests\AppBundle\Entity;
 
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\OfferImage;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class OfferImageTest
+ * @package tests\AppBundle\Entity
+ */
 class OfferImageTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -18,8 +23,8 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputName
-     * @param $outputName
+     * @param string $inputName
+     * @param string $outputName
      *
      * @dataProvider getTestGetImageNameData()
      */
@@ -38,15 +43,16 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
      */
     public function getTestGetImageFileData()
     {
-        $image = fopen(__DIR__ . '/../../../app/Resources/images/offerImages/futbolas.jpg', 'r');
+        $image = fopen(__DIR__.'/../../../app/Resources/images/offerImages/futbolas.jpg', 'r');
+
         return [
             [$image, $image],
         ];
     }
 
     /**
-     * @param $inputImage
-     * @param $outputImage
+     * @param resource     $inputImage
+     * @param UploadedFile $outputImage
      *
      * @dataProvider getTestGetImageFileData()
      */
@@ -67,14 +73,15 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
     {
         $offer = new  Offer();
         $offer->setName('Sabonio krepšinio mokykla');
+
         return [
             [$offer, $offer],
         ];
     }
 
     /**
-     * @param $inputOffer
-     * @param $outputOffer
+     * @param Offer $inputOffer
+     * @param Offer $outputOffer
      *
      * @dataProvider getTestGetOfferData()
      */
@@ -99,7 +106,7 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputName
+     * @param string $inputName
      *
      * @dataProvider getTestToStringData()
      */

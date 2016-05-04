@@ -7,6 +7,10 @@ use AppBundle\Entity\Offer;
 use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\User;
 
+/**
+ * Class OfferTest
+ * @package tests\AppBundle\Entity
+ */
 class OfferTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -20,8 +24,8 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputInfo
-     * @param $outputInfo
+     * @param string $inputInfo
+     * @param string $outputInfo
      *
      * @dataProvider getTestGetContactInfoData()
      */
@@ -42,13 +46,13 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [true, true],
-            [false, false]
+            [false, false],
         ];
     }
 
     /**
-     * @param $input
-     * @param $output
+     * @param boolean $input
+     * @param boolean $output
      *
      * @dataProvider getTestIsImportedData()
      */
@@ -69,13 +73,13 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [20, 20],
-            [22.4, 22.4]
+            [22.4, 22.4],
         ];
     }
 
     /**
-     * @param $inputDistance
-     * @param $outputDistance
+     * @param mixed $inputDistance
+     * @param mixed $outputDistance
      *
      * @dataProvider getTestGetDistanceData()
      */
@@ -100,8 +104,8 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputAddress
-     * @param $outputAddress
+     * @param string $inputAddress
+     * @param string $outputAddress
      *
      * @dataProvider getTestGetAddressData()
      */
@@ -126,8 +130,8 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $inputName
-     * @param $outputName
+     * @param string $inputName
+     * @param string $outputName
      *
      * @dataProvider getTestGetNameData()
      */
@@ -150,14 +154,15 @@ class OfferTest extends \PHPUnit_Framework_TestCase
 Strateginis krepšinio rinkos partneris, ugdantis aktyvius ir sveikus visuomenės narius,
  lyderiaujantis rengiant profesionalaus krepšinio pamainą.
 DESCRIPTION;
+
         return [
             [$description, $description],
         ];
     }
 
     /**
-     * @param $inputDescription
-     * @param $outputDescription
+     * @param string $inputDescription
+     * @param string $outputDescription
      *
      * @dataProvider getTestGetDescriptionData()
      */
@@ -182,8 +187,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputAge
-     * @param $outputAge
+     * @param int $inputAge
+     * @param int $outputAge
      *
      * @dataProvider getTestAgeFromData()
      */
@@ -208,8 +213,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputAge
-     * @param $outputAge
+     * @param int $inputAge
+     * @param int $outputAge
      *
      * @dataProvider getTestAgeToData()
      */
@@ -234,8 +239,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputPrice
-     * @param $outputPrice
+     * @param float $inputPrice
+     * @param float $outputPrice
      *
      * @dataProvider getTestGetPriceData()
      */
@@ -256,6 +261,7 @@ DESCRIPTION;
     {
         $activity = new  Activity();
         $activity->setName('Krepšinis');
+
         return [
             [$activity, $activity],
             [null, null],
@@ -263,8 +269,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputActivity
-     * @param $outputActivity
+     * @param Activity $inputActivity
+     * @param Activity $outputActivity
      *
      * @dataProvider getTestGetActivityData()
      */
@@ -285,6 +291,7 @@ DESCRIPTION;
     {
         $user = new  User();
         $user->setFirstName('Darius');
+
         return [
             [$user, $user],
             [null, null],
@@ -292,8 +299,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputUser
-     * @param $outputUser
+     * @param User $inputUser
+     * @param User $outputUser
      *
      * @dataProvider getTestGetUserData()
      */
@@ -314,13 +321,13 @@ DESCRIPTION;
     {
         return [
             [true, true],
-            [false, false]
+            [false, false],
         ];
     }
 
     /**
-     * @param $input
-     * @param $output
+     * @param boolean $input
+     * @param boolean $output
      *
      * @dataProvider getTestIsMaleData()
      */
@@ -341,13 +348,13 @@ DESCRIPTION;
     {
         return [
             [true, true],
-            [false, false]
+            [false, false],
         ];
     }
 
     /**
-     * @param $input
-     * @param $output
+     * @param boolean $input
+     * @param boolean $output
      *
      * @dataProvider getTestIsFemaleData()
      */
@@ -372,8 +379,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputLatitude
-     * @param $outputLatitude
+     * @param float $inputLatitude
+     * @param float $outputLatitude
      *
      * @dataProvider getTestGetLatitudeData()
      */
@@ -398,8 +405,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputLongitude
-     * @param $outputLongitude
+     * @param float $inputLongitude
+     * @param float $outputLongitude
      *
      * @dataProvider getTestGetLongitudeData()
      */
@@ -426,14 +433,15 @@ DESCRIPTION;
 
         $images[] = new OfferImage();
         array_push($images, $image1, $image2);
+
         return [
             [$images, $images],
         ];
     }
 
     /**
-     * @param $inputImages
-     * @param $outputImages
+     * @param OfferImage[] $inputImages
+     * @param OfferImage[] $outputImages
      *
      * @dataProvider getTestGetImagesData()
      */
@@ -461,8 +469,8 @@ DESCRIPTION;
     }
 
     /**
-     * @param $inputImage
-     * @param $outputImage
+     * @param OfferImage $inputImage
+     * @param OfferImage $outputImage
      *
      * @dataProvider getTestGetMainImageData()
      */
@@ -484,13 +492,13 @@ DESCRIPTION;
         return [
             [0, Offer::SINGLE_TIME],
             [1, Offer::WEEKLY],
-            [2, Offer::MONTHLY]
+            [2, Offer::MONTHLY],
         ];
     }
 
     /**
-     * @param $inputPayment
-     * @param $outputPayment
+     * @param mixed $inputPayment
+     * @param mixed $outputPayment
      *
      * @dataProvider getTestGetPaymentTypeData()
      */
