@@ -59,11 +59,11 @@ class OfferRepository extends EntityRepository
         }
 
         if ($offer->isFemale()) {
-            $qb->where("o.female = true");
+            $qb->andWhere("o.female = true");
         }
 
         if ($offer->isMale()) {
-            $qb->where("o.male = true");
+            $qb->andWhere("o.male = true");
         }
 
         $results = $paginator->paginate(
