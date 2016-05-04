@@ -6,7 +6,7 @@ $('#age').popover({
 }).click(function() {
     $('.button-container').click(function () {
         $('#age').val($(this).text()).popover('hide');
-        if (typeof markers !== undefined) {
+        if (typeof offers !== 'undefined') {
             ajaxUpdate();
         }
     });

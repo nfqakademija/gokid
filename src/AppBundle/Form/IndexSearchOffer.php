@@ -9,6 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
+/**
+ * Class IndexSearchOffer
+ * @package AppBundle\Form
+ */
 class IndexSearchOffer extends AbstractType
 {
     /**
@@ -32,9 +36,15 @@ class IndexSearchOffer extends AbstractType
         ])->add('distance', TextType::class, [
             'label' => false,
             'data' => '10',
+        ])->add('priceFrom', TextType::class, [
+            'label' => false,
+            'data' => '1',
+        ])->add('priceTo', TextType::class, [
+            'label' => false,
+            'data' => '50',
         ]);
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

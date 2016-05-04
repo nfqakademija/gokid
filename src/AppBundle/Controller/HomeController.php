@@ -73,10 +73,10 @@ class HomeController extends Controller
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
-        $paginator  = $this->get('knp_paginator');
+        $paginator   = $this->get('knp_paginator');
 
-        $offers     = $offerRepository->search($offer, $paginator, $request);
-        $offers_json= $offerRepository->prepareJSON($offers->getItems());
+        $offers      = $offerRepository->search($offer, $paginator, $request);
+        $offersJson  = $offerRepository->prepareJSON($offers->getItems());
 
         if ($request->get('ajax') == 1) {
             $offers->setParam('ajax', null);
@@ -84,15 +84,15 @@ class HomeController extends Controller
             return $this->render('AppBundle:Home/includes:offerObjects.html.twig', [
                 'ajax' => 1,
                 'offers' => $offers,
-                'offers_json' => $offers_json,
+                'offers_json' => $offersJson,
             ]);
         }
 
         return [
-            'activities' => $activityRepository->getActivityList(),
+            'activities' => $activityRepository->getAllActivities(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
-            'offers_json' => $offers_json,
+            'offers_json' => $offersJson,
             'form' => $form->createView(),
         ];
     }
@@ -150,6 +150,7 @@ class HomeController extends Controller
             $form = $this->createForm(OfferType::class, $offer);
             if (!$loggedIn && $response && $response->getContent() === 'Ok') {
                 $this->addFlash('success', 'Jūsų paskyra sukurta, o būrelis patalpintas į sistemą');
+
                 return $this->redirect($this->generateUrl('fos_user_profile_edit'));
             }
             $form->remove('user');
@@ -328,6 +329,7 @@ class HomeController extends Controller
             $entityManager->persist($activity);
             $entityManager->flush();
             $this->addFlash('success', 'Sporto šaka atnaujinta');
+
             return $this->redirect($this->generateUrl('app.activityCreate'));
         }
 

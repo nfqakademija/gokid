@@ -36,6 +36,7 @@ class ActivityRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('a')->from('AppBundle:Activity', 'a');
+
         return $qb->getQuery()->execute();
     }
 }
