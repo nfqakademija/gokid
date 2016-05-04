@@ -93,7 +93,7 @@ $(form).submit(function(event) {
 });
 
 // Geocoding function to reduce code duplication
-function geocode(params, callback) {
+function geocode(params, callback, failCallback) {
     geocoder.geocode(params,
         function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
@@ -104,6 +104,7 @@ function geocode(params, callback) {
                 }
             } else {
                 console.log('Geocoderio fail del:' + status);
+                failCallback(status);
             }
         }
     );
@@ -128,6 +129,7 @@ function setCoordinatesInputs() {
 }
 
 function locateUserAddress() {
+    addressLoading(true);
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var latlng = new google.maps.LatLng(
@@ -144,8 +146,34 @@ function locateUserAddress() {
                 changeCoordinates(
                     results[0].geometry.location.lat(),
                     results[0].geometry.location.lng()
-                )
+                );
+                addressLoading(false);
+            }, function(status) {
+                addressLoading(false, true);
             })
         });
+    }
+}
+
+var addressValue;
+
+function addressLoading(isLoading, failed) {
+    if (isLoading) {
+        $(input).attr('disabled', true);
+        $('.locate-me').addClass('hidden');
+        $('.loader-div').removeClass('hidden');
+        $(input).attr('placeholder', '');
+        addressValue = $(input).val();
+        $(input).val('');
+        $(input).addClass('absolute');
+    } else {
+        $(input).attr('placeholder', 'Gyvenamoji vieta');
+        $('.loader-div').addClass('hidden');
+        $(input).attr('disabled', false);
+        $('.locate-me').removeClass('hidden');
+        $(input).removeClass('absolute');
+    }
+    if (failed) {
+        $(input).val(addressValue);
     }
 }

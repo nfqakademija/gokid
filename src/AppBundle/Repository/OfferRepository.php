@@ -6,6 +6,7 @@ use AppBundle\Entity\OfferSearch;
 use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Offer;
+use Knp\Component\Pager\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,6 +17,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OfferRepository extends EntityRepository
 {
+
+    /**
+     * @var int
+     */
+    private $kmsInDegreeLatitude = 111;
+
+    /**
+     * @var int
+     */
+    private $kmsInDegreeLongitude = 62;
+
     /**
      * @param OfferSearch $offer
      * @param Paginator $paginator paging bundle
@@ -25,21 +37,23 @@ class OfferRepository extends EntityRepository
     public function search(OfferSearch $offer, $paginator, Request $request)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+        $longitude = $offer->getLongitude();
+        $latitude = $offer->getLatitude();
 
         if ($offer->getLatitude() && $offer->getLongitude()) {
-            $qb->select("o," .
-                "(6371 * ACOS(" .
-                "COS(RADIANS({$offer->getLatitude()})) * " .
-                "COS(RADIANS(o.latitude)) * " .
-                "COS(RADIANS(o.longitude) - RADIANS({$offer->getLongitude()})) + " .
-                "SIN(RADIANS({$offer->getLatitude()})) * SIN(RADIANS(o.latitude)))" .
-                ") as distance")
+            $distance = $offer->getDistance();
+            $boundsLongitude = $distance / $this->kmsInDegreeLongitude;
+            $minimumLongitude = $longitude - $boundsLongitude;
+            $maximumLongitude = $longitude + $boundsLongitude;
+            $boundsLatitude = $distance / $this->kmsInDegreeLatitude;
+            $minimumLatitude = $latitude - $boundsLatitude;
+            $maximumLatitude = $latitude + $boundsLatitude;
+            $qb->select("o")
                 ->from('AppBundle:Offer', 'o')
-                ->orderBy('distance');
-            if ($offer->getDistance()) {
-                $qb->having('distance <= :radius')
-                    ->setParameter('radius', $offer->getDistance());
-            }
+                ->where("o.latitude >= {$minimumLatitude}")
+                ->andWhere("o.latitude <= {$maximumLatitude}")
+                ->andWhere("o.longitude >= {$minimumLongitude}")
+                ->andWhere("o.longitude <= {$maximumLongitude}");
         } else {
             $qb->select("o")
                 ->from('AppBundle:Offer', 'o');
@@ -74,19 +88,41 @@ class OfferRepository extends EntityRepository
         );
 
         if ($offer->getLatitude() && $offer->getLongitude()) {
-            $returnArray = [];
             $items = $results->getItems();
+            /** @var Offer $item */
             foreach ($items as $item) {
-                $item[0]->setDistance($item['distance']);
-                $returnArray[] = $item[0];
+                $item->setDistance($this->calculateDistance(
+                    $item->getLatitude(),
+                    $item->getLongitude(),
+                    $latitude,
+                    $longitude
+                ));
             }
-
-            $results->setItems($returnArray);
-
-            return $results;
         }
-
         return $results;
+    }
+
+
+    /**
+     * @param float $offerLatitude
+     * @param float $offerLongitude
+     * @param float $userLatitude
+     * @param float $userLongitude
+     * @return float
+     */
+    private function calculateDistance(
+        $offerLatitude,
+        $offerLongitude,
+        $userLatitude,
+        $userLongitude
+    ) {
+        $distance = (6371 * acos(
+            cos(deg2rad($offerLatitude)) *
+            cos(deg2rad($userLatitude)) *
+            cos(deg2rad($userLongitude) - deg2rad($offerLongitude)) +
+            sin(deg2rad($offerLatitude)) * sin(deg2rad($userLatitude))
+        ));
+        return $distance;
     }
 
     /**
@@ -198,15 +234,25 @@ class OfferRepository extends EntityRepository
      * @param User $user
      * @return Offer[]
      */
-    public function getUsersOffers(User $user)
-    {
+    public function getUsersOffers(
+        User $user,
+        Paginator $paginator,
+        Request $request
+    ) {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
             ->from('AppBundle:Offer', 'o');
 
         $qb->where('o.user = :user')->setParameter('user', $user);
 
-        return $qb->getQuery()->execute();
+        $results = $paginator->paginate(
+            $qb,
+            $request->query->get('page', 1),
+            15,
+            array('wrap-queries' => true)
+        );
+
+        return $results;
     }
 
     /**

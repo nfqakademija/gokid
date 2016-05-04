@@ -63,7 +63,6 @@ class OfferType extends AbstractType
             ->add('longitude', null, [
                 'label' => false,
             ])
-            ->add('user', new RegistrationType())
             ->add('paymentType', ChoiceType::class, [
                 'label' => false,
                 'choices' => [

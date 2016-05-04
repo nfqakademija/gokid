@@ -20,4 +20,7 @@ $('body').on('click', function (e) {
             $(this).popover('hide');
         }
     });
+}).on('hidden.bs.popover', function (e) {
+    // Fix to make popup open after first click after being closed by above function
+    $(e.target).data("bs.popover").inState.click = false;
 });

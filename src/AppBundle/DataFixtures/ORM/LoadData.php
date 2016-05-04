@@ -14,21 +14,37 @@ use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Activity;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class LoadData
  * @package AppBundle\DataFixtures\ORM
  */
-class LoadData implements FixtureInterface
+class LoadData implements FixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface $container
+     */
+    private $container;
+
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
+        $userManager = $this->container->get('fos_user.user_manager');
+
+        $admin = $userManager->createUser();
+        $admin->setEmail('admin');
+        $admin->setPlainPassword('pass');
+        $admin->setUsername('admin');
+        $admin->setEnabled(true);
+        $admin->setRoles(['ROLE_ADMIN']);
+        $userManager->updateUser($admin, true);
+
         $user1 = new User();
-        $user1->setFirstName('Aurimas');
-        $user1->setLastName('Jasilionis');
+        $user1->setName('Aurimas Jasilionis');
         $user1->setPhone('865778030');
         $user1->setEmail('a.jasilionis@saboniocentras.lt');
         $user1->setUsername('Aurimas');
@@ -36,8 +52,7 @@ class LoadData implements FixtureInterface
         $user1->setRating(10);
         $manager->persist($user1);
         $user2 = new User();
-        $user2->setFirstName('Darius');
-        $user2->setLastName('Sirtautas');
+        $user2->setName('Darius Sirtautas');
         $user2->setPhone('868637833');
         $user2->setEmail('d.sirtautas@saboniocentras.lt');
         $user2->setUsername('Darius');
@@ -46,8 +61,7 @@ class LoadData implements FixtureInterface
         $manager->persist($user2);
 
         $user3 = new User();
-        $user3->setFirstName('Laimis');
-        $user3->setLastName('Bičkauskas');
+        $user3->setName('Laimis Bičkauskas');
         $user3->setPhone('865221255');
         $user3->setEmail('email@mail.com');
         $user3->setUsername('Laimis');
@@ -56,8 +70,7 @@ class LoadData implements FixtureInterface
         $manager->persist($user3);
 
         $user4 = new User();
-        $user4->setFirstName('Kazimieras');
-        $user4->setLastName('Bričkus');
+        $user4->setName('Kazimieras Bričkus');
         $user4->setPhone('861235851');
         $user4->setEmail('email2@mail.com');
         $user4->setUsername('Kazimieras');
@@ -66,8 +79,7 @@ class LoadData implements FixtureInterface
         $manager->persist($user4);
 
         $user5 = new User();
-        $user5->setFirstName('Donatas');
-        $user5->setLastName('Januševičius');
+        $user5->setName('Donatas Januševičius');
         $user5->setPhone('860000001');
         $user5->setEmail('email3@mail.com');
         $user5->setUsername('Donatas');
@@ -76,8 +88,7 @@ class LoadData implements FixtureInterface
         $manager->persist($user5);
 
         $user6 = new User();
-        $user6->setFirstName('Justas');
-        $user6->setLastName('Bugailiškis');
+        $user6->setName('Justas Bugailiškis');
         $user6->setPhone('861376228');
         $user6->setEmail('j.bugailiskis@gmail.com');
         $user6->setUsername('Justas');
@@ -86,8 +97,7 @@ class LoadData implements FixtureInterface
         $manager->persist($user6);
 
         $user7 = new User();
-        $user7->setFirstName('Justė');
-        $user7->setLastName('Kubiliūtė');
+        $user7->setName('Justė Kubiliūtė');
         $user7->setPhone('860015689');
         $user7->setEmail('juste@tennisvilnius.lt');
         $user7->setUsername('Justė');
@@ -96,8 +106,7 @@ class LoadData implements FixtureInterface
         $manager->persist($user7);
 
         $user8 = new User();
-        $user8->setFirstName('Eduardas');
-        $user8->setLastName('Belevičius');
+        $user8->setName('Eduardas Belevičius');
         $user8->setPhone('868711391');
         $user8->setEmail('email4@mail.com');
         $user8->setUsername('Eduardas');
@@ -165,8 +174,7 @@ DESCRIPTION;
         $offer1->setPaymentType(0);
         $offer1->setImported(true);
         $offer1->setContactInfo(
-            $offer1->getUser()->getFirstName() . ' ' .
-            $offer1->getUser()->getLastName() . ' - ' .
+            $offer1->getUser()->getName() . ' ' .
             $offer1->getUser()->getPhone()
         );
         $manager->persist($offer1);
@@ -193,8 +201,7 @@ DESCRIPTION;
         $offer2->setPaymentType(0);
         $offer2->setImported(true);
         $offer2->setContactInfo(
-            $offer2->getUser()->getFirstName() . ' ' .
-            $offer2->getUser()->getLastName() . ' - ' .
+            $offer2->getUser()->getName() . ' ' .
             $offer2->getUser()->getPhone()
         );
         $manager->persist($offer2);
@@ -219,8 +226,7 @@ DESCRIPTION;
         $offer3->setPaymentType(0);
         $offer3->setImported(true);
         $offer3->setContactInfo(
-            $offer3->getUser()->getFirstName() . ' ' .
-            $offer3->getUser()->getLastName() . ' - ' .
+            $offer3->getUser()->getName() . ' ' .
             $offer3->getUser()->getPhone()
         );
         $manager->persist($offer3);
@@ -246,8 +252,7 @@ DESCRIPTION;
         $offer4->setPaymentType(0);
         $offer4->setImported(true);
         $offer4->setContactInfo(
-            $offer4->getUser()->getFirstName() . ' ' .
-            $offer4->getUser()->getLastName() . ' - ' .
+            $offer4->getUser()->getName() . ' ' .
             $offer4->getUser()->getPhone()
         );
         $manager->persist($offer4);
@@ -272,8 +277,7 @@ DESCRIPTION;
         $offer5->setPaymentType(0);
         $offer5->setImported(true);
         $offer5->setContactInfo(
-            $offer5->getUser()->getFirstName() . ' ' .
-            $offer5->getUser()->getLastName() . ' - ' .
+            $offer5->getUser()->getName() . ' ' .
             $offer5->getUser()->getPhone()
         );
         $manager->persist($offer5);
@@ -298,8 +302,7 @@ DESCRIPTION;
         $offer6->setPaymentType(0);
         $offer6->setImported(true);
         $offer6->setContactInfo(
-            $offer6->getUser()->getFirstName() . ' ' .
-            $offer6->getUser()->getLastName() . ' - ' .
+            $offer6->getUser()->getName() . ' ' .
             $offer6->getUser()->getPhone()
         );
         $manager->persist($offer6);
@@ -325,8 +328,7 @@ DESCRIPTION;
         $offer7->setPaymentType(0);
         $offer7->setImported(true);
         $offer7->setContactInfo(
-            $offer7->getUser()->getFirstName() . ' ' .
-            $offer7->getUser()->getLastName() . ' - ' .
+            $offer7->getUser()->getName() . ' ' .
             $offer7->getUser()->getPhone()
         );
         $manager->persist($offer7);
@@ -352,8 +354,7 @@ DESCRIPTION;
         $offer8->setPaymentType(0);
         $offer8->setImported(true);
         $offer8->setContactInfo(
-            $offer8->getUser()->getFirstName() . ' ' .
-            $offer8->getUser()->getLastName() . ' - ' .
+            $offer8->getUser()->getName() . ' ' .
             $offer8->getUser()->getPhone()
         );
         $manager->persist($offer8);
@@ -378,8 +379,7 @@ DESCRIPTION;
         $offer9->setPaymentType(0);
         $offer9->setImported(true);
         $offer9->setContactInfo(
-            $offer9->getUser()->getFirstName() . ' ' .
-            $offer9->getUser()->getLastName() . ' - ' .
+            $offer9->getUser()->getName() . ' ' .
             $offer9->getUser()->getPhone()
         );
         $manager->persist($offer9);
@@ -404,8 +404,7 @@ DESCRIPTION;
         $offer10->setPaymentType(0);
         $offer10->setImported(true);
         $offer10->setContactInfo(
-            $offer10->getUser()->getFirstName() . ' ' .
-            $offer10->getUser()->getLastName() . ' - ' .
+            $offer10->getUser()->getName() . ' ' .
             $offer10->getUser()->getPhone()
         );
         $manager->persist($offer10);
@@ -472,5 +471,15 @@ DESCRIPTION;
         $offer10->setMainImage($image10);
 
         $manager->flush();
+    }
+
+    /**
+     * Sets the container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

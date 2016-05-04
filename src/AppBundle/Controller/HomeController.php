@@ -7,6 +7,7 @@ use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Form\ActivityType;
 use AppBundle\Form\CommentType;
+use AppBundle\Form\ActivityTypeMapped;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Entity\Comment;
@@ -16,9 +17,13 @@ use AppBundle\Form\OfferType;
 use AppBundle\Utility\ImportHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * Class HomeController
@@ -105,40 +110,12 @@ class HomeController extends Controller
      */
     public function coachesAction(Request $request)
     {
-        $loggedIn = $this->container->get('security.authorization_checker')
-            ->isGranted('IS_AUTHENTICATED_FULLY');
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
-
-        // If the user is logged in, don't show account creation fields
-        if ($loggedIn) {
-            $form->remove('user');
-        }
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // If user creates an account when registering an offer, we pass
-            // the offer being created and the user information to the
-            // user registration action, and then we persist the
-            // offer being created.
-            $response = null;
-            if (!$loggedIn) {
-                $userFields = $request->request->get('offer')['user'];
-                $userFields['_token'] = $request->request->get('_registration_token');
-                $request->request->set('_internal', true);
-                $request->request->set(
-                    'fos_user_registration_form',
-                    $userFields
-                );
-                $response = $this->forward(
-                    'FOSUserBundle:Registration:register',
-                    ['offer' => $offer]
-                );
-                // Remove the default FOSUserBundle account registration success
-                // flash message.
-                $this->get('session')->getFlashBag()->clear();
-            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($offer->getMainImage());
             $em->persist($offer);
@@ -148,12 +125,6 @@ class HomeController extends Controller
             unset($form);
             $offer = new Offer();
             $form = $this->createForm(OfferType::class, $offer);
-            if (!$loggedIn && $response && $response->getContent() === 'Ok') {
-                $this->addFlash('success', 'Jūsų paskyra sukurta, o būrelis patalpintas į sistemą');
-
-                return $this->redirect($this->generateUrl('fos_user_profile_edit'));
-            }
-            $form->remove('user');
             $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
         }
 
@@ -164,6 +135,7 @@ class HomeController extends Controller
             'gender' => false,
         ];
         foreach ($form->getErrors() as $error) {
+            /** @var FormError $error */
             if ($parameters = $error->getMessageParameters()) {
                 if (isset($parameters['id'])) {
                     $errors[$parameters['id']] = $error->getMessage();
@@ -232,11 +204,16 @@ class HomeController extends Controller
      * @Security("has_role('ROLE_USER')")
      * @return array
      */
-    public function offersAction()
+    public function offersAction(Request $request)
     {
+        $paginator = $this->get('knp_paginator');
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
-        $offers = $offerRepository->getUsersOffers($this->getUser());
+        $offers = $offerRepository->getUsersOffers(
+            $this->getUser(),
+            $paginator,
+            $request
+        );
 
         return  [
             'offers' => $offers,
@@ -277,7 +254,7 @@ class HomeController extends Controller
     public function activityCreateAction(Request $request)
     {
         $activity = new Activity();
-        $form = $this->createForm(ActivityType::class, $activity, [
+        $form = $this->createForm(ActivityTypeMapped::class, $activity, [
             'validation_groups' => ['creation', 'Default']
         ]);
         /** @var ActivityRepository $activityRepository */
@@ -287,7 +264,9 @@ class HomeController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $defaultImage = new OfferImage();
-            $defaultImage->setImageFile($activity->getDefaultImage());
+            /** @var UploadedFile $imageFile */
+            $imageFile = $activity->getDefaultImage();
+            $defaultImage->setImageFile($imageFile);
             $activity->setDefaultImage($defaultImage);
             $entityManager = $this->getDoctrine()->getEntityManager();
             $entityManager->persist($activity->getDefaultImage());
@@ -297,8 +276,13 @@ class HomeController extends Controller
             unset($activity);
         }
 
+        $paginator = $this->get('knp_paginator');
+
         return [
-            'activities' => $activityRepository->getAllActivities(),
+            'activities' => $activityRepository->getAllActivitiesPaginated(
+                $paginator,
+                $request
+            ),
             'form' => $form->createView(),
         ];
     }
@@ -335,6 +319,46 @@ class HomeController extends Controller
 
         return [
             'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * Offer delete action.
+     *
+     * @Template("AppBundle:Home:offerDeleteConfirmation.html.twig")
+     * @param Request $request
+     * @param Offer $offer
+     * @return array|RedirectResponse
+     */
+    public function offerDeleteAction(Request $request, Offer $offer)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $tokenManager = $this->get('security.csrf.token_manager');
+        if ($request->request->get('_csrf_token')) {
+            $token = new CsrfToken(
+                'offer_delete',
+                $request->request->get('_csrf_token')
+            );
+            if ($tokenManager->isTokenValid($token)
+                && $offer->getUser() == $user
+                && $request->request->get('answer') === 'y'
+            ) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($offer);
+                $entityManager->flush();
+                $this->addFlash('success', 'Būrelis ištrintas');
+                return $this->redirect(
+                    $this->generateUrl('app.registeredOffers')
+                );
+            } elseif ($request->request->get('answer') === 'n') {
+                return $this->redirect(
+                    $this->generateUrl('app.registeredOffers')
+                );
+            }
+        }
+
+        return [
+            'offer' => $offer,
         ];
     }
 }

@@ -73,12 +73,16 @@ gulp.task('images', function() {
             dir.assets + 'images/**'
         ])
         .pipe(gulp.dest(dir.dist + 'images'));
+    gulp.src([
+        './vendor/kartik-v/bootstrap-fileinput/img/**'
+    ])
+        .pipe(gulp.dest(dir.dist + 'img'));
 });
 
 gulp.task('fonts', function() {
     gulp.src([
         dir.bower + 'bootstrap-sass/assets/fonts/**',
-        './node_modules/font-awesome/fonts/**'
+        dir.assets + 'fonts/**'
         ])
         .pipe(gulp.dest(dir.dist + 'fonts'));
 });

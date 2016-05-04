@@ -1,0 +1,36 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        {% include '@App/Home/includes/flashBag.html.twig' %}
+        <div class="row">
+            <div class="col-sm-4">
+                {% include '@App/Home/includes/accountLeftMenu.html.twig' %}
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Būrelio ištrinimas
+                    </div>
+                    <div class="content-form logged-in no-shadow">
+                        <legend>
+                            Ar tikrai norite ištrinti '{{ offer.getName }}' būrėlį ?
+                        </legend>
+                        <form method="post" class="delete-form" action="{{ path('app.offerDelete', {'id': offer.id}) }}">
+                            <div class="row">
+                                <div class="col-sm-3 col-sm-offset-3">
+                                    <button class="btn btn-danger full-width" onclick="document.getElementById('answer').value = 'y'">Taip</button>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn-success full-width" onclick="document.getElementById('answer').value = 'n'">Ne</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="answer" id="answer"/>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('offer_delete') }}"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

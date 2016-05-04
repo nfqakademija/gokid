@@ -40,6 +40,9 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/account, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/profile, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/offers/import, role: ROLE_ADMIN }
+        - { path: ^/acitivity*, role: ROLE_ADMIN }
+        - { path: ^/offers/*, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/coaches, role: IS_AUTHENTICATED_FULLY }

@@ -26,16 +26,9 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=45)
+     * @ORM\Column(name="name", type="string", length=120)
      */
-    private $firstName = '';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lastName", type="string", length=45)
-     */
-    private $lastName = '';
+    private $name = '';
 
     /**
      * @var string
@@ -97,51 +90,27 @@ class User extends BaseUser
     }
 
     /**
-     * Set firstName
+     * Set name
      *
-     * @param string $firstName
+     * @param string $name
      *
      * @return User
      */
-    public function setFirstName($firstName)
+    public function setName($name)
     {
-        $this->firstName = $firstName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get firstName
+     * Get name
      *
      * @return string
      */
-    public function getFirstName()
+    public function getName()
     {
-        return $this->firstName;
-    }
-
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     *
-     * @return User
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
+        return $this->name;
     }
 
     /**

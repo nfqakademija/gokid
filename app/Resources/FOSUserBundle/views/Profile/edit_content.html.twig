@@ -16,8 +16,7 @@
                 <div class="content-form logged-in no-shadow">
                     {% form_theme form '@App/form/OfferRegistrationFields.html.twig' %}
                     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-                        {{ form_row(form.firstName) }}
-                        {{ form_row(form.lastName) }}
+                        {{ form_row(form.name) }}
                         {{ form_row(form.phone) }}
                         {{ form_row(form.current_password) }}
                         {{ form_widget(form.plainPassword) }}

@@ -48,6 +48,7 @@
   color: $neutral;
   transition: color 0.5s ease;
   text-align: center;
+  z-index: 2;
 }
 
 .locate-me:hover {
@@ -72,11 +73,45 @@
   }
 }
 
+.loader-div {
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  width: 100% ;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.loader {
+  width: 44px;
+  height: 44px;
+}
+
+.loader.smaller {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  height: 42px;
+}
+
+.loader-submit {
+  background-color: #eee;
+  margin-bottom: 30px;
+}
+
+.address-input {
+  position: absolute;
+  top: 0;
+}
+
 .search-container {
   position: relative;
   height: 100%;
   display: table;
   table-layout: fixed;
+
+  .link {
+    color: $neutral;
+  }
 
   .form-control:focus {
     box-shadow: none;
@@ -142,6 +177,10 @@
     border-right: 1px solid #ccc;
   }
 
+  .age-input:hover {
+    cursor: pointer;
+  }
+
   .gutter-remove {
     margin-left: 0;
     margin-right: 0;
@@ -160,7 +199,6 @@
     border-radius: 0 2px 2px 0;
     transition: background-color 0.5s, color 0.5s;
   }
-
 
   .searchbar-submit:hover {
     background-color: $lightest;
@@ -185,6 +223,10 @@
 @media (max-width: 768px) {
   .popover {
     width: 100%;
+  }
+
+  .address-input {
+    position: inherit;
   }
 
   .search-container {
@@ -230,4 +272,8 @@
     background-color: #ccc;
     border-radius: 3px;
   }
+}
+
+.absolute {
+  position: absolute !important;
 }

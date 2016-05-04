@@ -17,11 +17,8 @@ class RegistrationType extends AbstractType
             ->add('email', null, [
                 'label' => 'El. paštas',
             ])
-            ->add('firstName', null, [
-                'label' => 'Vardas',
-            ])
-            ->add('lastName', null, [
-                'label' => 'Pavardė',
+            ->add('name', null, [
+                'label' => 'Vardas ir pavardė',
             ])
             ->add('phone', null, [
                 'label' => 'Telefono numeris',

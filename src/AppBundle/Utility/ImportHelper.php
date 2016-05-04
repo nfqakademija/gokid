@@ -6,9 +6,12 @@ use AppBundle\Entity\Offer;
 use AppBundle\Entity\Activity;
 use AppBundle\Entity\OfferImage;
 use AppBundle\Repository\ActivityRepository;
-use Doctrine\ORM\EntityManager;
+use AppBundle\Utility\Curl\CurlRequest;
+use ProxyManager\Proxy\Exception\RemoteObjectException;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Helper class for importing offers from a csv file.
@@ -19,23 +22,31 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ImportHelper
 {
     /**
-     * @var EntityManager
+     * @var ManagerRegistry
      */
-    protected $em;
+    private $managerRegistry;
 
     /**
      * @var ActivityRepository
      */
-    protected $activityRepo;
+    private $activityRepo;
+
+    /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
 
     /**
      * ImportHelper constructor.
      *
-     * @param EntityManager $manager
+     * @param ManagerRegistry $manager
      */
-    public function __construct($manager)
-    {
-        $this->em = $manager;
+    public function __construct(
+        ManagerRegistry $manager,
+        TokenStorage $tokenStorage
+    ) {
+        $this->managerRegistry = $manager;
+        $this->tokenStorage = $tokenStorage;
         $this->activityRepo = $manager->getRepository('AppBundle:Activity');
     }
 
@@ -46,10 +57,10 @@ class ImportHelper
     public function parseCsv($filepath)
     {
         $i = 0;
-        if (($handle = fopen($filepath, "r")) !== false) {
+        if (file_exists($filepath) && ($handle = fopen($filepath, "r")) !== false) {
             $offers = [];
             $offerImages = [];
-            while (($data = fgetcsv($handle, null, "|")) !== false) {
+            while (($data = fgetcsv($handle, null, "|", "~")) !== false) {
                 $offer = new Offer();
                 $offer->setImported(true);
                 $offer->setName($data[0]);
@@ -64,20 +75,24 @@ class ImportHelper
                 $offer->setContactInfo(
                     $data[7] . ' ' . $data[8] . ' - ' . $data[9]
                 );
-                $offer->setMale($data[10] == '1' ? true : false);
-                $offer->setFemale($data[11] == '1' ? true : false);
-                $offer->setAgeFrom($data[12]);
-                $offer->setAgeTo($data[13]);
-                $offer->setAddress($data[14]);
-                if (isset($data[15])) {
-                    $offerImage = $this->createOfferImageFromFile(
-                        $data[15],
+                $offer->setMale($data[8] == '1' ? true : false);
+                $offer->setFemale($data[9] == '1' ? true : false);
+                $offer->setAgeFrom($data[10]);
+                $offer->setAgeTo($data[11]);
+                $offer->setAddress($data[12]);
+                if (isset($data[13]) && $data[13] != "") {
+                    if (!($offerImage = $this->createOfferImageFromFile(
+                        $data[13],
                         $i++
-                    );
+                    ))) {
+                        throw new RemoteObjectException(
+                            'Paveikslėlio parsiųsti iš ' . $data[13] . ' nepavyko'
+                        );
+                    };
                     $offer->setMainImage($offerImage);
                     $offerImage->setOffer($offer);
-                    $index = 16;
-                    while (isset($data[$index])) {
+                    $index = 14;
+                    while (isset($data[$index]) && $data[$index] != "") {
                         $offerImage = $this->createOfferImageFromFile(
                             $data[$index],
                             $i++
@@ -105,6 +120,8 @@ class ImportHelper
      */
     public function import($data)
     {
+        $user = $this->tokenStorage->getToken()->getUser();
+        $entityManager = $this->managerRegistry->getManager();
         /** @var Offer $offer */
         foreach ($data['offers'] as $offer) {
             /** @var Activity[] $activity */
@@ -116,17 +133,18 @@ class ImportHelper
                     $offer->setMainImage($activity[0]->getDefaultImage());
                 }
             } else {
-                $this->em->persist($offer->getActivity());
+                $entityManager->persist($offer->getActivity());
             }
-            $this->em->persist($offer);
+            $offer->setUser($user);
+            $entityManager->persist($offer);
             if ($offer->getMainImage()) {
-                $this->em->persist($offer->getMainImage());
+                $entityManager->persist($offer->getMainImage());
             }
         }
         foreach ($data['offerImages'] as $image) {
-            $this->em->persist($image);
+            $entityManager->persist($image);
         }
-        $this->em->flush();
+        $entityManager->flush();
     }
 
     /**
@@ -138,10 +156,10 @@ class ImportHelper
     {
         $extension = $this->getFileExtension($fileUrl);
         $path = 'images/tmpImages/tmp' . $tmpFileIndex . '.' . $extension;
-        if ($image = $this->downloadImage($fileUrl, $path)) {
+        $curl = new CurlRequest($fileUrl);
+        if ($image = $this->downloadImage($curl, $fileUrl, $path)) {
             $offerImage = new OfferImage();
             $offerImage->setImageFile($image);
-
             return $offerImage;
         }
 
@@ -161,24 +179,24 @@ class ImportHelper
     }
 
     /**
+     * @param CurlRequest $curl
      * @param string $path
      * @param string $name
      * @return null|UploadedFile
      */
-    public function downloadImage($path, $name)
+    public function downloadImage($curl, $path, $name)
     {
-        $ch = curl_init($path);
         $fp = fopen($name, 'a+');
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl->setOption(CURLOPT_NOBODY, true);
+        $curl->execute();
+        $httpCode = $curl->getInfo(CURLINFO_HTTP_CODE);
         if ($httpCode == 200) {
-            curl_setopt($ch, CURLOPT_NOBODY, false);
-            curl_setopt($ch, CURLOPT_FILE, $fp);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            $fileType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-            curl_exec($ch);
-            curl_close($ch);
+            $curl->setOption(CURLOPT_NOBODY, false);
+            $curl->setOption(CURLOPT_FILE, $fp);
+            $curl->setOption(CURLOPT_HEADER, 0);
+            $fileType = $curl->getInfo(CURLINFO_CONTENT_TYPE);
+            $curl->execute();
+            $curl->close();
             fclose($fp);
             $file = new UploadedFile(
                 $name,

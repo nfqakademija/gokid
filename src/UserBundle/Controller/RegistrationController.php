@@ -1,5 +1,4 @@
 <?php
-
 namespace UserBundle\Controller;
 
 use AppBundle\Entity\Offer;
@@ -37,62 +36,36 @@ class RegistrationController extends BaseController
         $userManager = $this->get('fos_user.user_manager');
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
-
         $user = $userManager->createUser();
         $user->setEnabled(true);
-
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
-
         if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
-
         $form = $formFactory->createForm();
         $form->setData($user);
-
         $form->handleRequest($request);
-
         // States whether request to register a user came from another
         // controller.
-        $internal = $request->request->get('_internal');
-
         if ($form->isValid()) {
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
             $userManager->updateUser($user);
-
             if (null === $response = $event->getResponse()) {
                 $url = $this->generateUrl('fos_user_profile_edit');
                 $response = new RedirectResponse($url);
             }
-
             $dispatcher->dispatch(
                 FOSUserEvents::REGISTRATION_COMPLETED,
                 new FilterUserResponseEvent($user, $request, $response)
             );
-
             // Remove the default FOSUserBundle account registration success
             // flash message.
             $this->get('session')->getFlashBag()->clear();
             $this->addFlash('success', 'Jūsų paskyra sukurta');
-
-            // Set the user of the offer to be registered to the just created
-            // user.
-            if ($internal) {
-                $offer->setUser($user);
-
-                return new Response('Ok');
-            }
-
             return $response;
         }
-
-        if ($internal) {
-            return new Response('Fail');
-        }
-
         return $this->render('FOSUserBundle:Registration:register.html.twig', array(
             'form' => $form->createView(),
         ));

@@ -22,7 +22,6 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "beberlei/DoctrineExtensions": "^1.0",
         "kartik-v/bootstrap-fileinput": "@dev",
         "vich/uploader-bundle": "^1.0",
         "knplabs/knp-paginator-bundle": "^2.5"
@@ -32,7 +31,10 @@
         "symfony/phpunit-bridge": "~2.7",
         "squizlabs/php_codesniffer": "~2.0",
         "escapestudios/symfony2-coding-standard": "~2.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "phpunit/phpunit": "^5.3",
+        "mikey179/vfsStream": "~1",
+        "liip/functional-test-bundle": "^1.6"
     },
     "scripts": {
         "post-install-cmd": [
