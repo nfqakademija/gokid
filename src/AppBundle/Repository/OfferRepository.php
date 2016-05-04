@@ -116,19 +116,6 @@ class OfferRepository extends EntityRepository
         $userLatitude,
         $userLongitude
     ) {
-//            $qb->select("o," .
-//                "(6371 * ACOS(" .
-//                "COS(RADIANS({$offer->getLatitude()})) * " .
-//                "COS(RADIANS(o.latitude)) * " .
-//                "COS(RADIANS(o.longitude) - RADIANS({$offer->getLongitude()})) + " .
-//                "SIN(RADIANS({$offer->getLatitude()})) * SIN(RADIANS(o.latitude)))" .
-//                ") as distance")
-//                ->from('AppBundle:Offer', 'o')
-//                ->orderBy('distance');
-//            if ($offer->getDistance()) {
-//                $qb->having('distance <= :radius')
-//                    ->setParameter('radius', $offer->getDistance());
-//            }
         $distance = (6371 * acos(
             cos(deg2rad($offerLatitude)) *
             cos(deg2rad($userLatitude)) *
