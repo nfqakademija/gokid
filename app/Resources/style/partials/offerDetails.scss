@@ -1,39 +1,333 @@
-﻿h1 {
-  margin-bottom: 50px;
+.owl-carousel {
+  margin-top: -19px;
+
+  img {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0) scale(1.0, 1.0);
+  }
 }
 
-.detailsContainer {
+.top-section {
   background-color: #fff;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  padding: 25px 0 20px 0;
+  position: relative;
+  margin-bottom: 35px;
 
-  p {
-    margin-left: 10px;
+  .bc,
+  .address {
+    color: #808080;
+    font-size: 16px;
   }
 
-  div {
-    margin-top: 10px;
+  h2 {
+    color: $neutral;
+    padding-bottom: 10px;
   }
 
-  .userInfo {
-    margin-left: 70px;
+  h4 {
+    font-size: 16px;
+    color: #808080;
+    padding-bottom: 20px;
+  }
+
+  .glyphicon {
+    width: 16px;
+  }
+
+  .info div {
+    padding-bottom: 5px;
+  }
+
+  .mail,
+  .phone {
+    color: #333;
   }
 }
 
-.similarOffers {
-  margin-top: 100px;
-  margin-right: 50px;
-  margin-left: 50px;
+.side-block {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  padding: 15px;
+  margin-bottom: 35px;
 
-  h3, h4 {
+  .topic {
+    font-size: 16px;
+    padding-bottom: 20px;
+    display: inline-block;
+  }
+}
+
+.middle-block {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  padding: 25px;
+  line-height: 2;
+
+  .topic {
+    font-size: 16px;
+  }
+
+  span {
+    font-weight: 600;
+    padding-bottom: 10px;
+    display: inline-block;
+  }
+
+  textarea,
+  input, button[type="submit"] {
+    border: 1px solid rgba(0, 0, 0, 0.075);
+    border-radius: 3px;
+    display: block;
+    outline: 0;
+    padding: 0.8125rem 0.9375rem;
+    vertical-align: middle;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     margin-bottom: 20px;
+  }
+
+  button[type="submit"] {
+    width: auto;
+    background-color: $neutral;
+    border: 0;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14.95px;
+    padding: 12px 24px;
     text-align: center;
+    transition: 0.1s background-color ease-out;
+    -webkit-appearance: none;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #808080;
+  }
+
+  .rating {
+    font-size: 0;
+    padding-bottom: 20px;
+    position: relative;
+  }
+
+  .rating input {
+    display: none;
+  }
+
+  .rating label {
+    font-size: 19px;
+    color: $neutral;
+    padding-right: 10px;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .rating:hover label {
+    color: $neutral !important;
+  }
+
+  .rating .selected ~ label {
+    color: #e8e6e5;
+  }
+
+  .rating label:hover ~ label {
+    color: #e8e6e5 !important;
+  }
+
+  .post-rating {
+    border: 1px solid rgba(0, 0, 0, 0.075);
+    border-radius: 3px;
+    color: #9b9b9b;
+    font-size: 15px;
+    left: 159px;
+    padding: 4px 26px;
+    top: -3px;
+    position: absolute;
+    bottom: auto;
+    right: auto;
+  }
+
+  .post-rating:not(:empty):before {
+    border-right-color: #fff;
+  }
+
+  .post-rating:not(:empty):before {
+    border-right-color: white;
+    border-width: 7px;
+    z-index: 1;
+  }
+
+  .post-rating:before, .post-rating:after {
+    border: solid transparent;
+    content: "";
+    height: 0;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 0;
+  }
+
+  .post-rating:not(:empty):after {
+    border-right-color: rgba(0, 0, 0, 0.075);
+    border-width: 8px;
   }
 }
 
-.detailsMap {
-    height: 80vh;
-    margin-left: 50px;
-    margin-right: 50px;
+.map-block {
+  margin-top: -235px;
+}
+
+.map-details {
+  height:250px;
+  width:100%;
+}
+
+.review-block {
+  padding: 15px 0;
+}
+
+.bottom-block {
+  margin-bottom: 70px;
+}
+
+.reviews {
+  font-size: 16px;
+  color: #606060;
+  font-weight: 700;
+}
+
+.review {
+  color: #606060;
+
+  .user {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .topic {
+    font-weight: 700;
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+
+  .rating {
+    padding-bottom: 10px;
+  }
+
+  .stars {
+    font-size: 25px;
+    display: inline-block;
+
+    span {
+      display: inline-block;
+      position: relative;
+      width: 1.1em;
+      color: $neutral;
+    }
+
+    span:after {
+      content: "\2605";
+    }
+
+    .selected ~ span:after {
+      content: "☆";
+      color: #606060;
+    }
+  }
+
+  .stars > .selected,
+  .stars > .selected ~ span {
+    color: $neutral;
+  }
+
+  .date {
+    color: #909090;
+  }
+
+  .text {
+    line-height: 1.7;
+  }
+}
+
+.similar-offers {
+  .offer {
+    overflow: hidden;
+    margin-bottom: 30px;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  .offer h2 {
+    font-size: 24px;
+  }
+
+  .offer-content {
+    color: #ababab;
+    font-size: 14.95px;
+    font-weight: 400;
+  }
+
+  .offer-content a {
+    color: $neutral;
+  }
+
+  .offer-rating {
+    border: 2px solid #65c04c;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    width: 30px;
+  }
+
+  .offer-activity {
+    padding-left: 5px;
+  }
+
+  .offer-price {
+    font-weight: 700;
+    float: right;
+    padding-right: 15px;
+  }
+
+  .offer-price .amount {
+    font-size: 19px;
+    display: block;
+    text-align: center;
+    line-height: 0.5;
+    color: #888;
+  }
+
+  .offer-price .type {
+    color: #bbb;
+  }
+}
+
+@media (max-width: 991px) {
+  .map-block {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .middle-block .post-rating {
+    left: 140px;
+  }
+  .middle-block .rating label {
+    padding-right: 8px;
+  }
 }
