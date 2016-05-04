@@ -80,6 +80,10 @@ class OfferRepository extends EntityRepository
             $qb->andWhere("o.male = true");
         }
 
+        if ($offer->getActivity()) {
+            $qb->andWhere("o.activity = {$offer->getActivity()}");
+        }
+
         $results = $paginator->paginate(
             $qb,
             $request->query->get('page', 1),
