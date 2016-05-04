@@ -53,44 +53,46 @@
             </div>
             <div class="review-block">
                 <hr />
-                <span class="reviews">Atsiliepimai ( 1 )</span>
+                <span class="reviews">Atsiliepimai ( {{ comments.count }} )</span>
                 <hr />
+                {% for comment in comments %}
                 <div class="review">
                     <div class="row">
                         <div class="user col-md-3">
-                            Vardenis Pavardenis
+                            {{ comment.getName }}
                         </div>
                         <div class="col-md-9">
                             <div class="topic">
-                                Lorem ipsum - tai fiktyvus tekstas naudojamas spaudos
+                                {{ comment.getTitle }}
                             </div>
                             <div class="rating">
                                 <div class="stars">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span class="selected"></span>
-                                    <span></span>
+                                    {% for i in 1..5 %}
+                                        <span {% if i == comment.getRate %}class="selected"{% endif %}></span>
+                                    {% endfor %}
                                 </div>
                                 <span class="date">
-                                    2016 Gegužės 1d.
+                                    {{ comment.getCreatedAt|date("F d, Y") }}
                                 </span>
                             </div>
                             <div class="text">
-                                Lorem ipsum - tai fiktyvus tekstas naudojamas spaudos ir grafinio dizaino pasaulyje jau nuo XVI a. pradžios. Lorem Ipsum tapo standartiniu fiktyviu tekstu, kai nežinomas spaustuvininkas atsitiktine tvarka išdėliojo raides atspaudų prese ir tokiu būdu sukūrė raidžių egzempliorių. Šis tekstas išliko beveik nepasikeitęs ne tik penkis amžius, bet ir įžengė i kopiuterinio grafinio dizaino laikus. Jis išpopuliarėjo XX a. šeštajame dešimtmetyje, kai buvo išleisti Letraset lapai su Lorem Ipsum ištraukomis, o vėliau -leidybinė sistema AldusPageMaker, kurioje buvo ir Lorem Ipsum versija.
+                                {{ comment.getBody }}
                             </div>
                         </div>
                     </div>
                 </div>
                 <hr />
+                {% endfor %}
             </div>
             <div class="middle-block bottom-block">
+                {{ form_start(form) }}
                 <div class="topic">
                     <span>Įvertinkite ir palikite atsiliepimą</span>
                 </div>
                 <hr />
                 <span>Jūsų atsiliepimas:</span>
-                <textarea placeholder="Pasidalinkite patirtimi apie šį būrelį ar palikite naudingą patarimą"></textarea>
+                {{ form_row(form.body, { 'attr': {'class': 'body-input', 'placeholder': 'Pasidalinkite patirtimi apie šį būrelį ar palikite naudingą patarimą'} }) }}
+                {{ form_row(form.rate, { 'attr': {'class': 'rate-input hidden'} }) }}
                 <span>Jūsų įvertinimas:</span>
                 <div class="rating" id="rating">
                     <label for="comment_rate_0" title="Blogas">
@@ -114,19 +116,20 @@
                     </div>
                 </div>
                 <span>Atsiliepimo tema:</span>
-                <input type="text" placeholder="Apibendrinkite savo nuomonę" />
+                {{ form_row(form.title, { 'attr': {'class': 'title-input', 'placeholder': 'Apibendrinkite savo nuomonę'} }) }}
                 <div class="row">
                     <div class="col-md-6">
                         <span>Jūsų vardas:</span>
-                        <input type="text" placeholder="Vardenis Pavardenis" />
+                        {{ form_row(form.name, { 'attr': {'class': 'name-input', 'placeholder': 'Vardenis Pavardenis'} }) }}
                     </div>
                     <div class="col-md-6">
                         <span>Jūsų el. paštas:</span>
-                        <input type="text" placeholder="jusu@el.pastas.lt" />
+                        {{ form_row(form.email, { 'attr': {'class': 'email-input', 'placeholder': 'jusu@el.pastas.lt'} }) }}
                     </div>
                 </div>
-                <input type="submit" value="Siųsti atsiliepimą" />
+                {{ form_row(form.submit, { 'label' : 'Siųsti atsiliepimą' }) }}
             </div>
+            {{ form_end(form) }}
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="side-block map-block">
