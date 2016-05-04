@@ -116,6 +116,7 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $offer->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($offer->getMainImage());
             $em->persist($offer);
