@@ -149,16 +149,34 @@
     margin: 0;
     width: 260px;
     height: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.075);
+  }
+
+  .marker-infowindow:after {
+    border-color: #fff transparent transparent;
+    border-width: 15px;
+    border-style: solid;
+    content: '';
+    display: inline-block;
+    position: absolute;
+    margin: 0 0 0 115px;
   }
 
   .marker-infowindow .name {
-    font-size: 18px;
+    font-size: 16px;
     color: #565a5c;
-    padding-top: 10px;
+    padding: 0 10px;
   }
 
   .marker-infowindow .image {
     position: relative;
+  }
+
+  .marker-infowindow .image img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   .marker-infowindow .image .price {
@@ -173,13 +191,14 @@
   }
 
   .marker-infowindow .offer-rating {
-    padding: 3px 0 0 0 !important;
+    padding: 5px 0 0 0 !important;
     float: right;
+    margin: 0 10px 10px 0;
   }
 
   .marker-infowindow .offer-activity {
-    padding-top: 4px;
     display: inline-block;
+    padding: 0 10px;
   }
 
   .marker {

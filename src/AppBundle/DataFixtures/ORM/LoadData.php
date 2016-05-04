@@ -51,7 +51,6 @@ class LoadData implements FixtureInterface, ContainerAwareInterface
         $user1->setPassword('password');
         $user1->setRating(10);
         $manager->persist($user1);
-
         $user2 = new User();
         $user2->setName('Darius Sirtautas');
         $user2->setPhone('868637833');

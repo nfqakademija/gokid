@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as CustomAssert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Offer
@@ -114,6 +115,13 @@ class Offer
     /**
      * @var float
      *
+     * @ORM\Column(name="rating", type="float", nullable=true)
+     */
+    protected $rating;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="latitude", type="float")
      */
     private $latitude;
@@ -158,35 +166,16 @@ class Offer
     private $contactInfo;
 
     /**
-     * @return string
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="offer")
      */
-    public function getContactInfo()
-    {
-        return $this->contactInfo;
-    }
+    protected $comments;
 
     /**
-     * @param string $contactInfo
+     * Activity constructor.
      */
-    public function setContactInfo($contactInfo)
+    public function __construct()
     {
-        $this->contactInfo = $contactInfo;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isImported()
-    {
-        return $this->imported;
-    }
-
-    /**
-     * @param boolean $imported
-     */
-    public function setImported($imported)
-    {
-        $this->imported = $imported;
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -237,6 +226,22 @@ class Offer
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * @return float
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param float $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
     }
 
     /**
@@ -558,5 +563,76 @@ class Offer
     public function setPaymentType($paymentType)
     {
         $this->paymentType = $paymentType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactInfo()
+    {
+        return $this->contactInfo;
+    }
+
+    /**
+     * @param string $contactInfo
+     */
+    public function setContactInfo($contactInfo)
+    {
+        $this->contactInfo = $contactInfo;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isImported()
+    {
+        return $this->imported;
+    }
+
+    /**
+     * @param boolean $imported
+     */
+    public function setImported($imported)
+    {
+        $this->imported = $imported;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param Comment $comment
+     *
+     * @return Offer
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        $rating = $this->getRating();
+        $count = count($this->getComments());
+
+        $this->setRating(($rating * ($count - 1) + $comment->getRate()) / $count);
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
