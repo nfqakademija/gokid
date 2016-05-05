@@ -5,7 +5,7 @@
         <div class="container">
             <div class="col-sm-12">
                 {% form_theme form '@App/form/IndexSearchFields.html.twig' %}
-                {{ form_start(form,  {'attr': {'action': path('app.search'),'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+                {{ form_start(form,  {'attr': {'action': path('app.search'),'novalidate': 'novalidate', 'class': 'form-horizontal index-form'}}) }}
                 <div class="form-group gutter-remove">
                     <div class="top-container">
                         <div class="col-sm-3">
@@ -102,6 +102,7 @@
         var form = $('.index-form');
         var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};
+        var searchPage = true;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
