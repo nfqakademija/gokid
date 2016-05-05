@@ -1,7 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block container %}
-    {% include ':inc:header.html.twig' %}
+    {% include ':inc:header.html.twig' with {'index': true}%}
     <div class="search-image"></div>
     <div class="container search-container">
         <div class="va-middle text-center">
