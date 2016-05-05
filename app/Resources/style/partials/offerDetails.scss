@@ -319,11 +319,14 @@
   }
 }
 
-@media (max-width: 380px) {
-  .container {
+@media (max-width: 468px) {
+  .mobile-no-padding {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+@media (max-width: 380px) {
   .middle-block .post-rating {
     left: 140px;
   }

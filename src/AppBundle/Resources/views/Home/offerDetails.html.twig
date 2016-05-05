@@ -13,7 +13,7 @@
     </div>
 
     <div class="top-section">
-        <div class="container">
+        <div class="container mobile-no-padding">
             <div class="col-xs-12 col-sm-12 col-md-8">
                 <a class="bc" href="{{ path('app.search') }}">Visi pasiūlymai</a> -> <a class="bc" href="{{ path('app.search', {'activity': offer.getActivity.getId, 'latitude': offer.getLatitude, 'longitude': offer.getLongitude, 'distance': 15}) }}">{{ offer.getActivity.getName }}</a>
                 <h2>{{ offer.getName }}</h2>
@@ -25,7 +25,7 @@
                     }) }}">{{ offer.getAddress }}</a></h4>
                     <div class="info row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
-                            <span class="glyphicon glyphicon-star"></span> Įvertinimas: 4.7
+                            <span class="glyphicon glyphicon-star"></span> Įvertinimas: {% if offer.getRating == 0 %}Nėra{% else %}{{ offer.getRating|number_format(1, '.') }}{% endif %}
                         </div>
                         {% if not offer.imported %}
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container mobile-no-padding">
         <div class="col-xs-12 col-sm-12 col-md-8">
             <div class="middle-block">
                 {{ offer.getDescription }}
