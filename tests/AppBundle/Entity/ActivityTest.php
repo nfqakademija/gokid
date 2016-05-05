@@ -42,7 +42,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getTestDefaultImageData()
+    public function getTestGetDefaultImageData()
     {
         $image = new OfferImage();
         $image->setImageName('futbolas.jpg');
@@ -56,9 +56,9 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
      * @param OfferImage $inputImage
      * @param OfferImage $outputImage
      *
-     * @dataProvider getTestDefaultImageData()
+     * @dataProvider getTestGetDefaultImageData()
      */
-    public function testDefaultImage($inputImage, $outputImage)
+    public function testGetDefaultImage($inputImage, $outputImage)
     {
         $activity = new Activity();
         $activity->setDefaultImage($inputImage);
@@ -191,8 +191,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     {
         $activity = new Activity();
         $activity->setName($inputName);
-        $this->assertEquals(
-            true,
+        $this->assertTrue(
             is_string($activity->__toString())
         );
     }
