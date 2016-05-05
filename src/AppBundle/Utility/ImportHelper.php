@@ -72,9 +72,7 @@ class ImportHelper
                 $activity = new Activity();
                 $activity->setName($data[6]);
                 $offer->setActivity($activity);
-                $offer->setContactInfo(
-                    $data[7] . ' ' . $data[8] . ' - ' . $data[9]
-                );
+                $offer->setContactInfo($data[7]);
                 $offer->setMale($data[8] == '1' ? true : false);
                 $offer->setFemale($data[9] == '1' ? true : false);
                 $offer->setAgeFrom($data[10]);
