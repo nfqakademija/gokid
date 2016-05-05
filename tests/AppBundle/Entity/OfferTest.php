@@ -3,6 +3,7 @@
 namespace tests\AppBundle\Entity;
 
 use AppBundle\Entity\Activity;
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\User;
@@ -509,6 +510,109 @@ DESCRIPTION;
         $this->assertEquals(
             $outputPayment,
             $offer->getPaymentType()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getTestGetCommentsData()
+    {
+        $comment1 = new Comment();
+        $comment1->setTitle('Geras būrelis');
+        $comment2 = new Comment();
+        $comment2->setName('Puikus būrelis');
+        $comments = [];
+        array_push($comments, $comment1, $comment2);
+
+        return [
+            [$comment1, $comment2, $comments],
+        ];
+    }
+
+    /**
+     * @param Comment   $comment1
+     * @param Comment   $comment2
+     * @param Comment[] $comments
+     *
+     * @dataProvider getTestGetCommentsData()
+     */
+    public function testGetComments($comment1, $comment2, $comments)
+    {
+        $offer = new Offer();
+        $offer->addComment($comment1);
+        $offer->addComment($comment2);
+
+        $this->assertEquals(
+            $comments,
+            $offer->getComments()->getValues()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getTestAddCommentData()
+    {
+        $comment1 = new Comment();
+        $comment1->setTitle('Geras būrelis');
+
+        return [
+            [$comment1, $comment1],
+        ];
+    }
+
+    /**
+     * @param Comment $inputComment
+     * @param Comment $outputComment
+     *
+     * @dataProvider getTestAddCommentData()
+     */
+    public function testAddComment($inputComment, $outputComment)
+    {
+        $offer = new Offer();
+        $offer->addComment($inputComment);
+        $this->assertEquals(
+            $outputComment,
+            $offer->getComments()[0]
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getTestRemoveCommentData()
+    {
+        $comment1 = new Comment();
+        $comment1->setTitle('Geras būrelis');
+        $comment2 = new Comment();
+        $comment2->setName('Puikus būrelis');
+        $inputOffer = new Offer();
+
+        $inputOffer->addComment($comment1);
+        $inputOffer->addComment($comment2);
+        $outputOffer = clone ($inputOffer);
+        $outputComments = $outputOffer->getComments()->getValues();
+        unset($outputComments[1]);
+
+        return [
+            [$inputOffer, $comment2, $outputComments],
+        ];
+    }
+
+    /**
+     * @param Offer     $inputOffer
+     * @param Comment   $commentRemove
+     * @param Comment[] $outputComments
+     *
+     * * @dataProvider getTestRemoveCommentData()
+     */
+    public function testRemoveComment($inputOffer, $commentRemove, $outputComments)
+    {
+        $inputOffer->removeComment($commentRemove);
+        $this->assertEquals(
+            $outputComments,
+            $inputOffer->getComments()->getValues()
         );
     }
 }
