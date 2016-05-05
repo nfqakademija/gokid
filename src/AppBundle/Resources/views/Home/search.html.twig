@@ -17,7 +17,7 @@
                             </div>
                             {{  form_row(form.address, {'attr': {'class': 'place-input address-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-1">
                             {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input', 'data-toggle': "popover"}}) }}
                         </div>
                         <div class="col-sm-2">
@@ -40,6 +40,12 @@
                     </div>
                     <div class="col-sm-2 submit-container">
                         <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="col-sm-2 counter">
+                        Rasta būrelių:
+                        <div class="stats">
+                            <span id="counter">0</span> iš <span>{{ offer_count }}</span>
+                        </div>
                     </div>
                     {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
                     {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
@@ -119,8 +125,10 @@
                 markerClusterer = new MarkerClusterer(map, clusters);
             {% endif %}
 
+            setCounter();
             initAutocomplete();
         }
+
         google.maps.event.addDomListener(window, 'load', initMap);
     </script>
 {% endblock %}

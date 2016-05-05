@@ -299,6 +299,15 @@
     color: $darkest;
   }
 
+  .counter {
+    padding-left: 15px !important;
+    padding-top: 10px !important;
+
+    .stats {
+      display: inline-block;
+    }
+  }
+
   @media (max-width: 768px) {
     .search-container {
       width: 100%;

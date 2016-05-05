@@ -102,6 +102,7 @@ class HomeController extends Controller
             'activities' => $activityRepository->getAllActivities(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
+            'offer_count' => $offerRepository->getOfferCount(),
             'offers_json' => $offersJson,
             'form' => $form->createView(),
         ];

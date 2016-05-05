@@ -164,6 +164,13 @@ function setMarkers() {
 }
 
 /**
+ * Updates counter in search results
+ */
+function setCounter() {
+    $('#counter').html(Object.keys(offers).length);
+}
+
+/**
  * Updates offers by filter parameters
  */
 function ajaxUpdate(page) {
@@ -192,6 +199,7 @@ function ajaxUpdate(page) {
 
         setMarkers();
         setMapParameters();
+        setCounter();
 
         markerClusterer = new MarkerClusterer(map, clusters);
 
