@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Entity\User;
 use \Doctrine\ORM\EntityRepository;
@@ -227,7 +228,17 @@ class OfferRepository extends EntityRepository
             $data[$offer->getId()]['address'] = $offer->getAddress();
             $data[$offer->getId()]['latitude'] = $offer->getLatitude();
             $data[$offer->getId()]['longitude'] = $offer->getLongitude();
-            $data[$offer->getId()]['image'] = $offer->getMainImage()->getImageName();
+            if ($offer->getMainImage()) {
+                $data[$offer->getId()]['image'] = $offer->getMainImage()->getImageName();
+            } elseif ($offer->getActivity()->getDefaultImage()) {
+                $offer->setMainImage($offer->getActivity()->getDefaultImage());
+                $data[$offer->getId()]['image'] = $offer->getActivity()->getDefaultImage();
+            } else {
+                $mainImage = new OfferImage();
+                $mainImage->setImageName('offerDefault.jpg');
+                $offer->setMainImage($mainImage);
+                $data[$offer->getId()]['image'] = 'offerDefault.jpg';
+            }
             $data[$offer->getId()]['paymentType'] = $offer->getPaymentType();
         }
 

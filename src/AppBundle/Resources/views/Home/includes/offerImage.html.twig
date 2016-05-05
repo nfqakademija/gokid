@@ -1,0 +1,7 @@
+{% if offer.mainImage %}
+    <img src="{{ asset ('/images/offerImages/'~ offer.mainImage.imageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+{% elseif offer.activity.defaultImage %}
+    <img src="{{ asset ('/images/offerImages/'~ offer.activity.defaultImage.imageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+{% else %}
+    <img src="{{ asset ('/images/offerImages/offerDefault.jpg')}}" class="img-responsive" alt="{{ offer.getName }}">
+{% endif %}
