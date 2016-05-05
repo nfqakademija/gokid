@@ -18,9 +18,9 @@ class ImageTransformer implements DataTransformerInterface
      *
      * @throws TransformationFailedException When the transformation fails.
      */
-    public function transform($offer)
+    public function transform($image)
     {
-        return $offer;
+        return null;
     }
 
     /**
@@ -33,27 +33,21 @@ class ImageTransformer implements DataTransformerInterface
      *
      * @throws TransformationFailedException When the transformation fails.
      */
-    public function reverseTransform($offer)
+    public function reverseTransform($images)
     {
-        if ($offer->getMainImage()) {
-            $image = new OfferImage();
-            $image->setImageFile($offer->getMainImage());
-            $image->setOffer($offer);
-            $offer->setMainImage($image);
-        }
-        if ($offer->getImages() && $offer->getImages()[0]) {
-            $images = [];
-            foreach ($offer->getImages() as $file) {
-                $image = new OfferImage();
-                $image->setImageFile($file);
-                $image->setOffer($offer);
-                $images[] = $image;
+        if (is_array($images) && $images[0]) {
+            $offerImages = [];
+            foreach ($images as $image) {
+                $offerImage = new OfferImage();
+                $offerImage->setImageFile($image);
+                $offerImages[] = $offerImage;
             }
-            $offer->setImages($images);
-        } else {
-            $offer->setImages(null);
+            return $offerImages;
+        } elseif (!is_array($images) && $images) {
+            $offerImage = new OfferImage();
+            $offerImage->setImageFile($images);
+            return $offerImage;
         }
-
-        return $offer;
+        return null;
     }
 }

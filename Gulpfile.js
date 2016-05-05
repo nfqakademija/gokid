@@ -37,6 +37,7 @@ gulp.task('scripts', function() {
             dir.bootstrapJS + 'dropdown.js',
             dir.bootstrapJS + 'tooltip.js',
             dir.bootstrapJS + 'popover.js',
+            dir.bootstrapJS + 'modal.js',
             //...
 
             // File Upload script

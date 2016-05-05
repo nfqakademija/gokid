@@ -21,9 +21,11 @@ class ActivityType extends AbstractType
             ])
             ->add('defaultImage', FileType::class, [
                 'label' => 'Numatytoji nuotrauka',
-                'mapped' => false,
             ])
         ;
+
+        $builder->get('defaultImage')
+            ->addModelTransformer(new ImageTransformer());
     }
 
     /**

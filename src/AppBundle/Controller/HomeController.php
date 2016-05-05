@@ -3,11 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Activity;
-use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Form\ActivityType;
 use AppBundle\Form\CommentType;
-use AppBundle\Form\ActivityTypeMapped;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Entity\Comment;
@@ -18,7 +16,6 @@ use AppBundle\Utility\ImportHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -123,7 +120,9 @@ class HomeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $offer->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
-            $em->persist($offer->getMainImage());
+            if ($offer->getMainImage()) {
+                $em->persist($offer->getMainImage());
+            }
             $em->persist($offer);
             $em->flush();
             // Unset the form so that the fields do not get repopulated
@@ -258,8 +257,8 @@ class HomeController extends Controller
     public function activityCreateAction(Request $request)
     {
         $activity = new Activity();
-        $form = $this->createForm(ActivityTypeMapped::class, $activity, [
-            'validation_groups' => ['creation', 'Default']
+        $form = $this->createForm(ActivityType::class, $activity, [
+            'validation_groups' => ['creation', 'Default'],
         ]);
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
@@ -267,17 +266,16 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $defaultImage = new OfferImage();
-            /** @var UploadedFile $imageFile */
-            $imageFile = $activity->getDefaultImage();
-            $defaultImage->setImageFile($imageFile);
-            $activity->setDefaultImage($defaultImage);
             $entityManager = $this->getDoctrine()->getEntityManager();
-            $entityManager->persist($activity->getDefaultImage());
+            if ($activity->getDefaultImage()) {
+                $entityManager->persist($activity->getDefaultImage());
+            }
             $entityManager->persist($activity);
             $entityManager->flush();
             $this->addFlash('success', 'Sporto šaka sukurta');
-            unset($activity);
+            $form = $this->createForm(ActivityType::class, new Activity(), [
+                'validation_groups' => ['creation', 'Default'],
+            ]);
         }
 
         $paginator = $this->get('knp_paginator');
@@ -300,25 +298,25 @@ class HomeController extends Controller
      */
     public function activityEditAction(Request $request, Activity $activity)
     {
+        $oldActivityName =  $activity->getName();
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getEntityManager();
-            if (isset($request->files->get('activity')['defaultImage'])) {
-                $entityManager->remove($activity->getDefaultImage());
-                $defaultImage = new OfferImage();
-                $defaultImage->setImageFile(
-                    $request->files->get('activity')['defaultImage']
-                );
-                $entityManager->persist($defaultImage);
-                $activity->setDefaultImage($defaultImage);
+            if ($activity->getName() !== $oldActivityName ||
+                $activity->getDefaultImage()
+            ) {
+                $entityManager = $this->getDoctrine()->getEntityManager();
+                if ($activity->getDefaultImage()) {
+                    $entityManager->persist($activity->getDefaultImage());
+                }
+                $entityManager->persist($activity);
+                $entityManager->flush();
+                $this->addFlash('success', 'Sporto šaka atnaujinta');
+                return $this->redirect($this->generateUrl('app.activityCreate'));
+            } else {
+                $this->addFlash('error', 'Neįvedėte duomenų šakos atnaujinimui');
             }
-            $entityManager->persist($activity);
-            $entityManager->flush();
-            $this->addFlash('success', 'Sporto šaka atnaujinta');
-
-            return $this->redirect($this->generateUrl('app.activityCreate'));
         }
 
         return [

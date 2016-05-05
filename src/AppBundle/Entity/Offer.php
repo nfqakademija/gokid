@@ -135,13 +135,16 @@ class Offer
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\OfferImage", mappedBy="offer", cascade={"persist"})
+     * @CustomAssert\ImageSizes(maxSize="1048576").
+     * @CustomAssert\ImageExtensions(extensions={"jpg","png","gif"})
      */
     private $images;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OfferImage")
      * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     * @Assert\NotBlank(message="Prašome įkelti pagrindinę būrelio nuotrauką")
+     * @CustomAssert\ImageSizes(maxSize="1048576")
+     * @CustomAssert\ImageExtensions(extensions={"jpg","png","gif"})
      */
     private $mainImage;
 
