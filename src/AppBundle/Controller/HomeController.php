@@ -75,6 +75,11 @@ class HomeController extends Controller
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
 
+        if ($request->query->get('activity')
+        ) {
+            $offer->setActivity($request->query->get('activity'));
+        }
+
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
@@ -116,15 +121,14 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $offer->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($offer->getMainImage());
             $em->persist($offer);
             $em->flush();
             // Unset the form so that the fields do not get repopulated
-            unset($offer);
             unset($form);
-            $offer = new Offer();
-            $form = $this->createForm(OfferType::class, $offer);
+            $form = $this->createForm(OfferType::class, new Offer());
             $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
         }
 

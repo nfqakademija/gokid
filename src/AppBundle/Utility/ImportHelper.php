@@ -72,9 +72,7 @@ class ImportHelper
                 $activity = new Activity();
                 $activity->setName($data[6]);
                 $offer->setActivity($activity);
-                $offer->setContactInfo(
-                    $data[7] . ' ' . $data[8] . ' - ' . $data[9]
-                );
+                $offer->setContactInfo($data[7]);
                 $offer->setMale($data[8] == '1' ? true : false);
                 $offer->setFemale($data[9] == '1' ? true : false);
                 $offer->setAgeFrom($data[10]);
@@ -122,6 +120,7 @@ class ImportHelper
     {
         $user = $this->tokenStorage->getToken()->getUser();
         $entityManager = $this->managerRegistry->getManager();
+        $activities = [];
         /** @var Offer $offer */
         foreach ($data['offers'] as $offer) {
             /** @var Activity[] $activity */
@@ -129,10 +128,15 @@ class ImportHelper
                 ['name' => $offer->getActivity()->getName()]
             )) {
                 $offer->setActivity($activity[0]);
-                if (!$offer->getMainImage()) {
-                    $offer->setMainImage($activity[0]->getDefaultImage());
-                }
+            } elseif ($activity = $this
+                ->findActivityByName(
+                    $offer->getActivity()->getName(),
+                    $activities
+                )
+            ) {
+                $offer->setActivity($activity);
             } else {
+                $activities[] = $offer->getActivity();
                 $entityManager->persist($offer->getActivity());
             }
             $offer->setUser($user);
@@ -145,6 +149,22 @@ class ImportHelper
             $entityManager->persist($image);
         }
         $entityManager->flush();
+    }
+
+    /**
+     * @param string $activityName
+     * @param Activity[] $activities
+     * @return null|Activity
+     */
+    private function findActivityByName($activityName, $activities)
+    {
+        foreach ($activities as $activity) {
+            if ($activity->getName() == $activityName) {
+                return $activity;
+            }
+        }
+
+        return null;
     }
 
     /**

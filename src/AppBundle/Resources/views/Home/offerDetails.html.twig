@@ -6,11 +6,10 @@
     <div class="owl-carousel">
         {% if offer.getImages.count > 0 %}
             {% for image in offer.getImages %}
-                <img src="{{ asset ('/images/offerImages/'~ image.getImageName)}}" class="img-responsive" alt="{{ offer.getName }}">
+                <img src="{{ asset ('/images/offerImages/'~ image.imageName)}}" class="img-responsive" alt="{{ offer.getName }}">
             {% endfor %}
-        {% else %}
-            <img src="{{ asset ('/images/offerImages/'~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}">
         {% endif %}
+        {% include '@App/Home/includes/offerImage.html.twig' with {'offer': offer} %}
     </div>
 
     <div class="top-section">
@@ -24,26 +23,30 @@
                         'longitude': offer.getLongitude,
                         'distance': 15
                     }) }}">{{ offer.getAddress }}</a></h4>
-                <div class="info row">
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <span class="glyphicon glyphicon-star"></span> Įvertinimas: {% if offer.getRating == 0 %}Nėra{% else %}{{ offer.getRating|number_format(1, '.') }}{% endif %}
+                    <div class="info row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <span class="glyphicon glyphicon-star"></span> Įvertinimas: 4.7
+                        </div>
+                        {% if not offer.imported %}
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <span class="glyphicon glyphicon-user"></span> {{ offer.getUser.name }}
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <a class="phone" href="callto:{{ offer.getUser.getPhone }}">
+                                    <span class="glyphicon glyphicon-earphone"></span> {{ offer.getUser.getPhone }}
+                                </a>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <a class="mail" href="mailto:{{ offer.getUser.getEmail }}">
+                                    <span class="glyphicon glyphicon-envelope"></span> {{ offer.getUser.getEmail }}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <span class="glyphicon glyphicon-user"></span> {{ offer.contactInfo }}
+                            </div>
+                        {% endif %}
                     </div>
-                    {% if offer.getUser is defined %}
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <span class="glyphicon glyphicon-user"></span> {{ offer.getUser.getFirstName }} {{ offer.getUser.getLastName }}
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <a class="phone" href="callto:{{ offer.getUser.getPhone }}">
-                                <span class="glyphicon glyphicon-earphone"></span> {{ offer.getUser.getPhone }}
-                            </a>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <a class="mail" href="mailto:{{ offer.getUser.getEmail }}">
-                                <span class="glyphicon glyphicon-envelope"></span> {{ offer.getUser.getEmail }}
-                            </a>
-                        </div>
-                    {% endif %}
-                </div>
             </div>
         </div>
     </div>
@@ -159,7 +162,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 offer" data-id="{{ offer.getId }}">
                                 <div class="offer-inner">
                                     <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
-                                        <img src="{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}" />
+                                        {% include '@App/Home/includes/offerImage.html.twig' with {'offer': offer} %}
                                     </a>
                                     <div class="offer-content">
                                         <h2>
