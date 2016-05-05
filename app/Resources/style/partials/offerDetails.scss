@@ -178,6 +178,11 @@
     border-right-color: rgba(0, 0, 0, 0.075);
     border-width: 8px;
   }
+
+  .error-container span {
+    font-weight: 400;
+    color: #ff0000;
+  }
 }
 
 .map-block {

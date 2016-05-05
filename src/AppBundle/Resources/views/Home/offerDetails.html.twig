@@ -61,7 +61,7 @@
                 <span class="reviews">Atsiliepimai ( {{ comments.count }} )</span>
                 <hr />
                 {% for comment in comments %}
-                <div class="review">
+                <div id="{{ comment.getId }}" class="review">
                     <div class="row">
                         <div class="user col-md-3">
                             {{ comment.getName }}
@@ -90,7 +90,8 @@
                 {% endfor %}
             </div>
             <div class="middle-block bottom-block">
-                {{ form_start(form) }}
+                {% form_theme form 'AppBundle:form:CommentFields.html.twig' %}
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                 <div class="topic">
                     <span>Įvertinkite ir palikite atsiliepimą</span>
                 </div>
@@ -142,7 +143,7 @@
             </div>
             {% if offer.getImages.count > 0 %}
                 <div class="side-block">
-                    <span class="topic">Foto galerija</span>
+                    <span class="topic">Nuotraukos</span>
                     <div class="row">
                         {% for image in offer.getImages %}
                             <div class="col-md-4">

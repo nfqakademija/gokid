@@ -102,7 +102,6 @@ class HomeController extends Controller
             'activities' => $activityRepository->getAllActivities(),
             'age_list' => $offerRepository->getAgeList(),
             'offers' => $offers,
-            'offer_count' => $offerRepository->getOfferCount(),
             'offers_json' => $offersJson,
             'form' => $form->createView(),
         ];
@@ -186,12 +185,11 @@ class HomeController extends Controller
 
             $em->flush();
 
-            return [
-                'form' => $this->createForm(CommentType::class, new Comment())->createView(),
-                'comments' => $offer->getComments(),
-                'offer' => $offer,
-                'similarOffers' => $offerRepository->searchSimilarOffers($offer),
-            ];
+            return $this->redirect(
+                $this->generateUrl('app.offerDetails', [
+                    'id'=>$offer->getId()
+                ]) . '#'.$comment->getId()
+            );
         }
 
         return [
