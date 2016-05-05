@@ -185,8 +185,8 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param float $inputRate
-     * @param float $outputRate
+     * @param int $inputRate
+     * @param int $outputRate
      *
      * @dataProvider getTestGetRateData()
      */

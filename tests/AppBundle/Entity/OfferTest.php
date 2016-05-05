@@ -123,6 +123,32 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
+    public function getTestGetRatingData()
+    {
+        return [
+            [4.5, 4.5],
+        ];
+    }
+
+    /**
+     * @param float $inputRating
+     * @param float $outputRating
+     *
+     * @dataProvider getTestGetRatingData()
+     */
+    public function testGetRating($inputRating, $outputRating)
+    {
+        $offer = new Offer();
+        $offer->setRating($inputRating);
+        $this->assertEquals(
+            $outputRating,
+            $offer->getRating()
+        );
+    }
+
+    /**
+     * @return array
+     */
     public function getTestGetNameData()
     {
         return [
@@ -180,7 +206,7 @@ DESCRIPTION;
     /**
      * @return array
      */
-    public function getTestAgeFromData()
+    public function getTestGetAgeFromData()
     {
         return [
             [12, 12],
@@ -193,7 +219,7 @@ DESCRIPTION;
      *
      * @dataProvider getTestAgeFromData()
      */
-    public function testAgeFrom($inputAge, $outputAge)
+    public function testGetAgeFrom($inputAge, $outputAge)
     {
         $offer = new Offer();
         $offer->setAgeFrom($inputAge);
@@ -206,7 +232,7 @@ DESCRIPTION;
     /**
      * @return array
      */
-    public function getTestAgeToData()
+    public function getTestGetAgeToData()
     {
         return [
             [14, 14],
@@ -217,9 +243,9 @@ DESCRIPTION;
      * @param int $inputAge
      * @param int $outputAge
      *
-     * @dataProvider getTestAgeToData()
+     * @dataProvider getTestGetAgeToData()
      */
-    public function testAgeTo($inputAge, $outputAge)
+    public function testGetAgeTo($inputAge, $outputAge)
     {
         $offer = new Offer();
         $offer->setAgeTo($inputAge);
