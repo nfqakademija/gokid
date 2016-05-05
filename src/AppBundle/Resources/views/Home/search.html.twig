@@ -52,13 +52,13 @@
             <div class="hidden" id="popover-content">
                 <div class="button-table">
                     <div class="button-row">
-                        {% for i in age_list[0] %}
+                        {% for i in 1..9 %}
                             <div class="button-container">{{ i }}</div>
                         {% endfor %}
                     </div>
                     <div class="button-row">
-                        {% for i in age_list[1] %}
-                            <div class="button-container">{{ i }}</div>
+                        {% for i in 10..18 %}
+                            <div class="button-container">{{ i }}{% if i == 18 %}+{% endif %}</div>
                         {% endfor %}
                     </div>
                 </div>
