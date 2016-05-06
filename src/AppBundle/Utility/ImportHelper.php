@@ -149,6 +149,20 @@ class ImportHelper
             $entityManager->persist($image);
         }
         $entityManager->flush();
+        $this->removeTemporaryFiles('images/tmpImages');
+    }
+
+    /**
+     * @param String $path
+     */
+    private function removeTemporaryFiles($path)
+    {
+        $files = glob($path . '/*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
     }
 
     /**
