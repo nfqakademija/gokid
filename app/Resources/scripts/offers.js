@@ -11,26 +11,15 @@ var infobox = [];
 var map;
 var markerClusterer = null;
 var green = 'http://maps.google.com/mapfiles/marker_green.png';
-
-/**
- * Hightligths marker when offer hovered
- */
-$( ".offer" ).hover(
-    function () {
-        var id = $(this).attr('data-id');
-        markers[id].setIcon(highlightedIcon());
-    },
-    function () {
-        var id = $(this).attr('data-id');
-        markers[id].setIcon(normalIcon());
-    }
-);
+var offersDiv = $( ".offers" );
+var sliderPrice = $( "#slider-price" );
+var sliderRange = $( "#slider-range" );
 
 /**
  * Focuses to location on map
  */
 
-$( ".offers" ).on( "click", ".offer-location", function() {
+offersDiv.on( "click", ".offer-location", function() {
         var id = $(this).closest('.offer').attr('data-id');
         openInfobox(id);
         map.setZoom(14);
@@ -67,7 +56,7 @@ function getPaymentType(id) {
 
 /**
  * Opens infobox in map
- * @param marker
+ * @param id
  */
 function openInfobox(id) {
     closeWindows();
@@ -121,7 +110,6 @@ function setMapParameters(){
 
 /**
  * Closes all given windows
- * @param windows
  */
 function closeWindows(){
     for (var id in markers) {
@@ -161,13 +149,27 @@ function setMarkers() {
         });
         clusters.push(markers[id]);
     }
+
+    /**
+     * Hightligths marker when offer hovered
+     */
+    $( ".offer" ).hover(
+        function () {
+            var id = $(this).attr('data-id');
+            markers[id].setIcon(highlightedIcon());
+        },
+        function () {
+            var id = $(this).attr('data-id');
+            markers[id].setIcon(normalIcon());
+        }
+    );
 }
 
 /**
  * Updates counter in search results
  */
 function setCounter() {
-    $('#counter').html(Object.keys(offers).length);
+    $('#counter').html(offers_found);
 }
 
 /**
@@ -218,12 +220,12 @@ $("#map").sticky({topSpacing:0, bottomSpacing: 85});
 /**
  * Distance slider
  */
-$( "#slider-range" ).slider({
+sliderRange.slider({
     range: "min",
     value: $( "#distance" ).val(),
     min: 1,
     max: 20,
-    change: function( event, ui ) {
+    change: function() {
         ajaxUpdate();
     },
     slide: function( event, ui ) {
@@ -231,24 +233,24 @@ $( "#slider-range" ).slider({
         $( "#dist" ).html( ui.value );
     }
 });
-$('#dist').html( $( "#slider-range" ).slider( "value" ) );
+$('#dist').html( sliderRange.slider( "value" ) );
 
 
 /**
  * Price slider
  */
-$( "#slider-price" ).slider({
+sliderPrice.slider({
     range: true,
     min: 1,
     max: 100,
     values: [ $( "#priceFrom" ).val(), $( "#priceTo" ).val() ],
-    change: function( event, ui ) {
+    change: function() {
         ajaxUpdate();
     },
     slide: function( event, ui ) {
         $( "#price" ).html( "€" + ui.values[ 0 ] + "&nbsp;-&nbsp;€" + ui.values[ 1 ] +
             (
-                (ui.values[ 1 ] == $("#slider-price").slider("option", "max")) ? '+' : ''
+                (ui.values[ 1 ] == sliderPrice.slider("option", "max")) ? '+' : ''
             )
         );
 
@@ -257,10 +259,10 @@ $( "#slider-price" ).slider({
     }
 });
 
-$( "#price" ).html( "€" + $( "#slider-price" ).slider( "values", 0 ) +
-    "&nbsp;-&nbsp;€" + $( "#slider-price" ).slider( "values", 1 ) +
+$( "#price" ).html( "€" + sliderPrice.slider( "values", 0 ) +
+    "&nbsp;-&nbsp;€" + sliderPrice.slider( "values", 1 ) +
     (
-        ($( "#slider-price" ).slider( "values", 1 ) === $("#slider-price").slider("option", "max")) ?
+        (sliderPrice.slider( "values", 1 ) === sliderPrice.slider("option", "max")) ?
         '+' : '')
     );
 
@@ -273,10 +275,12 @@ $('.offers-filter input').change(function() {
     }
     ajaxUpdate();
 });
+
 $('#activity').change(function() {
     ajaxUpdate();
 });
-$( ".offers" ).on( "click", ".pagination a", function() {
+
+offersDiv.on( "click", ".pagination a", function() {
     ajaxUpdate($(this).attr('page'));
     return false;
 });

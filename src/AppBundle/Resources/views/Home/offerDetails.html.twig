@@ -55,6 +55,8 @@
         <div class="col-xs-12 col-sm-12 col-md-8">
             <div class="middle-block">
                 {{ offer.getDescription }}
+                <hr />
+                <span class="offer-price">Kaina: € {{ offer.getPrice }} / {% if offer.paymentType == "0" %}vienkartinis mokestis{% elseif offer.paymentType == "1" %}kas savaitę{% else %}kas mėnesį{% endif %}</span>
             </div>
             <div class="review-block">
                 <hr />

@@ -49,7 +49,7 @@
                     <div class="col-sm-2 counter">
                         Rasta būrelių:
                         <div class="stats">
-                            <span id="counter">0</span> iš <span>{{ offer_count }}</span>
+                            <span id="counter">0</span> iš <span>{{ offers_all }}</span>
                         </div>
                     </div>
                     {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
@@ -113,6 +113,7 @@
         var form = $('.index-form');
         var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};
+        var offers_found = {{ offers_found }};
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {

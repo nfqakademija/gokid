@@ -368,5 +368,11 @@
     .submit-container {
       @include box-shadow(none);
     }
+
+    .gender-input {
+      height: 54px;
+      padding-top: 5px;
+     }
+
   }
 }

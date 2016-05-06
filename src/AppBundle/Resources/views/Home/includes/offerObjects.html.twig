@@ -55,7 +55,7 @@
 {% else %}
     <div class="not-found">Būrelių nerasta</div>
     <script>
-        window.document.onload = function(e){
+        window.document.onload = function(){
             map.setCenter({lat: 54.8931048, lng: 23.8666335});
         }
     </script>
@@ -63,5 +63,6 @@
 {% if ajax is defined %}
     <script>
         var offers = {{ offers_json|raw }};
+        var offers_found = {{ offers_found }};
     </script>
 {% endif %}
