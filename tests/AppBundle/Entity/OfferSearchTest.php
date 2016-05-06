@@ -17,6 +17,10 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [10, 10],
+            [10.1, 10.1],
+            [null, null],
+            ['5.1', 5.1],
+            ['5.1', '5.1'],
         ];
     }
 
@@ -43,6 +47,9 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [5, 5],
+            [null, null],
+            ['5', '5'],
+            ['5', 5],
         ];
     }
 
@@ -68,7 +75,10 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     public function getTestGetPriceToData()
     {
         return [
-            [20, 20],
+            [25, 25],
+            [null, null],
+            ['25', '25'],
+            ['25', 25],
         ];
     }
 
@@ -95,6 +105,9 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [12, 12],
+            [null, null],
+            ['12', '12'],
+            ['12', 12],
         ];
     }
 
@@ -121,6 +134,7 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Savanorių pr. 223, Kaunas', 'Savanorių pr. 223, Kaunas'],
+            [null, null],
         ];
     }
 
@@ -147,6 +161,9 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [3, 3],
+            [null, null],
+            ['3', '3'],
+            ['3', 3],
         ];
     }
 
@@ -173,6 +190,9 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [114.25, 114.25],
+            ['114.25', '114.25'],
+            ['114.25', 114.25],
+            [null, null],
         ];
     }
 
@@ -199,6 +219,9 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [84.5, 84.5],
+            ['84.5', '84.5'],
+            ['84.5', 84.5],
+            [null, null],
         ];
     }
 
@@ -226,6 +249,7 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
         return [
             [true, true],
             [false, false],
+            [null, null],
         ];
     }
 
@@ -253,6 +277,7 @@ class OfferSearchTest extends \PHPUnit_Framework_TestCase
         return [
             [true, true],
             [false, false],
+            [null, null],
         ];
     }
 

@@ -12,6 +12,18 @@ use AppBundle\Entity\Offer;
 class CommentTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     *
+     */
+    public function testConstruct()
+    {
+        $comment = new Comment();
+        $this->assertNotEquals(
+            null,
+            $comment->getCreatedAt()
+        );
+    }
+
+    /**
      * @return array
      */
     public function getTestGetOfferData()
@@ -50,6 +62,9 @@ class CommentTest extends \PHPUnit_Framework_TestCase
 
         return [
             [$createdAt, $createdAt],
+            [null, null],
+            ['2016-04-05', '2016-04-05'],
+            [2016-04-05, 2016-04-05],
         ];
     }
 
@@ -76,6 +91,9 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Geras būrelis', 'Geras būrelis'],
+            [null, null],
+            [5, '5'],
+            [5, 5],
         ];
     }
 
@@ -102,6 +120,9 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Geras būrelis', 'Geras būrelis'],
+            [null, null],
+            [5, '5'],
+            [5, 5],
         ];
     }
 
@@ -128,6 +149,9 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Rimas', 'Rimas'],
+            [null, null],
+            [5, '5'],
+            [5, 5],
         ];
     }
 
@@ -154,6 +178,7 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['rimas@gmail.com', 'rimas@gmail.com'],
+            [null, null],
         ];
     }
 
@@ -181,6 +206,8 @@ class CommentTest extends \PHPUnit_Framework_TestCase
         return [
             [5, 5],
             [2, 2],
+            ['2', 2],
+            [null, null],
         ];
     }
 

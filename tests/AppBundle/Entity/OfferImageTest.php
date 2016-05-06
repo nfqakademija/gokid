@@ -19,6 +19,7 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['sabonio.png', 'sabonio.png'],
+            [null, null],
         ];
     }
 
@@ -47,6 +48,7 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
 
         return [
             [$image, $image],
+            [null, null],
         ];
     }
 
@@ -76,6 +78,7 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
 
         return [
             [$offer, $offer],
+            [null, null],
         ];
     }
 
@@ -102,6 +105,7 @@ class OfferImageTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['sabonio.png'],
+            [''],
         ];
     }
 

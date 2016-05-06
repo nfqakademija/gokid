@@ -15,12 +15,25 @@ use AppBundle\Entity\User;
 class OfferTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     *
+     */
+    public function testConstruct()
+    {
+        $offer = new Offer();
+        $this->assertNotEquals(
+            null,
+            $offer->getComments()
+        );
+    }
+
+    /**
      * @return array
      */
     public function getTestGetContactInfoData()
     {
         return [
             ['Vardas pavardė tel. 8686 00001', 'Vardas pavardė tel. 8686 00001'],
+            [null, null],
         ];
     }
 
@@ -48,6 +61,7 @@ class OfferTest extends \PHPUnit_Framework_TestCase
         return [
             [true, true],
             [false, false],
+            [null, null],
         ];
     }
 
@@ -75,6 +89,9 @@ class OfferTest extends \PHPUnit_Framework_TestCase
         return [
             [20, 20],
             [22.4, 22.4],
+            ['22.4', '22.4'],
+            ['22.4', 22.4],
+            [null, null],
         ];
     }
 
@@ -101,6 +118,7 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Savanorių pr. 223, Kaunas', 'Savanorių pr. 223, Kaunas'],
+            [null, null],
         ];
     }
 
@@ -127,6 +145,9 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [4.5, 4.5],
+            ['4.5', '4.5'],
+            ['4.5', 4.5],
+            [null, null],
         ];
     }
 
@@ -153,6 +174,7 @@ class OfferTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Sabonio krepšinio centras', 'Sabonio krepšinio centras'],
+            [null, null],
         ];
     }
 
@@ -184,6 +206,7 @@ DESCRIPTION;
 
         return [
             [$description, $description],
+            [null, null],
         ];
     }
 
@@ -210,6 +233,9 @@ DESCRIPTION;
     {
         return [
             [12, 12],
+            ['12', '12'],
+            ['12', 12],
+            [null, null],
         ];
     }
 
@@ -217,7 +243,7 @@ DESCRIPTION;
      * @param int $inputAge
      * @param int $outputAge
      *
-     * @dataProvider getTestAgeFromData()
+     * @dataProvider getTestGetAgeFromData()
      */
     public function testGetAgeFrom($inputAge, $outputAge)
     {
@@ -236,6 +262,9 @@ DESCRIPTION;
     {
         return [
             [14, 14],
+            ['14', '14'],
+            ['14', 14],
+            [null, null],
         ];
     }
 
@@ -262,6 +291,9 @@ DESCRIPTION;
     {
         return [
             [14.25, 14.25],
+            ['14.25', '14.25'],
+            ['14.25', 14.25],
+            [null, null],
         ];
     }
 
@@ -349,6 +381,7 @@ DESCRIPTION;
         return [
             [true, true],
             [false, false],
+            [null, null],
         ];
     }
 
@@ -376,6 +409,7 @@ DESCRIPTION;
         return [
             [true, true],
             [false, false],
+            [null, null],
         ];
     }
 
@@ -402,6 +436,9 @@ DESCRIPTION;
     {
         return [
             [114.25, 114.25],
+            ['114.25', '114.25'],
+            ['114.25', 114.25],
+            [null, null],
         ];
     }
 
@@ -428,6 +465,9 @@ DESCRIPTION;
     {
         return [
             [84.5, 84.5],
+            ['84.5', '84.5'],
+            ['84.5', 84.5],
+            [null, null],
         ];
     }
 
@@ -463,6 +503,7 @@ DESCRIPTION;
 
         return [
             [$images, $images],
+            [null, null],
         ];
     }
 
@@ -492,6 +533,7 @@ DESCRIPTION;
 
         return [
             [$image, $image],
+            [null, null],
         ];
     }
 
@@ -520,6 +562,8 @@ DESCRIPTION;
             [0, Offer::SINGLE_TIME],
             [1, Offer::WEEKLY],
             [2, Offer::MONTHLY],
+            [null, null],
+            [-1, -1],
         ];
     }
 
@@ -582,25 +626,42 @@ DESCRIPTION;
     {
         $comment1 = new Comment();
         $comment1->setTitle('Geras būrelis');
+        $comment1->setRate(4);
+
+        $comment2 = new Comment();
+        $comment2->setTitle('Puikus būrelis');
+        $comment2->setRate(5);
 
         return [
-            [$comment1, $comment1],
+            [$comment1, $comment1, $comment2, $comment2, 4.5],
         ];
     }
 
     /**
-     * @param Comment $inputComment
-     * @param Comment $outputComment
+     * @param Comment $inputComment1
+     * @param Comment $outputComment1
+     * @param Comment $inputComment2
+     * @param Comment $outputComment2
+     * @param float   $offerRating
      *
      * @dataProvider getTestAddCommentData()
      */
-    public function testAddComment($inputComment, $outputComment)
+    public function testAddComment($inputComment1, $outputComment1, $inputComment2, $outputComment2, $offerRating)
     {
         $offer = new Offer();
-        $offer->addComment($inputComment);
+        $offer->addComment($inputComment1);
+        $offer->addComment($inputComment2);
         $this->assertEquals(
-            $outputComment,
+            $outputComment1,
             $offer->getComments()[0]
+        );
+        $this->assertEquals(
+            $outputComment2,
+            $offer->getComments()[1]
+        );
+        $this->assertEquals(
+            $offerRating,
+            $offer->getRating()
         );
     }
 
@@ -614,7 +675,6 @@ DESCRIPTION;
         $comment2 = new Comment();
         $comment2->setName('Puikus būrelis');
         $inputOffer = new Offer();
-
         $inputOffer->addComment($comment1);
         $inputOffer->addComment($comment2);
         $outputOffer = clone ($inputOffer);

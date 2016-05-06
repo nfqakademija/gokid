@@ -12,6 +12,18 @@ use AppBundle\Entity\Offer;
 class UserTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     *
+     */
+    public function testConstruct()
+    {
+        $user = new User();
+        $this->assertNotEquals(
+            null,
+            $user->getOffers()
+        );
+    }
+
+    /**
      * @return array
      */
     public function getTestGetFirstNameData()
@@ -19,6 +31,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         return [
             ['Darius', 'Darius'],
             ['', ''],
+            [null, null],
         ];
     }
 
@@ -46,6 +59,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         return [
             ['Sirtautas', 'Sirtautas'],
             ['', ''],
+            [null, null],
         ];
     }
 
@@ -73,6 +87,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         return [
             ['8 686 37833', '8 686 37833'],
             ['+370 657 78030', '+370 657 78030'],
+            [null, null],
         ];
     }
 
@@ -95,11 +110,44 @@ class UserTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
+    public function getTestSetEmailData()
+    {
+        return [
+            ['rimas@mail.com', 'rimas@mail.com'],
+            [null, null],
+        ];
+    }
+
+    /**
+     * @param string $inputEmail
+     * @param string $outputEmail
+     *
+     * @dataProvider getTestSetEmailData()
+     */
+    public function testSetEmail($inputEmail, $outputEmail)
+    {
+        $user = new User();
+        $user->setEmail($inputEmail);
+        $this->assertEquals(
+            $outputEmail,
+            $user->getEmail()
+        );
+        $this->assertEquals(
+            $outputEmail,
+            $user->getUsername()
+        );
+    }
+
+    /**
+     * @return array
+     */
     public function getTestGetRatingData()
     {
         return [
             [5, 5],
             [2, 2],
+            [null, null],
+            ['5', 5],
         ];
     }
 
@@ -126,6 +174,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['password', 'password'],
+            [null, null],
+            [2, 2],
         ];
     }
 
@@ -187,7 +237,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function getTestAddOfferData()
     {
         $offer1 = new Offer();
-        $offer1->setName('Offer1');
+        $offer1->setName('Sabonio krepšinio centras');
 
         return [
             [$offer1, $offer1],

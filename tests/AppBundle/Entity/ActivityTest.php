@@ -13,6 +13,18 @@ use AppBundle\Entity\OfferImage;
 class ActivityTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     *
+     */
+    public function testConstruct()
+    {
+        $activity = new Activity();
+        $this->assertNotEquals(
+            null,
+            $activity->getOffers()
+        );
+    }
+
+    /**
      * @return array
      */
     public function getTestGetNameData()
@@ -20,6 +32,9 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
         return [
             ['Basketball', 'Basketball'],
             ['Futbolas', 'Futbolas'],
+            [3, '3'],
+            [3, 3],
+            [null, null],
         ];
     }
 
@@ -49,6 +64,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
 
         return [
             [$image, $image],
+            [null, null],
         ];
     }
 
@@ -143,7 +159,6 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
         $offer2 = new Offer();
         $offer2->setName('Kauno futbolo mokykla „Tauras“');
         $inputActivity = new Activity();
-
         $inputActivity->addOffer($offer1);
         $inputActivity->addOffer($offer2);
         $outputActivity = clone ($inputActivity);
@@ -179,6 +194,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['Basketball'],
+            [''],
         ];
     }
 
