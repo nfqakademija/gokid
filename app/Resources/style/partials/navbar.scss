@@ -47,6 +47,8 @@
 }
 
 .navbar.transparent {
+  position: absolute;
+  top: 0;
   border-width: 0;
   width: 100%;
   background-color: transparent;
@@ -72,6 +74,7 @@
 @media (max-width: 768px) {
   .navbar.transparent {
     background-color: rgba(0, 0, 0, 0.25);
+    position: relative;
   }
 }
 
