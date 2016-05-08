@@ -91,6 +91,7 @@ class HomeController extends Controller
             return $this->render('AppBundle:Home/includes:offerObjects.html.twig', [
                 'ajax' => 1,
                 'offers' => $offers,
+                'offers_found' => $offers->getTotalItemCount(),
                 'offers_json' => $offersJson,
             ]);
         }
@@ -98,6 +99,8 @@ class HomeController extends Controller
         return [
             'activities' => $activityRepository->getAllActivities(),
             'age_list' => $offerRepository->getAgeList(),
+            'offers_all' => $offerRepository->getOfferCount(),
+            'offers_found' => $offers->getTotalItemCount(),
             'offers' => $offers,
             'offers_json' => $offersJson,
             'form' => $form->createView(),
@@ -184,12 +187,11 @@ class HomeController extends Controller
 
             $em->flush();
 
-            return [
-                'form' => $this->createForm(CommentType::class, new Comment())->createView(),
-                'comments' => $offer->getComments(),
-                'offer' => $offer,
-                'similarOffers' => $offerRepository->searchSimilarOffers($offer),
-            ];
+            return $this->redirect(
+                $this->generateUrl('app.offerDetails', [
+                    'id'=>$offer->getId()
+                ]) . '#'.$comment->getId()
+            );
         }
 
         return [

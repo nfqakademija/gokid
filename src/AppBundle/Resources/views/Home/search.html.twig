@@ -17,11 +17,12 @@
                             </div>
                             {{  form_row(form.address, {'attr': {'class': 'place-input address-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                         </div>
-                        <div class="col-sm-3">
-                            {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input', 'data-toggle': "popover"}}) }}
+                        <div class="col-sm-1">
+                            {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input', 'data-toggle': "popover", 'placeholder': 'Amžius'}}) }}
                         </div>
                         <div class="col-sm-2">
                             <select name="activity" id="activity" class="activities-select">
+                                <option value="" {% if offers.getParams['activity'] is not defined %}selected{% endif %}>-- Kategorija --</option>
                                 {% for key, activity in activities %}
                                     <option value="{{ activity.getId }}" {% if offers.getParams['activity'] is defined and activity.getId == offers.getParams['activity'] %}selected{% endif %}>{{ activity }}</option>
                                 {% endfor %}
@@ -31,15 +32,25 @@
                     <div class="col-sm-2">
                         <div class="gender-input text-center">
                             <div class="icons-center">
-                                <div class="gender-icon"><b>&#9794;</b></div>
-                                {{ form_row(form.male, {'attr': {'class': 'gender-checkbox'}}) }}
-                                <div class="gender-icon"><b>&#9792;</b></div>
-                                {{ form_row(form.female, {'attr': {'class': 'gender-checkbox'}}) }}
+                                <button type="button" for="male" class="btn btn-default btn-sm {% if offers.getParams.male is defined %}active{% endif %}">
+                                   <span class="icon icon-male"></span>
+                                </button>
+                                <button type="button" for="female" class="btn btn-default btn-sm {% if offers.getParams.female is defined %}active{% endif %}">
+                                    <span class="icon icon-female"></span>
+                                </button>
+                                {{ form_row(form.male, {'attr': {'class': 'gender-checkbox hidden'}}) }}
+                                {{ form_row(form.female, {'attr': {'class': 'gender-checkbox hidden'}}) }}
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-2 submit-container">
                         <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="col-sm-2 counter">
+                        Rasta būrelių:
+                        <div class="stats">
+                            <span id="counter">0</span> iš <span>{{ offers_all }}</span>
+                        </div>
                     </div>
                     {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
                     {{ form_row(form.longitude, {'attr': {'class': 'hidden'}}) }}
@@ -52,13 +63,13 @@
             <div class="hidden" id="popover-content">
                 <div class="button-table">
                     <div class="button-row">
-                        {% for i in age_list[0] %}
+                        {% for i in 1..9 %}
                             <div class="button-container">{{ i }}</div>
                         {% endfor %}
                     </div>
                     <div class="button-row">
-                        {% for i in age_list[1] %}
-                            <div class="button-container">{{ i }}</div>
+                        {% for i in 10..18 %}
+                            <div class="button-container">{{ i }}{% if i == 18 %}+{% endif %}</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -102,6 +113,7 @@
         var form = $('.index-form');
         var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};
+        var offers_found = {{ offers_found }};
         var searchPage = true;
 
         function initMap() {
@@ -120,8 +132,10 @@
                 markerClusterer = new MarkerClusterer(map, clusters);
             {% endif %}
 
+            setCounter();
             initAutocomplete();
         }
+
         google.maps.event.addDomListener(window, 'load', initMap);
     </script>
 {% endblock %}

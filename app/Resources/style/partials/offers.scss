@@ -233,6 +233,27 @@
     background-color: #fff;
     height: 44px;
     margin: 0;
+
+    .icon {
+      font-size: 20px;
+    }
+
+    button {
+      border: 1px solid #ccc;
+      border-radius: 0;
+      padding: 10px 10px 3px 10px;
+      margin-right: 5px;
+    }
+
+    button:focus {
+      background-color: #fff;
+    }
+
+    button.active {
+      background-color: #65C04C;
+      color: #fff;
+      box-shadow: none;
+    }
   }
 
   .gender-checkbox {
@@ -250,7 +271,6 @@
   .icons-center {
     overflow: hidden;
     margin: 0 auto;
-    width: 85px;
   }
 
   .place-input {
@@ -298,6 +318,15 @@
     color: $darkest;
   }
 
+  .counter {
+    padding-left: 15px !important;
+    padding-top: 10px !important;
+
+    .stats {
+      display: inline-block;
+    }
+  }
+
   @media (max-width: 768px) {
     .search-container {
       width: 100%;
@@ -338,5 +367,11 @@
     .submit-container {
       @include box-shadow(none);
     }
+
+    .gender-input {
+      height: 54px;
+      padding-top: 5px;
+     }
+
   }
 }
