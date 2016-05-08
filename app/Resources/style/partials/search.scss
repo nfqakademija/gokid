@@ -103,6 +103,16 @@
   top: 0;
 }
 
+.age-input:hover {
+  cursor: pointer;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .search-container {
   position: relative;
   height: 100%;
@@ -127,10 +137,42 @@
     display: inline-block;
   }
 
+
   .gender-input {
     background-color: #fff;
     height: 44px;
     margin: 0;
+
+    .btn {
+      border-width: 0;
+      height: 100%;
+      margin: 0;
+    }
+
+    .btn:focus {
+      outline: none;
+    }
+
+    .icon {
+      font-size: 20px;
+    }
+
+    button {
+      border: 1px solid #ccc;
+      border-radius: 0;
+      padding: 10px 10px 3px 10px;
+      margin-right: 5px;
+    }
+
+    button:focus {
+      background-color: #fff;
+    }
+
+    button.active {
+      background-color: #65C04C;
+      color: #fff;
+      box-shadow: none;
+    }
   }
 
   .gender-checkbox {
@@ -148,7 +190,8 @@
   .icons-center {
     overflow: hidden;
     margin: 0 auto;
-    width: 85px;
+    height: 100%;
+    //width: 85px;
   }
 
   .header-text {
@@ -175,10 +218,6 @@
     border-radius: 0;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
-  }
-
-  .age-input:hover {
-    cursor: pointer;
   }
 
   .gutter-remove {
@@ -229,6 +268,14 @@
     position: inherit;
   }
 
+  .male {
+    border-radius: 3px 0 0 3px !important;
+  }
+
+  .female {
+    border-radius: 0 3px 3px 0 !important;
+  }
+
   .search-container {
     width: 100%;
     margin-top: -30px;
@@ -239,6 +286,7 @@
 
     .gender-input {
       background-color: transparent;
+      margin: 5px 0;
     }
 
     .age-input {
