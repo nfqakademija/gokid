@@ -6,11 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * Offer
  *
- * @ORM\Table(name="offers",options={"engine":"MyISAM"})
+ * @ORM\Table(
+ *     name="offers",
+ *     options={"engine":"MyISAM"},
+ *     indexes={@Index(name="position_index", columns={"latitude", "longitude"})}
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OfferRepository")
  * @CustomAssert\GenderSelected
  * @CustomAssert\AgesAscending

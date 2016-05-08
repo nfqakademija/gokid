@@ -169,7 +169,7 @@ DESCRIPTION;
         $offer1->setLatitude('54.907187');
         $offer1->setLongitude('23.965188');
         $offer1->setActivity($activity1);
-        $offer1->setUser($user1);
+        $offer1->setUser($admin);
         $offer1->setPrice(10.0);
         $offer1->setPaymentType(0);
         $offer1->setImported(true);

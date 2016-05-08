@@ -35,7 +35,7 @@ class ImageTransformer implements DataTransformerInterface
      */
     public function reverseTransform($images)
     {
-        if (is_array($images) && $images[0]) {
+        if (is_array($images) && !empty($images) && $images[0]) {
             $offerImages = [];
             foreach ($images as $image) {
                 $offerImage = new OfferImage();
