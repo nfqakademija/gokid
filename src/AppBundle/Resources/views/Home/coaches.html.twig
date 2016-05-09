@@ -91,7 +91,7 @@
                 <div class="popover left">
                     <div class="arrow"></div>
                     <div class="popover-content">
-                        Pagrindinė nuotrauką bus matoma pagrindiniame puslapyje, vartotojams ieškant būrelių
+                        Pagrindinė nuotrauka bus matoma pagrindiniame puslapyje, vartotojams ieškant būrelių
                     </div>
                 </div>
             </div>
@@ -126,14 +126,15 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
     <script type="text/javascript">
         // Address input element
         var input = (document.getElementById('offer_address'));
-        var latitude = $('#offer_latitude');
-        var longitude = $('#offer_longitude');
-        var form = $('.registration-form');
-
+        var latitude = (document.getElementById('offer_latitude'));
+        var longitude = (document.getElementById('offer_longitude'));
+        var form = (document.getElementsByClassName('registration-form')[0]);
+    </script>
+    {{ parent() }}
+    <script type="text/javascript">
         $('#offer_images').fileinput({
             language: 'lt',
             showUpload: false,
