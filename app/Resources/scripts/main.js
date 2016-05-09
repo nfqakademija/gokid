@@ -26,11 +26,9 @@ $(document).ready(function() {
 
     if ($('.male-checkbox').is(':checked')) {
         $('.male').addClass('active');
-        console.log('1');
     }
 
     if ($('.female-checkbox').is(':checked')) {
         $('.female').addClass('active');
-        console.log('2');
     }
 });
