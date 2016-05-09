@@ -20,7 +20,6 @@ function initAutocomplete() {
     // Change the coordinates variable, when user autocompletes address
     autocomplete.addListener('place_changed', function() {
         var location = autocomplete.getPlace();
-        console.log(location);
         if (location && ('geometry' in location)) {
             changeCoordinates(
                 location.geometry.location.lat(),
