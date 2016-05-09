@@ -27,3 +27,20 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('#activity_defaultImage').fileinput({
+            language: 'lt',
+            showUpload: false,
+            previewSettings: {
+                image: {
+                    width: 'auto',
+                    height: '100px'
+                }
+            },
+            allowedFileTypes: ['image']
+        });
+    </script>
+{% endblock %}

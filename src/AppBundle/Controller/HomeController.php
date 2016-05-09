@@ -3,11 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Activity;
-use AppBundle\Entity\OfferImage;
 use AppBundle\Entity\OfferSearch;
 use AppBundle\Form\ActivityType;
 use AppBundle\Form\CommentType;
-use AppBundle\Form\ActivityTypeMapped;
 use AppBundle\Repository\ActivityRepository;
 use AppBundle\Repository\OfferRepository;
 use AppBundle\Entity\Comment;
@@ -17,8 +15,6 @@ use AppBundle\Form\OfferType;
 use AppBundle\Utility\ImportHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,6 +61,7 @@ class HomeController extends Controller
      * @param Request $request
      * @return array
      */
+
     public function searchAction(Request $request)
     {
         $offer = new OfferSearch();
@@ -120,15 +117,10 @@ class HomeController extends Controller
     {
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $offer->setUser($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($offer->getMainImage());
-            $em->persist($offer);
-            $em->flush();
+            $this->get('data_manager')->createOffer($offer, $this->getUser());
             // Unset the form so that the fields do not get repopulated
             unset($form);
             $form = $this->createForm(OfferType::class, new Offer());
@@ -137,18 +129,7 @@ class HomeController extends Controller
 
         // Checking if class level assertions failed and setting variables
         // for the template to render error classes on invalid fields.
-        $errors = [
-            'ages' => false,
-            'gender' => false,
-        ];
-        foreach ($form->getErrors() as $error) {
-            /** @var FormError $error */
-            if ($parameters = $error->getMessageParameters()) {
-                if (isset($parameters['id'])) {
-                    $errors[$parameters['id']] = $error->getMessage();
-                }
-            }
-        }
+        $errors = $this->get('data_manager')->getFormErrors($form);
 
         return $this->render('AppBundle:Home:coaches.html.twig', [
             'form' => $form->createView(),
@@ -180,13 +161,7 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $comment->setOffer($offer);
-            $em->persist($comment);
-            $offer->addComment($comment);
-            $em->persist($offer);
-
-            $em->flush();
+            $this->get('data_manager')->createComment($offer, $comment);
 
             return $this->redirect(
                 $this->generateUrl('app.offerDetails', [
@@ -260,8 +235,8 @@ class HomeController extends Controller
     public function activityCreateAction(Request $request)
     {
         $activity = new Activity();
-        $form = $this->createForm(ActivityTypeMapped::class, $activity, [
-            'validation_groups' => ['creation', 'Default']
+        $form = $this->createForm(ActivityType::class, $activity, [
+            'validation_groups' => ['creation', 'Default'],
         ]);
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
@@ -269,17 +244,11 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $defaultImage = new OfferImage();
-            /** @var UploadedFile $imageFile */
-            $imageFile = $activity->getDefaultImage();
-            $defaultImage->setImageFile($imageFile);
-            $activity->setDefaultImage($defaultImage);
-            $entityManager = $this->getDoctrine()->getEntityManager();
-            $entityManager->persist($activity->getDefaultImage());
-            $entityManager->persist($activity);
-            $entityManager->flush();
+            $this->get('data_manager')->createActivity($activity);
             $this->addFlash('success', 'Sporto šaka sukurta');
-            unset($activity);
+            $form = $this->createForm(ActivityType::class, new Activity(), [
+                'validation_groups' => ['creation', 'Default'],
+            ]);
         }
 
         $paginator = $this->get('knp_paginator');
@@ -302,25 +271,20 @@ class HomeController extends Controller
      */
     public function activityEditAction(Request $request, Activity $activity)
     {
+        $oldActivity = clone $activity;
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getEntityManager();
-            if (isset($request->files->get('activity')['defaultImage'])) {
-                $entityManager->remove($activity->getDefaultImage());
-                $defaultImage = new OfferImage();
-                $defaultImage->setImageFile(
-                    $request->files->get('activity')['defaultImage']
-                );
-                $entityManager->persist($defaultImage);
-                $activity->setDefaultImage($defaultImage);
+            if ($this->get('data_manager')->editActivity(
+                $oldActivity,
+                $activity
+            )) {
+                $this->addFlash('success', 'Sporto šaka atnaujinta');
+                return $this->redirect($this->generateUrl('app.activityCreate'));
+            } else {
+                $this->addFlash('error', 'Neįvedėte duomenų šakos atnaujinimui');
             }
-            $entityManager->persist($activity);
-            $entityManager->flush();
-            $this->addFlash('success', 'Sporto šaka atnaujinta');
-
-            return $this->redirect($this->generateUrl('app.activityCreate'));
         }
 
         return [
@@ -349,9 +313,7 @@ class HomeController extends Controller
                 && $offer->getUser() == $user
                 && $request->request->get('answer') === 'y'
             ) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($offer);
-                $entityManager->flush();
+                $this->get('data_manager')->deleteOffer($offer);
                 $this->addFlash('success', 'Būrelis ištrintas');
                 return $this->redirect(
                     $this->generateUrl('app.registeredOffers')

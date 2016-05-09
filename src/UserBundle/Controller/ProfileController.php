@@ -39,7 +39,12 @@ class ProfileController extends BaseController
             return $event->getResponse();
         }
 
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(RegistrationType::class, $user, [
+            'validation_groups' => [
+                'CustomProfile',
+                'Default',
+            ]
+        ]);
         $form->remove('email')->remove('plainPassword');
         $form
             ->add('plainPassword', RepeatedType::class, [
@@ -73,7 +78,7 @@ class ProfileController extends BaseController
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_profile_show');
+                $url = $this->generateUrl('fos_user_profile_edit');
                 $response = new RedirectResponse($url);
             }
 

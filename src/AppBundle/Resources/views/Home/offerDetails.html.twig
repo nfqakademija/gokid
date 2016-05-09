@@ -53,6 +53,17 @@
                             <span class="glyphicon glyphicon-resize-vertical"></span> Nuo {{ offer.getAgeFrom }} iki {{ offer.getAgeTo }} m
                         </div>
                     </div>
+                    {% if not offer.imported and offer.contactInfo %}
+                        <hr/>
+                        <div class="info row">
+                            <div class="col-xs-12 col-sm-6">
+                                Papildoma kontaktinė informacija:
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <span class="glyphicon glyphicon-user"></span> {{ offer.contactInfo }}
+                            </div>
+                        </div>
+                    {% endif %}
             </div>
         </div>
     </div>

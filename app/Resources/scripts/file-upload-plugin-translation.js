@@ -25,6 +25,7 @@
         msgSelected: '{n} {files} pažymėti',
         msgLoading: 'Kraunamas failas nr. {index} iš {files} &hellip;',
         msgProgress: 'Kraunamas failas nr. {index} iš {files} - {name} - {percent}% baigta.',
-        msgInvalidFileType: 'Failo "{name}" tipas netinkamas. Priimami tik nuotraukų failai.'
+        msgInvalidFileType: 'Failo "{name}" tipas netinkamas. Priimami tik nuotraukų failai.',
+        msgInvalidFileExtension: 'Netinkamas failo "{name}" plėtinys. Palaikomi tik "{extensions}" failai'
     };
 })(window.jQuery);

@@ -21,7 +21,7 @@
                             </div>
                             {{  form_row(form.address, {'attr': {'class': 'place-input address-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input', 'data-toggle': "popover", 'placeholder': 'Amžius'}}) }}
                         </div>
                         <div class="col-sm-2">
@@ -116,6 +116,7 @@
         var rootUrl = "{{ asset('') }}";
         var offers = {{ offers_json|raw }};
         var offers_found = {{ offers_found }};
+        var searchPage = true;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {

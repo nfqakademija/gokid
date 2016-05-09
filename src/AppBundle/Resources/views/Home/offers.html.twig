@@ -13,17 +13,23 @@
                         Jūsų įkelti būreliai
                     </div>
                     <ul class="list-group">
-                        {% for offer in offers  %}
-                            <form class="list-group-item" id="delete_{{ offer.id }}" method="post" action="{{ path('app.offerDelete', {'id': offer.id}) }}">
-                                {{ offer.name }}
-                                <a class="badge warning" onclick="document.getElementById('delete_{{ offer.id }}').submit(); return false;">Ištrinti</a>
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('offer_delete') }}"/>
-                            </form>
-                        {% endfor %}
-                        <div class="navigation">
-                            {{ knp_pagination_render(offers) }}
-                        </div>
+                        {% if offers|length == 0 %}
+                            <li class="list-group-item">
+                                Neturite įkeltų būrelių
+                            </li>
+                        {% else %}
+                            {% for offer in offers  %}
+                                <form class="list-group-item" id="delete_{{ offer.id }}" method="post" action="{{ path('app.offerDelete', {'id': offer.id}) }}">
+                                    {{ offer.name }}
+                                    <a class="badge warning" onclick="document.getElementById('delete_{{ offer.id }}').submit(); return false;">Ištrinti</a>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('offer_delete') }}"/>
+                                </form>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
+                    <div class="navigation">
+                        {{ knp_pagination_render(offers) }}
+                    </div>
                 </div>
             </div>
         </div>

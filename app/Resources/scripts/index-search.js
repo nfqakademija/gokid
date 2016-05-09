@@ -41,6 +41,10 @@ function initAutocomplete() {
 
 // Confirm that user coordinates are set when form is submitted
 $(form).submit(function(event) {
+    if (typeof searchPage !== 'undefined' && searchPage && formSubmiting) {
+        event.preventDefault();
+        ajaxUpdate();
+    }
     // If user has not selected their address from autocomplete list or
     // used geolocating, perform location aproximation
     if (!formSubmiting) {

@@ -52,7 +52,6 @@ class OfferType extends AbstractType
                 'label' => 'Papildomos nuotraukos',
                 'multiple' => true,
             ])
-            ->addModelTransformer(new ImageTransformer())
             ->add('activity', null, [
                 'label' => null,
                 'placeholder' => 'Pasirinkite',
@@ -72,6 +71,12 @@ class OfferType extends AbstractType
                 ],
             ])
         ;
+
+        $builder->get('mainImage')
+            ->addModelTransformer(new ImageTransformer());
+
+        $builder->get('images')
+            ->addModelTransformer(new ImageTransformer());
     }
 
     /**

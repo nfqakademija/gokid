@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Validator\Constraints as CustomAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -41,6 +42,8 @@ class Activity
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\OfferImage")
      * @ORM\JoinColumn(name="default_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @Assert\NotBlank(message="Prašome įkelti numatytają sporto šakos nuotrauką", groups={"creation"})
+     * @CustomAssert\ImageSizes(maxSize="1048576")
+     * @CustomAssert\ImageExtensions(extensions={"jpg","png","gif"})
      */
     private $defaultImage;
 

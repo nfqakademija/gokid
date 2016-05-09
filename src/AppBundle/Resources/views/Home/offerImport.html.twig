@@ -10,7 +10,7 @@
             <div class="col-sm-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Jūsų įkelti būreliai
+                        Būrelių importavimas
                     </div>
                     <div class="panel-body content-form logged-in no-shadow">
                         <form method="POST" action="{{ path('app.offerImport') }}" novalidate="novalidate" enctype="multipart/form-data">
@@ -18,7 +18,7 @@
                                 <label for="fileInput" class="control-label">
                                     CSV Failas
                                 </label>
-                                <input type="file" class="form-control-file" name="fileInput" accept="text/csv"/>
+                                <input type="file" class="form-control-file" name="fileInput" id="csv_input" accept="text/csv"/>
                             </div>
                             <div class="loader-div loader-submit hidden">
                                 <img class="loader" src="{{ asset('images/loading-spinner.gif') }}"/>
@@ -38,6 +38,18 @@
         $('.submit').click(function () {
             $('.submit').addClass('hidden');
             $('.loader-div').removeClass('hidden');
+        });
+
+        $('#csv_input').fileinput({
+            language: 'lt',
+            showUpload: false,
+            previewSettings: {
+                image: {
+                    width: 'auto',
+                    height: '100px'
+                }
+            },
+            allowedFileExtensions: ['csv']
         });
     </script>
 {% endblock %}

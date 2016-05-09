@@ -66,8 +66,8 @@
                 Amžius: nuo - iki
             </label>
             <br/>
-            {{ form_widget(form.ageFrom, {'attr': {'min': '0', 'class': 'age-input'}}) }}
-            {{ form_widget(form.ageTo, {'attr': {'min': '0', 'class': 'age-input'}}) }}
+            {{ form_widget(form.ageFrom, {'attr': {'min': '0', 'class': 'offer-age'}}) }}
+            {{ form_widget(form.ageTo, {'attr': {'min': '0', 'class': 'offer-age'}}) }}
             {{ form_errors(form.ageFrom) }}
             {{ form_errors(form.ageTo) }}
             {% if errors.ages %}

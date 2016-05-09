@@ -1,7 +1,7 @@
-<nav class="navbar navbar-default {% if app.request.attributes.get('_route') == 'app.index' %}transparent{% endif %}">
+<nav class="navbar navbar-default {% if app.request.attributes.get('_route') == 'app.index' %}transparent{% endif %}{% if app.request.attributes.get('_route') == 'app.search' %}no-margin{% endif %}">
     <div class="container">
         <div class="navbar-header">
-            {% if app.user or index is defined and index is not defined %}
+            {% if app.user or index is defined and not index or index is not defined %}
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                     <span class="sr-only">Atverti navigaciją</span>
                     <span class="icon-bar"></span>

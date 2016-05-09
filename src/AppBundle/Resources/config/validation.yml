@@ -10,7 +10,7 @@ AppBundle\Entity\User:
                 groups: [ "CustomProfile", "CustomRegistration" ]
             - AppBundle\Validator\Constraints\PhoneNumber:
                 message: "Telefono numeris neteisingas"
-                groups: [ "Customprofile", "CustomRegistration" ]
+                groups: [ "CustomProfile", "CustomRegistration" ]
 
 AppBundle\Entity\Comment:
     properties:
@@ -53,13 +53,13 @@ FOS\UserBundle\Model\User:
              fields: email
              errorPath: email
              message: fos_user.email.already_used
-             groups: [ "CustomRegistration", "CustomProfile" ]
+             groups: [ "CustomRegistration" ]
 
     properties:
         email:
             - NotBlank:
                 message: fos_user.email.blank
-                groups: [ "CustomRegistration", "CustomProfile" ]
+                groups: [ "CustomRegistration" ]
             - Length:
                 min: 2
                 minMessage: fos_user.email.short
@@ -68,66 +68,13 @@ FOS\UserBundle\Model\User:
                 groups: [ "CustomRegistration", "ResetPassword" ]
             - Email:
                 message: fos_user.email.invalid
-                groups: [ "CustomRegistration", "CustomProfile" ]
+                groups: [ "CustomRegistration" ]
         plainPassword:
             - NotBlank:
                 message: fos_user.password.blank
                 groups: [ "CustomRegistration", "ResetPassword", "ChangePassword" ]
             - Length:
-                min: 2
+                min: 6
                 max: 4096
                 minMessage: fos_user.password.short
                 groups: [ "CustomRegistration", "CustomProfile", "ResetPassword", "ChangePassword"]
-
-FOS\UserBundle\Model\Group:
-    properties:
-        name:
-            - NotBlank:
-                message: fos_user.group.blank
-                groups: [ "CustomRegistration" ]
-            - Length:
-                min: 2
-                minMessage: fos_user.group.short
-                max: 255
-                maxMessage: fos_user.group.long
-                groups: [ "CustomRegistration" ]
-
-FOS\UserBundle\Propel\User:
-    properties:
-        email:
-            - NotBlank:
-                message: fos_user.email.blank
-                groups: [ "CustomRegistration", "CustomProfile" ]
-            - Length:
-                min: 2
-                minMessage: fos_user.email.short
-                max: 255
-                maxMessage: fos_user.email.long
-                groups: [ "CustomRegistration", "ResetPassword" ]
-            - Email:
-                message: fos_user.email.invalid
-                groups: [ "CustomRegistration", "CustomProfile" ]
-
-        plainPassword:
-            - NotBlank:
-                message: fos_user.password.blank
-                groups: [ "CustomRegistration", "ResetPassword", "ChangePassword" ]
-            - Length:
-                min: 2
-                max: 4096
-                minMessage: fos_user.password.short
-                groups: [ "CustomRegistration", "CustomProfile", "ResetPassword", "ChangePassword"]
-
-
-FOS\UserBundle\Propel\Group:
-    properties:
-        name:
-            - NotBlank:
-                message: fos_user.group.blank
-                groups: [ "CustomRegistration" ]
-            - Length:
-                min: 2
-                minMessage: fos_user.group.short
-                max: 255
-                maxMessage: fos_user.group.long
-                groups: [ "CustomRegistration" ]

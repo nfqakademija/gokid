@@ -6,11 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * Offer
  *
- * @ORM\Table(name="offers",options={"engine":"MyISAM"})
+ * @ORM\Table(
+ *     name="offers",
+ *     options={"engine":"MyISAM"},
+ *     indexes={@Index(name="position_index", columns={"latitude", "longitude"})}
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OfferRepository")
  * @CustomAssert\GenderSelected
  * @CustomAssert\AgesAscending
@@ -93,6 +98,12 @@ class Offer
      *
      * @ORM\Column(name="age_from", type="integer")
      * @Assert\NotBlank(message="Prašome įvesti mažiausią galimą vaiko amžių")
+     * @Assert\Range(
+     *     min=0,
+     *     max=18,
+     *     minMessage="Amžius negali būti neigiamas",
+     *     maxMessage="Maksimalus apatinis amžių rėžis yra 18 metų"
+     * )
      */
     private $ageFrom;
 
@@ -101,6 +112,10 @@ class Offer
      *
      * @ORM\Column(name="age_to", type="integer")
      * @Assert\NotBlank(message="Prašome įvesti didžiausią galimą vaiko amžių")
+     * @Assert\Range(
+     *     min=0,
+     *     minMessage="Amžius negali būti neigiamas"
+     * )
      */
     private $ageTo;
 
@@ -135,13 +150,16 @@ class Offer
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\OfferImage", mappedBy="offer", cascade={"persist"})
+     * @CustomAssert\ImageSizes(maxSize="1048576").
+     * @CustomAssert\ImageExtensions(extensions={"jpg","png","gif"})
      */
     private $images;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OfferImage")
      * @ORM\JoinColumn(name="main_image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     * @Assert\NotBlank(message="Prašome įkelti pagrindinę būrelio nuotrauką")
+     * @CustomAssert\ImageSizes(maxSize="1048576")
+     * @CustomAssert\ImageExtensions(extensions={"jpg","png","gif"})
      */
     private $mainImage;
 
@@ -161,9 +179,8 @@ class Offer
      * @var string
      *
      * @ORM\Column(name="contact_info", type="string", length=120)
-     * @Assert\NotBlank(message="Prašome įvesti būrelio kontaktinę informaciją")
      */
-    private $contactInfo;
+    private $contactInfo = "";
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="offer")

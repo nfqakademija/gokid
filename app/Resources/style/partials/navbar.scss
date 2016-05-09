@@ -36,6 +36,10 @@
   }
 }
 
+.no-margin {
+  margin-bottom: 0;
+}
+
 .navbar-default .navbar-toggle,
 .navbar.transparent .navbar-toggle {
   border-radius: 3px;
@@ -43,8 +47,9 @@
 }
 
 .navbar.transparent {
-  border-width: 0;
   position: absolute;
+  top: 0;
+  border-width: 0;
   width: 100%;
   background-color: transparent;
   transition: background-color 0.5s ease;
@@ -69,6 +74,7 @@
 @media (max-width: 768px) {
   .navbar.transparent {
     background-color: rgba(0, 0, 0, 0.25);
+    position: relative;
   }
 }
 

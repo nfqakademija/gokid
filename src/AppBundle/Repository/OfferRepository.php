@@ -51,7 +51,7 @@ class OfferRepository extends EntityRepository
             $maximumLatitude = $latitude + $boundsLatitude;
             $qb->select("o")
                 ->from('AppBundle:Offer', 'o')
-                ->where("o.latitude >= {$minimumLatitude}")
+                ->andWhere("o.latitude >= {$minimumLatitude}")
                 ->andWhere("o.latitude <= {$maximumLatitude}")
                 ->andWhere("o.longitude >= {$minimumLongitude}")
                 ->andWhere("o.longitude <= {$maximumLongitude}");
@@ -61,7 +61,7 @@ class OfferRepository extends EntityRepository
         }
 
         if ($offer->getAge()) {
-            $qb->where("o.ageFrom <= {$offer->getAge()}")
+            $qb->andWhere("o.ageFrom <= {$offer->getAge()}")
                 ->andWhere("o.ageTo >= {$offer->getAge()}");
         }
 

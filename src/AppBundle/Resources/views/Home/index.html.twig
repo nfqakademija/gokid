@@ -26,7 +26,7 @@
                                     <span class="glyphicon glyphicon-globe" id="locate-me"></span>
                                 </div>
                                 <div class="loader-div hidden">
-                                    <img class="loader" src="{{ asset('images/loading-spinner.gif') }}"/>
+                                    <img class="loader smaller" src="{{ asset('images/loading-spinner.gif') }}"/>
                                 </div>
                                 {{  form_row(form.address, {'attr': {'class': 'place-input address-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                             </div>
@@ -45,19 +45,21 @@
                                 }}
                             </div>
                         </div>
-                        <div class="col-sm-1">
-                            <div class="gender-input">
-                                <button type="button" for="male" class="btn btn-default btn-sm {% if offers.getParams.male is defined %}active{% endif %}">
-                                    <span class="icon icon-male"></span>
-                                </button>
-                                <button type="button" for="female" class="btn btn-default btn-sm female {% if offers.getParams.female is defined %}active{% endif %}">
-                                    <span class="icon icon-female"></span>
-                                </button>
-                                {{ form_row(form.male, {'attr': {'class': 'gender-checkbox hidden'}}) }}
-                                {{ form_row(form.female, {'attr': {'class': 'gender-checkbox hidden'}}) }}
+                        <div class="col-sm-2 gender-column">
+                            <div class="gender-input text-center">
+                                <div class="icons-center">
+                                    <button type="button" for="male" class="btn btn-default btn-sm male{% if offers.getParams.male is defined %}active{% endif %}">
+                                        <span class="icon icon-male"></span>
+                                    </button><!--
+                                    --><button type="button" for="female" class="btn btn-default btn-sm female{% if offers.getParams.female is defined %}active{% endif %}">
+                                        <span class="icon icon-female"></span>
+                                    </button>
+                                    {{ form_row(form.male, {'attr': {'class': 'male-checkbox hidden'}}) }}
+                                    {{ form_row(form.female, {'attr': {'class': 'female-checkbox hidden'}}) }}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 submit-container">
+                        <div class="col-sm-2 submit-container">
                             <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </div>
                         {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}

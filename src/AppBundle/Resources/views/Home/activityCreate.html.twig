@@ -13,21 +13,37 @@
                         Sporto šakos
                     </div>
                     <ul class="list-group">
-                        {% for activity in activities  %}
+                        {% if activities|length == 0 %}
                             <li class="list-group-item">
-                                {{ activity.name }}
-                                <a class="badge" href="{{ path('app.activityEdit', {'id': activity.id}) }}">Keisti</a>
+                                Sporto šakų nėra
                             </li>
-                        {% endfor %}
+                        {% else %}
+                            {% for activity in activities  %}
+                                <li class="list-group-item">
+                                    {{ activity.name }}
+                                    <a class="badge" href="{{ path('app.activityEdit', {'id': activity.id}) }}">Keisti</a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
                     <div class="navigation">
                         {{ knp_pagination_render(activities) }}
                     </div>
+                    <hr class="no-margin"/>
                     <div class="content-form logged-in no-shadow">
+                        <h3>
+                            Sporto šakos sukūrimas
+                        </h3>
                         {% form_theme form '@App/form/OfferRegistrationFields.html.twig' %}
                         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                             {{ form_row(form.name) }}
-                            {{ form_row(form.defaultImage) }}
+                            <div class="form-group {%  if form.defaultImage.vars.errors|length %}has-error{% endif %}">
+                                <label class="control-label required">
+                                    Numatytoji nuotrauka
+                                </label>
+                                {{ form_widget(form.defaultImage) }}
+                                {{ form_errors(form.defaultImage) }}
+                            </div>
                             <div>
                                 <input type="submit" value="Pridėti sporto šaką" class="submit"/>
                             </div>
@@ -37,4 +53,21 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('#activity_defaultImage').fileinput({
+            language: 'lt',
+            showUpload: false,
+            previewSettings: {
+                image: {
+                    width: 'auto',
+                    height: '100px'
+                }
+            },
+            allowedFileTypes: ['image']
+        });
+    </script>
 {% endblock %}
