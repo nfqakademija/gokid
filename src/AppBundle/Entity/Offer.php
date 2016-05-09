@@ -178,9 +178,9 @@ class Offer
     /**
      * @var string
      *
-     * @ORM\Column(name="contact_info", type="string", length=120, nullable=true)
+     * @ORM\Column(name="contact_info", type="string", length=120)
      */
-    private $contactInfo;
+    private $contactInfo = "";
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="offer")
