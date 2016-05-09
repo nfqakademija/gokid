@@ -20,7 +20,8 @@ function initAutocomplete() {
     // Change the coordinates variable, when user autocompletes address
     autocomplete.addListener('place_changed', function() {
         var location = autocomplete.getPlace();
-        if (location) {
+        console.log(location);
+        if (location && ('geometry' in location)) {
             changeCoordinates(
                 location.geometry.location.lat(),
                 location.geometry.location.lng()
@@ -43,6 +44,9 @@ $(form).submit(function(event) {
     if (typeof searchPage !== 'undefined' && searchPage && formSubmiting) {
         event.preventDefault();
         ajaxUpdate();
+        formSubmiting = false;
+        coordinates = null;
+        return;
     }
     // If user has not selected their address from autocomplete list or
     // used geolocating, perform location aproximation
