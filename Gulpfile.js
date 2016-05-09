@@ -30,8 +30,8 @@ gulp.task('scripts', function() {
             dir.bower + 'owl-carousel2/dist/owl.carousel.js',
             dir.bower + 'fancybox/source/jquery.fancybox.js',
             dir.bower + 'fancybox/source/helpers/jquery.fancybox-thumbs.js',
-            dir.bower + 'matchHeight/dist/jquery.matchHeight.js',
-
+            dir.bower + 'matchheight/dist/jquery.matchHeight.js',
+    
             // Bootstrap JS modules
             dir.bootstrapJS + 'transition.js',
             dir.bootstrapJS + 'collapse.js',
