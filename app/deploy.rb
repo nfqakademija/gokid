@@ -8,4 +8,5 @@ set :scm, :archive
 
 set :linked_files, fetch(:linked_files, []).push('app/config/parameters.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('app/logs')
+set :linked_dirs, fetch(:linked_dirs, []).push('web/images/offerImages')
 
