@@ -216,6 +216,8 @@
     {{ parent() }}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&libraries=places"></script>
     <script>
+        var input = (document.getElementById('address'));
+        var form = $('.index-form');
         $('.rating label').removeClass('selected');
         $('#rate-'+$('input[type=radio]:checked').val()).trigger('click');
         google.maps.event.addDomListener(window, 'load', detailsMap({{ offer.getLatitude }}, {{ offer.getLongitude }}));

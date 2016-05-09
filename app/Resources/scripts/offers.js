@@ -1,10 +1,6 @@
 /**
  * Variables
  */
-var input = (document.getElementById('address'));
-var latitude = $('#latitude');
-var longitude = $('#longitude');
-var form = $('.index-form');
 var markers = [];
 var clusters = [];
 var infobox = [];

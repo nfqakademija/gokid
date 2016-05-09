@@ -38,7 +38,6 @@ function initAutocomplete() {
         }
     });
 }
-
 // Confirm that user coordinates are set when form is submitted
 $(form).submit(function(event) {
     if (typeof searchPage !== 'undefined' && searchPage && formSubmiting) {
@@ -83,6 +82,7 @@ $(form).submit(function(event) {
                                 // User input illegible, set coordinates to null
                                 changeCoordinates(null, null);
                                 formSubmiting = true;
+                                $(input).val('');
                                 $(form).submit();
                             }
                         } else {

@@ -595,6 +595,9 @@ class Offer
      */
     public function setContactInfo($contactInfo)
     {
+        if ($contactInfo == null) {
+            $contactInfo = "";
+        }
         $this->contactInfo = $contactInfo;
     }
 
