@@ -72,6 +72,17 @@
     background-color: #fff;
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.075);
+
+    .description {
+      padding-bottom: 20px;
+    }
+  }
+
+  .offer-bottom {
+    position: absolute;
+    bottom: 8px;
+    padding-right: 65px;
+    width: 100%;
   }
 
   .offer-content {
