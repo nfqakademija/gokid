@@ -9,7 +9,11 @@
                 <div class="form-group gutter-remove">
                     <div class="top-container">
                         <div class="col-sm-3">
-                            <div class="locate-me">
+                            {% if 'Chrome' in app.request.server.get('HTTP_USER_AGENT') %}
+                                <div class="locate-me hidden">
+                            {% else %}
+                                <div class="locate-me">
+                            {% endif %}
                                 <span class="glyphicon glyphicon-globe" id="locate-me"></span>
                             </div>
                             <div class="loader-div hidden">
