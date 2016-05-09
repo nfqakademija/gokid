@@ -8,6 +8,7 @@ services:
         arguments:
             - @doctrine
             - @security.token_storage
+            - %gokid_tmp_dir_name%
         class: AppBundle\Utility\ImportHelper
 
     data_manager:

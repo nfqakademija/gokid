@@ -40,14 +40,21 @@ class ImportHelper
      * ImportHelper constructor.
      *
      * @param ManagerRegistry $manager
+     * @param TokenStorage    $tokenStorage
+     * @param string          $tmpFolderName
      */
     public function __construct(
         ManagerRegistry $manager,
-        TokenStorage $tokenStorage
+        TokenStorage $tokenStorage,
+        $tmpFolderName
     ) {
         $this->managerRegistry = $manager;
         $this->tokenStorage = $tokenStorage;
         $this->activityRepo = $manager->getRepository('AppBundle:Activity');
+        $this->tmpFolderName = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $tmpFolderName;
+        if (is_dir($this->tmpFolderName) === false) {
+            mkdir($this->tmpFolderName);
+        }
     }
 
     /**
@@ -149,7 +156,7 @@ class ImportHelper
             $entityManager->persist($image);
         }
         $entityManager->flush();
-        $this->removeTemporaryFiles('images/tmpImages');
+        $this->removeTemporaryFiles($this->tmpFolderName);
     }
 
     /**
@@ -189,7 +196,7 @@ class ImportHelper
     public function createOfferImageFromFile($fileUrl, $tmpFileIndex)
     {
         $extension = $this->getFileExtension($fileUrl);
-        $path = 'images/tmpImages/tmp' . $tmpFileIndex . '.' . $extension;
+        $path = $this->tmpFolderName . DIRECTORY_SEPARATOR . 'tmp' . $tmpFileIndex . '.' . $extension;
         $curl = new CurlRequest($fileUrl);
         if ($image = $this->downloadImage($curl, $fileUrl, $path)) {
             $offerImage = new OfferImage();
