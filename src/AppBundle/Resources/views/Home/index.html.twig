@@ -1,7 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block container %}
-    {% include ':inc:header.html.twig' %}
+    {% include ':inc:header.html.twig' with {'index': true}%}
     <div class="search-image"></div>
     <div class="container search-container">
         <div class="va-middle text-center">
@@ -41,17 +41,19 @@
                                 }}
                             </div>
                         </div>
-                        <div class="col-sm-2">
-                            <div class="gender-input text-center">
-                                <div class="icons-center">
-                                    <div class="gender-icon"><b>&#9794;</b></div>
-                                    {{ form_row(form.male, {'attr': {'class': 'gender-checkbox'}}) }}
-                                    <div class="gender-icon"><b>&#9792;</b></div>
-                                    {{ form_row(form.female, {'attr': {'class': 'gender-checkbox'}}) }}
-                                </div>
+                        <div class="col-sm-1">
+                            <div class="gender-input">
+                                <button type="button" for="male" class="btn btn-default btn-sm {% if offers.getParams.male is defined %}active{% endif %}">
+                                    <span class="icon icon-male"></span>
+                                </button>
+                                <button type="button" for="female" class="btn btn-default btn-sm female {% if offers.getParams.female is defined %}active{% endif %}">
+                                    <span class="icon icon-female"></span>
+                                </button>
+                                {{ form_row(form.male, {'attr': {'class': 'gender-checkbox hidden'}}) }}
+                                {{ form_row(form.female, {'attr': {'class': 'gender-checkbox hidden'}}) }}
                             </div>
                         </div>
-                        <div class="col-sm-2 submit-container">
+                        <div class="col-sm-3 submit-container">
                             <button type="submit" class="btn btn-default searchbar-submit"><span class="hidden-xs">Ieškoti</span><span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </div>
                         {{ form_row(form.latitude, {'attr': {'class': 'hidden'}}) }}
@@ -78,13 +80,13 @@
     <div class="hidden" id="popover-content">
         <div class="button-table">
             <div class="button-row">
-                {% for i in age_list[0] %}
+                {% for i in 1..9 %}
                     <div class="button-container">{{ i }}</div>
                 {% endfor %}
             </div>
             <div class="button-row">
-                {% for i in age_list[1] %}
-                    <div class="button-container">{{ i }}</div>
+                {% for i in 10..18 %}
+                    <div class="button-container">{{ i }}{% if i == 18 %}+{% endif %}</div>
                 {% endfor %}
             </div>
         </div>

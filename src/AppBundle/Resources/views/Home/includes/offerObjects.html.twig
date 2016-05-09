@@ -4,7 +4,7 @@
             <div class="col-xs-12 col-sm-6 col-md-6 offer" data-id="{{ offer.getId }}">
                 <div class="offer-inner">
                     <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
-                        <img src="{{ asset ('/images/offerImages/' ~ offer.getMainImage)}}" class="img-responsive" alt="{{ offer.getName }}" />
+                        {% include '@App/Home/includes/offerImage.html.twig' with {'offer': offer} %}
                     </a>
                     <div class="offer-content">
                         <h2>
@@ -55,7 +55,7 @@
 {% else %}
     <div class="not-found">Būrelių nerasta</div>
     <script>
-        window.document.onload = function(e){
+        window.document.onload = function(){
             map.setCenter({lat: 54.8931048, lng: 23.8666335});
         }
     </script>
@@ -63,5 +63,6 @@
 {% if ajax is defined %}
     <script>
         var offers = {{ offers_json|raw }};
+        var offers_found = {{ offers_found }};
     </script>
 {% endif %}

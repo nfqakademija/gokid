@@ -5,7 +5,7 @@ $('#age').popover({
     html: true
 }).click(function() {
     $('.button-container').click(function () {
-        $('#age').val($(this).text()).popover('hide');
+        $('#age').val(parseInt($(this).text())).popover('hide');
         if (typeof offers !== 'undefined') {
             ajaxUpdate();
         }

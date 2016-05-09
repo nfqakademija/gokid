@@ -42,6 +42,7 @@ class CommentType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
+                'data' => 5,
         ])->add('title', TextType::class, [
                 'label' => false,
         ])->add('name', TextType::class, [

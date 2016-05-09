@@ -75,6 +75,11 @@ class HomeController extends Controller
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getDoctrine()->getRepository('AppBundle:Activity');
 
+        if ($request->query->get('activity')
+        ) {
+            $offer->setActivity($request->query->get('activity'));
+        }
+
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->getDoctrine()->getRepository('AppBundle:Offer');
 
@@ -89,6 +94,7 @@ class HomeController extends Controller
             return $this->render('AppBundle:Home/includes:offerObjects.html.twig', [
                 'ajax' => 1,
                 'offers' => $offers,
+                'offers_found' => $offers->getTotalItemCount(),
                 'offers_json' => $offersJson,
             ]);
         }
@@ -96,6 +102,8 @@ class HomeController extends Controller
         return [
             'activities' => $activityRepository->getAllActivities(),
             'age_list' => $offerRepository->getAgeList(),
+            'offers_all' => $offerRepository->getOfferCount(),
+            'offers_found' => $offers->getTotalItemCount(),
             'offers' => $offers,
             'offers_json' => $offersJson,
             'form' => $form->createView(),
@@ -116,15 +124,14 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $offer->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($offer->getMainImage());
             $em->persist($offer);
             $em->flush();
             // Unset the form so that the fields do not get repopulated
-            unset($offer);
             unset($form);
-            $offer = new Offer();
-            $form = $this->createForm(OfferType::class, $offer);
+            $form = $this->createForm(OfferType::class, new Offer());
             $this->addFlash('success', 'Jūsų būrelis patalpintas į sistemą');
         }
 
@@ -181,12 +188,11 @@ class HomeController extends Controller
 
             $em->flush();
 
-            return [
-                'form' => $this->createForm(CommentType::class, new Comment())->createView(),
-                'comments' => $offer->getComments(),
-                'offer' => $offer,
-                'similarOffers' => $offerRepository->searchSimilarOffers($offer),
-            ];
+            return $this->redirect(
+                $this->generateUrl('app.offerDetails', [
+                    'id'=>$offer->getId()
+                ]) . '#'.$comment->getId()
+            );
         }
 
         return [

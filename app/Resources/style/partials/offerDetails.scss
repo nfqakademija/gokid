@@ -178,10 +178,19 @@
     border-right-color: rgba(0, 0, 0, 0.075);
     border-width: 8px;
   }
+
+  .error-container span {
+    font-weight: 400;
+    color: #ff0000;
+  }
+
+  .offer-price {
+    font-size: 16px;
+  }
 }
 
 .map-block {
-  margin-top: -235px;
+  margin-top: -220px;
 }
 
 .map-details {
@@ -319,11 +328,14 @@
   }
 }
 
-@media (max-width: 380px) {
-  .container {
+@media (max-width: 468px) {
+  .mobile-no-padding {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+@media (max-width: 380px) {
   .middle-block .post-rating {
     left: 140px;
   }

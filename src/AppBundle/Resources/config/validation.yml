@@ -12,6 +12,41 @@ AppBundle\Entity\User:
                 message: "Telefono numeris neteisingas"
                 groups: [ "Customprofile", "CustomRegistration" ]
 
+AppBundle\Entity\Comment:
+    properties:
+        name:
+            - NotBlank:
+                message: "Prašome įvesti savo vardą"
+            - Length:
+                min: 2
+                minMessage: "Jūsų vardas per trumpas"
+                max: 50
+                maxMessage: "Jūsų vardas per ilgas"
+        email:
+            - NotBlank:
+                message: "Prašome įvesti savo el. paštą"
+            - Email:
+                message: "Prašome įvesti tikrą el. paštą"
+        title:
+            - NotBlank:
+                message: "Prašome įvesti temą"
+            - Length:
+                min: 2
+                minMessage: "Jūsų tema per trumpa"
+                max: 100
+                maxMessage: "Jūsų tema per ilga"
+        body:
+            - NotBlank:
+                message: "Prašome įvesti atsiliepimą"
+            - Length:
+                min: 5
+                minMessage: "Prašome parašyti išsamiau"
+                max: 1000
+                maxMessage: "Jūsų žinutė per ilga, daugiausiai 1000 simbolių"
+        rate:
+            - NotBlank:
+                message: "Prašome palikti įvertinimą"
+
 FOS\UserBundle\Model\User:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:

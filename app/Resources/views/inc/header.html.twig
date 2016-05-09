@@ -1,12 +1,14 @@
 <nav class="navbar navbar-default {% if app.request.attributes.get('_route') == 'app.index' %}transparent{% endif %}">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
-                <span class="sr-only">Atverti navigaciją</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            {% if app.user or index is defined and index is not defined %}
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Atverti navigaciją</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            {% endif %}
             {% if app.request.attributes.get('_route') == 'app.index' %}
                 <span class="navbar-brand"><img src="{{ asset('images/soccerball-white.png') }}" width="100" height="30"/></span>
             {% else %}
