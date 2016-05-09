@@ -28,14 +28,12 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="gender-input text-center">
-                            <div class="icons-center">
+                        <div class="col-sm-1">
+                            <div class="gender-input">
                                 <button type="button" for="male" class="btn btn-default btn-sm {% if offers.getParams.male is defined %}active{% endif %}">
-                                   <span class="icon icon-male"></span>
+                                    <span class="icon icon-male"></span>
                                 </button>
-                                <button type="button" for="female" class="btn btn-default btn-sm {% if offers.getParams.female is defined %}active{% endif %}">
+                                <button type="button" for="female" class="btn btn-default btn-sm female {% if offers.getParams.female is defined %}active{% endif %}">
                                     <span class="icon icon-female"></span>
                                 </button>
                                 {{ form_row(form.male, {'attr': {'class': 'gender-checkbox hidden'}}) }}

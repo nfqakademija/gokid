@@ -131,6 +131,33 @@
     background-color: #fff;
     height: 44px;
     margin: 0;
+    text-align: left;
+
+    .icon {
+      font-size: 20px;
+    }
+
+    button {
+      border: none;
+      border-radius: 0;
+      padding: 9px 10px 5px 9px;
+      color: #ccc;
+    }
+
+    .female {
+      margin-left: -3px;
+    }
+
+    button:focus {
+      background-color: #fff;
+      outline: none;
+    }
+
+    button.active {
+      background-color: #72c02c;
+      color: #fff;
+      box-shadow: none;
+    }
   }
 
   .gender-checkbox {
@@ -148,7 +175,6 @@
   .icons-center {
     overflow: hidden;
     margin: 0 auto;
-    width: 85px;
   }
 
   .header-text {
