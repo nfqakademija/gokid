@@ -24,16 +24,16 @@
   }
 
   .ui-state-default {
-    background: #65c04c !important;
+    background: $neutral !important;
     border: 1px solid rgba(0, 0, 0, 0.075) !important;
   }
 
   .ui-state-default:hover {
-    background: #65c04c !important;
+    background: $neutral !important;
   }
 
   .ui-widget-header {
-    background: #65c04c !important;
+    background: $neutral !important;
   }
 
   .not-found {
@@ -46,7 +46,7 @@
     font-size: 24px;
     margin-top: 5px;
     font-weight: 700;
-    color: #65c04c;
+    color: $neutral;
   }
 
   a:hover h2 {
@@ -93,7 +93,7 @@
   }
 
   .offer-rating {
-    border: 2px solid #65c04c;
+    border: 2px solid $neutral;
     border-radius: 50%;
     font-size: 13px;
     font-weight: 600;
@@ -127,7 +127,7 @@
 
   .offer-location {
     float: right;
-    color: #65c04c;
+    color: $neutral;
     cursor: pointer;
   }
 
@@ -266,7 +266,7 @@
     }
 
     button.active {
-      background-color: #65C04C;
+      background-color: $neutral;
       color: #fff;
       box-shadow: none;
     }
