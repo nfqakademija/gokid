@@ -185,12 +185,12 @@
   }
 
   .offer-price {
-    font-size: 16px;
+    font-size:20px
   }
 }
 
 .map-block {
-  margin-top: -220px;
+  margin-top: -235px;
 }
 
 .map-details {
@@ -246,8 +246,7 @@
     }
 
     .selected ~ span:after {
-      content: "☆";
-      color: #606060;
+      color: #ccc;
     }
   }
 
