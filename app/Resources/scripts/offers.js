@@ -99,6 +99,10 @@ function setMapParameters(){
 
     if (markers.length > 0) {
         map.fitBounds(bounds);
+
+        if (offers_found == 1) {
+            map.setZoom(14);
+        }
     }
 
     map.addListener('click', function() {
