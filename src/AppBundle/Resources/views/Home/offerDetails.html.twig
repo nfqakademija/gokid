@@ -46,6 +46,12 @@
                                 <span class="glyphicon glyphicon-user"></span> {{ offer.contactInfo }}
                             </div>
                         {% endif %}
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <span class="glyphicon glyphicon-home"></span> {{ offer.getAddress }}
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <span class="glyphicon glyphicon-resize-vertical"></span> Nuo {{ offer.getAgeFrom }} iki {{ offer.getAgeTo }} m
+                        </div>
                     </div>
                     {% if not offer.imported and offer.contactInfo %}
                         <hr/>
@@ -90,7 +96,7 @@
                                     {% endfor %}
                                 </div>
                                 <span class="date">
-                                    {{ comment.getCreatedAt|date("F d, Y") }}
+                                    {{ comment.getCreatedAt|date("Y m d") }}
                                 </span>
                             </div>
                             <div class="text">
@@ -114,19 +120,19 @@
                 {{ form_row(form.rate, { 'attr': {'class': 'rate-input hidden'} }) }}
                 <span>Jūsų įvertinimas:</span>
                 <div class="rating" id="rating">
-                    <label for="comment_rate_0" title="Blogas">
+                    <label id="rate-1" for="comment_rate_0" title="Blogas">
                         <span class="glyphicon glyphicon-star"></span>
                     </label>
-                    <label for="comment_rate_1" title="Prastas">
+                    <label id="rate-2" for="comment_rate_1" title="Prastas">
                         <span class="glyphicon glyphicon-star"></span>
                     </label>
-                    <label for="comment_rate_2" title="Geras">
+                    <label id="rate-3" for="comment_rate_2" title="Geras">
                         <span class="glyphicon glyphicon-star"></span>
                     </label>
-                    <label for="comment_rate_3" title="Puikus">
+                    <label id="rate-4" for="comment_rate_3" title="Puikus">
                         <span class="glyphicon glyphicon-star"></span>
                     </label>
-                    <label class="selected" for="comment_rate_4" title="Išskirtinis">
+                    <label id="rate-5" class="selected" for="comment_rate_4" title="Išskirtinis">
                         <span class="glyphicon glyphicon-star"></span>
                     </label>
                     <div><div id="comment_rate" class="rate-input"><input type="radio" id="comment_rate_0" name="comment[rate]" required="required" value="1.0"><input type="radio" id="comment_rate_1" name="comment[rate]" required="required" value="2.0"><input type="radio" id="comment_rate_2" name="comment[rate]" required="required" value="3.0"><input type="radio" id="comment_rate_3" name="comment[rate]" required="required" value="4.0"><input type="radio" id="comment_rate_4" name="comment[rate]" required="required" value="5.0"></div></div>
@@ -175,12 +181,12 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 offer" data-id="{{ offer.getId }}">
                                 <div class="offer-inner">
-                                    <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                                    <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
                                         {% include '@App/Home/includes/offerImage.html.twig' with {'offer': offer} %}
                                     </a>
                                     <div class="offer-content">
                                         <h2>
-                                            <a target="_blank" href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
+                                            <a href="{{ path('app.offerDetails', {'id': offer.getId}) }}">
                                                 {{ offer.getName }}
                                             </a>
                                         </h2>
@@ -210,6 +216,8 @@
     {{ parent() }}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&libraries=places"></script>
     <script>
+        $('.rating label').removeClass('selected');
+        $('#rate-'+$('input[type=radio]:checked').val()).trigger('click');
         google.maps.event.addDomListener(window, 'load', detailsMap({{ offer.getLatitude }}, {{ offer.getLongitude }}));
     </script>
 {% endblock %}

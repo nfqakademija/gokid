@@ -9,7 +9,11 @@
                 <div class="form-group gutter-remove">
                     <div class="top-container">
                         <div class="col-sm-3">
-                            <div class="locate-me">
+                            {% if 'Chrome' in app.request.server.get('HTTP_USER_AGENT') %}
+                                <div class="locate-me hidden">
+                            {% else %}
+                                <div class="locate-me">
+                            {% endif %}
                                 <span class="glyphicon glyphicon-globe" id="locate-me"></span>
                             </div>
                             <div class="loader-div hidden">
@@ -22,20 +26,18 @@
                         </div>
                         <div class="col-sm-2">
                             <select name="activity" id="activity" class="activities-select">
-                                <option value="" {% if offers.getParams['activity'] is not defined %}selected{% endif %}>-- Kategorija --</option>
+                                <option value="" {% if offers.getParams['activity'] is not defined %}selected{% endif %}>-- Visos kategorijos --</option>
                                 {% for key, activity in activities %}
                                     <option value="{{ activity.getId }}" {% if offers.getParams['activity'] is defined and activity.getId == offers.getParams['activity'] %}selected{% endif %}>{{ activity }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="gender-input text-center">
-                            <div class="icons-center">
+                        <div class="col-sm-1">
+                            <div class="gender-input">
                                 <button type="button" for="male" class="btn btn-default btn-sm {% if offers.getParams.male is defined %}active{% endif %}">
-                                   <span class="icon icon-male"></span>
+                                    <span class="icon icon-male"></span>
                                 </button>
-                                <button type="button" for="female" class="btn btn-default btn-sm {% if offers.getParams.female is defined %}active{% endif %}">
+                                <button type="button" for="female" class="btn btn-default btn-sm female {% if offers.getParams.female is defined %}active{% endif %}">
                                     <span class="icon icon-female"></span>
                                 </button>
                                 {{ form_row(form.male, {'attr': {'class': 'gender-checkbox hidden'}}) }}
