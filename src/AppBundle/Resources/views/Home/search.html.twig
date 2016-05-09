@@ -21,10 +21,10 @@
                             </div>
                             {{  form_row(form.address, {'attr': {'class': 'place-input address-input', 'placeholder': 'Gyvenamoji vieta'}}) }}
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             {{ form_row(form.age, {'attr': {'min': 0, 'class': 'age-input', 'data-toggle': "popover", 'placeholder': 'Amžius'}}) }}
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <select name="activity" id="activity" class="activities-select">
                                 <option value="" {% if offers.getParams['activity'] is not defined %}selected{% endif %}>-- Visos kategorijos --</option>
                                 {% for key, activity in activities %}
@@ -33,7 +33,7 @@
                             </select>
                         </div>
                         <div class="col-sm-1">
-                            <div class="gender-input text-center">
+                            <div class="gender-input">
                                 <button type="button" for="male" class="btn btn-default btn-sm {% if offers.getParams.male is defined %}active{% endif %}">
                                     <span class="icon icon-male"></span>
                                 </button>
