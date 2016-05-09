@@ -19,7 +19,9 @@ class ImageExtensionsValidator extends ConstraintValidator
             if (is_array($images) && $images[0]) {
                 foreach ($images as $image) {
                     if (!in_array(
-                        $image->getImageFile()->getClientOriginalExtension(),
+                        strtolower(
+                            $image->getImageFile()->getClientOriginalExtension()
+                        ),
                         $extensions
                     )) {
                         $this->context->addViolation(
@@ -29,7 +31,9 @@ class ImageExtensionsValidator extends ConstraintValidator
                 }
             } else {
                 if (!in_array(
-                    $images->getImageFile()->getClientOriginalExtension(),
+                    strtolower(
+                        $images->getImageFile()->getClientOriginalExtension()
+                    ),
                     $extensions
                 )) {
                     $this->context->addViolation(

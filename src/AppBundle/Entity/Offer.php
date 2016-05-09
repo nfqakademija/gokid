@@ -168,8 +168,7 @@ class Offer
     /**
      * @var string
      *
-     * @ORM\Column(name="contact_info", type="string", length=120)
-     * @Assert\NotBlank(message="Prašome įvesti būrelio kontaktinę informaciją")
+     * @ORM\Column(name="contact_info", type="string", length=120, nullable=true)
      */
     private $contactInfo;
 

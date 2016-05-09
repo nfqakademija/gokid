@@ -9,3 +9,9 @@ services:
             - @doctrine
             - @security.token_storage
         class: AppBundle\Utility\ImportHelper
+
+    data_manager:
+        arguments:
+            - @doctrine
+            - @security.token_storage
+        class: AppBundle\Utility\DataManager

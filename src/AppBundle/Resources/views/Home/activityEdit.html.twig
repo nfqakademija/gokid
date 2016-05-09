@@ -13,7 +13,7 @@
                         Sporto šakos keitimas
                     </div>
                     <div class="content-form logged-in no-shadow">
-                        {% form_theme form '    @App/form/OfferRegistrationFields.html.twig' %}
+                        {% form_theme form '@App/form/OfferRegistrationFields.html.twig' %}
                         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                         {{ form_row(form.name) }}
                         {{ form_row(form.defaultImage) }}
