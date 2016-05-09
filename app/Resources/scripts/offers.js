@@ -11,6 +11,8 @@ var offersDiv = $( ".offers" );
 var sliderPrice = $( "#slider-price" );
 var sliderRange = $( "#slider-range" );
 
+$('.offer-inner').matchHeight();
+
 /**
  * Focuses to location on map
  */
@@ -95,6 +97,10 @@ function setMapParameters(){
 
     if (markers.length > 0) {
         map.fitBounds(bounds);
+
+        if (offers_found == 1) {
+            map.setZoom(14);
+        }
     }
 
     map.addListener('click', function() {
@@ -202,6 +208,8 @@ function ajaxUpdate(page) {
         markerClusterer = new MarkerClusterer(map, clusters);
 
         offerObjects.removeClass('loading');
+
+        $('.offer-inner').matchHeight();
     });
 }
 
