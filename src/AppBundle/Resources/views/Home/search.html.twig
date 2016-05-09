@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-sm-2">
                             <select name="activity" id="activity" class="activities-select">
-                                <option value="" {% if offers.getParams['activity'] is not defined %}selected{% endif %}>-- Kategorija --</option>
+                                <option value="" {% if offers.getParams['activity'] is not defined %}selected{% endif %}>-- Visos kategorijos --</option>
                                 {% for key, activity in activities %}
                                     <option value="{{ activity.getId }}" {% if offers.getParams['activity'] is defined and activity.getId == offers.getParams['activity'] %}selected{% endif %}>{{ activity }}</option>
                                 {% endfor %}
