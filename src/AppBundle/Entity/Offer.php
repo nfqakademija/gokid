@@ -98,6 +98,12 @@ class Offer
      *
      * @ORM\Column(name="age_from", type="integer")
      * @Assert\NotBlank(message="Prašome įvesti mažiausią galimą vaiko amžių")
+     * @Assert\Range(
+     *     min=0,
+     *     max=18,
+     *     minMessage="Amžius negali būti neigiamas",
+     *     maxMessage="Maksimalus apatinis amžių rėžis yra 18 metų"
+     * )
      */
     private $ageFrom;
 
@@ -106,6 +112,10 @@ class Offer
      *
      * @ORM\Column(name="age_to", type="integer")
      * @Assert\NotBlank(message="Prašome įvesti didžiausią galimą vaiko amžių")
+     * @Assert\Range(
+     *     min=0,
+     *     minMessage="Amžius negali būti neigiamas"
+     * )
      */
     private $ageTo;
 
