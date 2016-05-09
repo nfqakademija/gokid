@@ -61,6 +61,9 @@ class HomeController extends Controller
      * @param Request $request
      * @return array
      */
+
+    //http://localhost:8000/search?address=Kaunas%2C+Kauno+apskritis%2C+Lietuva&age=&latitude=54.8985207&longitude=23.90359650000005&distance=10&priceFrom=1&priceTo=50
+    //http://localhost:8000/search?address=Kaunas&age=13&latitude=54.8985207&longitude=23.90359650000005&distance=10&priceFrom=1&priceTo=50
     public function searchAction(Request $request)
     {
         $offer = new OfferSearch();
