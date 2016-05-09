@@ -99,16 +99,17 @@
     </div>
 {% endblock %}
 
-
-
 {% block javascripts %}
-    {{ parent() }}
     <script type="text/javascript">
         // Address input element
         var input = (document.getElementById('address'));
-        var latitude = $('#latitude');
-        var longitude = $('#longitude');
-        var form = $('.index-form');
+        var latitude = document.getElementById('latitude');
+        var longitude = document.getElementById('longitude');
+        var form = document.getElementById('index-form');
+    </script>
+    {{ parent() }}
+    <script type="text/javascript">
+
     </script>
     <script defer="defer" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
 {% endblock %}
