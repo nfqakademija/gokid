@@ -11,8 +11,6 @@ var offersDiv = $( ".offers" );
 var sliderPrice = $( "#slider-price" );
 var sliderRange = $( "#slider-range" );
 
-$('.offer-inner').matchHeight();
-
 /**
  * Focuses to location on map
  */
@@ -209,7 +207,6 @@ function ajaxUpdate(page) {
 
         offerObjects.removeClass('loading');
 
-        $('.offer-inner').matchHeight();
     });
 }
 
