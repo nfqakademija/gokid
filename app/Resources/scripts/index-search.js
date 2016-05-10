@@ -17,6 +17,10 @@ function initAutocomplete() {
     );
     geocoder = new google.maps.Geocoder();
 
+    $(input).change(function() {
+        coordinates = null;
+    });
+
     // Change the coordinates variable, when user autocompletes address
     autocomplete.addListener('place_changed', function() {
         var location = autocomplete.getPlace();
@@ -25,6 +29,8 @@ function initAutocomplete() {
                 location.geometry.location.lat(),
                 location.geometry.location.lng()
             );
+        } else {
+            coordinates = null;
         }
         return false;
     });
@@ -39,65 +45,67 @@ function initAutocomplete() {
     });
 }
 // Confirm that user coordinates are set when form is submitted
-$(form).submit(function(event) {
-    if (typeof searchPage !== 'undefined' && searchPage && formSubmiting) {
-        event.preventDefault();
-        ajaxUpdate();
-        formSubmiting = false;
-        coordinates = null;
-        return;
-    }
-    // If user has not selected their address from autocomplete list or
-    // used geolocating, perform location aproximation
-    if (!formSubmiting) {
-        if (coordinates == null) {
+if(typeof form != 'undefined') {
+    $(form).submit(function (event) {
+        if (typeof searchPage !== 'undefined' && searchPage && formSubmiting) {
             event.preventDefault();
-            var userInput = $(input).val();
-            // User typed nothing, proceed with form submission
-            if (userInput === "") {
-                formSubmiting = true;
-                $(form).submit();
-            } else {
-                var service = new google.maps.places.AutocompleteService();
-                service.getPlacePredictions(
-                    {
-                        input: userInput,
-                        types: ['geocode'],
-                        componentRestrictions: {country: 'ltu'}
-                    },
-                    function (predictions, status) {
-                        // User typed something legible, predict the location
-                        // and set coordinates
-                        if (status === google.maps.places.PlacesServiceStatus.OK) {
-                            if (predictions && predictions[0]) {
-                                var predictedLocation = predictions[0];
-                                geocode({'address': predictedLocation.description},
-                                    function(results) {
-                                        changeCoordinates(
-                                            results[0].geometry.location.lat(),
-                                            results[0].geometry.location.lng()
-                                        );
-                                        formSubmiting = true;
-                                        $(form).submit();
-                                    }
-                                );
+            ajaxUpdate();
+            formSubmiting = false;
+            coordinates = null;
+            return;
+        }
+        // If user has not selected their address from autocomplete list or
+        // used geolocating, perform location aproximation
+        if (!formSubmiting) {
+            if (coordinates == null) {
+                event.preventDefault();
+                var userInput = $(input).val();
+                // User typed nothing, proceed with form submission
+                if (userInput === "") {
+                    formSubmiting = true;
+                    $(form).submit();
+                } else {
+                    var service = new google.maps.places.AutocompleteService();
+                    service.getPlacePredictions(
+                        {
+                            input: userInput,
+                            types: ['geocode'],
+                            componentRestrictions: {country: 'ltu'}
+                        },
+                        function (predictions, status) {
+                            // User typed something legible, predict the location
+                            // and set coordinates
+                            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                if (predictions && predictions[0]) {
+                                    var predictedLocation = predictions[0];
+                                    geocode({'address': predictedLocation.description},
+                                        function (results) {
+                                            changeCoordinates(
+                                                results[0].geometry.location.lat(),
+                                                results[0].geometry.location.lng()
+                                            );
+                                            formSubmiting = true;
+                                            $(form).submit();
+                                        }
+                                    );
+                                } else {
+                                    // User input illegible, set coordinates to null
+                                    changeCoordinates(null, null);
+                                    formSubmiting = true;
+                                    $(input).val('');
+                                    $(form).submit();
+                                }
                             } else {
-                                // User input illegible, set coordinates to null
-                                changeCoordinates(null, null);
-                                formSubmiting = true;
                                 $(input).val('');
                                 $(form).submit();
                             }
-                        } else {
-                            $(input).val('');
-                            $(form).submit();
                         }
-                    }
-                );
+                    );
+                }
             }
         }
-    }
-});
+    });
+}
 
 // Geocoding function to reduce code duplication
 function geocode(params, callback, failCallback) {
