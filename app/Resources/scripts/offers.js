@@ -2,10 +2,8 @@
  * Variables
  */
 var markers = [];
-var clusters = [];
 var infobox = [];
 var map;
-var markerClusterer = null;
 var green = 'http://maps.google.com/mapfiles/marker_green.png';
 var offersDiv = $( ".offers" );
 var sliderPrice = $( "#slider-price" );
@@ -126,12 +124,7 @@ function clearMarkers() {
         markers[id].setMap(null);
     }
 
-    if (markers.length > 0) {
-        markerClusterer.clearMarkers();
-    }
-
     markers     = [];
-    clusters    = [];
     infobox     = [];
 }
 
@@ -147,7 +140,6 @@ function setMarkers() {
             icon: green,
             id: id
         });
-        clusters.push(markers[id]);
     }
 
     /**
@@ -202,8 +194,6 @@ function ajaxUpdate(page) {
         setMarkers();
         setMapParameters();
         setCounter();
-
-        markerClusterer = new MarkerClusterer(map, clusters);
 
         offerObjects.removeClass('loading');
 
