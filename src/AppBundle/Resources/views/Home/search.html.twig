@@ -109,10 +109,8 @@
         var longitude = document.getElementById('longitude');
         var form = document.getElementsByClassName('index-form')[0];
     </script>
-    {{ parent() }}
-    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/1.0/src/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB55WKt6k7UZLVfTeDFi1DV9EQjcsAmwKA&libraries=places"></script>
-    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js" async defer></script>
+    {{ parent() }}
     <script type="text/javascript">
         // Address input element
         var rootUrl = "{{ asset('') }}";
