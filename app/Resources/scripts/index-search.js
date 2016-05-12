@@ -166,6 +166,8 @@ function locateUserAddress() {
             }, function(status) {
                 addressLoading(false, true);
             })
+        }, function(status) {
+            addressLoading(false, true);
         });
     }
 }

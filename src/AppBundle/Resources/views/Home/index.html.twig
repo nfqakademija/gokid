@@ -18,7 +18,7 @@
                     <div class="form-group gutter-remove bar-container">
                         <div class="top-container">
                             <div class="col-sm-5">
-                                {% if 'Chrome' in app.request.server.get('HTTP_USER_AGENT') %}
+                                {% if 'Chrome' in app.request.server.get('HTTP_USER_AGENT') or 'Firefox' in app.request.server.get('HTTP_USER_AGENT')%}
                                     <div class="locate-me hidden">
                                 {% else %}
                                     <div class="locate-me">
