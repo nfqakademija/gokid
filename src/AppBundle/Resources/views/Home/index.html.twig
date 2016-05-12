@@ -107,11 +107,11 @@
         var longitude = document.getElementById('longitude');
         var form = document.getElementsByClassName('index-form')[0];
     </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places"></script>
     {{ parent() }}
-    <script type="text/javascript">
-
+    <script>
+        initAutocomplete();
     </script>
-    <script defer="defer" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDD-Qz3vsjQhtb903ppoMa79EI4Xc-AP8&libraries=places&callback=initAutocomplete"></script>
 {% endblock %}
 
 {% block footer %}
