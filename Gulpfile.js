@@ -54,6 +54,7 @@ gulp.task('scripts', function() {
             dir.assets + 'scripts/file-upload-plugin-translation.js',
             dir.assets + 'scripts/age-popover.js',
             dir.assets + 'scripts/index-search.js',
+            dir.assets + 'scripts/infobox.js',
 
             // Main JS file
             dir.assets + 'scripts/main.js'
